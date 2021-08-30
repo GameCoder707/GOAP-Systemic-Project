@@ -6,7 +6,6 @@ using System;
 
 public sealed class GoapAgent : MonoBehaviour
 {
-
     private FSM stateMachine;
 
     private FSM.FSMState idleState; // finds something to do
@@ -38,7 +37,8 @@ public sealed class GoapAgent : MonoBehaviour
 
     void Update()
     {
-        stateMachine.Update(this.gameObject);
+        //if (GetComponent<EnemyBehaviour>().playerInRange)
+            stateMachine.Update(this.gameObject);
     }
 
 
@@ -69,7 +69,8 @@ public sealed class GoapAgent : MonoBehaviour
 
     private void createIdleState()
     {
-        idleState = (fsm, gameObj) => {
+        idleState = (fsm, gameObj) =>
+        {
             // GOAP planning
 
             // get the world state and the goal we want to plan for
@@ -102,7 +103,8 @@ public sealed class GoapAgent : MonoBehaviour
 
     private void createMoveToState()
     {
-        moveToState = (fsm, gameObj) => {
+        moveToState = (fsm, gameObj) =>
+        {
             // move the game object
 
             GoapAction action = currentActions.Peek();
@@ -127,7 +129,8 @@ public sealed class GoapAgent : MonoBehaviour
     private void createPerformActionState()
     {
 
-        performActionState = (fsm, gameObj) => {
+        performActionState = (fsm, gameObj) =>
+        {
             // perform the action
 
 

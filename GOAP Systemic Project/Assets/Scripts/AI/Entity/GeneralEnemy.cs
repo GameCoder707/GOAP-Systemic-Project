@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class GeneralEnemy : MonoBehaviour, IGoap
 {
-    private float moveSpeed = 2;
+    private float moveSpeed = 4;
     private EnemyStats stats;
 
     // Start is called before the first frame update

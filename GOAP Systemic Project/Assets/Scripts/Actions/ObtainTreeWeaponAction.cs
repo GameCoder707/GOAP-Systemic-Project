@@ -18,7 +18,7 @@ public class ObtainTreeWeaponAction : GoapAction
     public override void reset()
     {
         // Reset
-        //hasWeapon = false;
+        hasWeapon = false;
     }
 
     public override bool isDone()

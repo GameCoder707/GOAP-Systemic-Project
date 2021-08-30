@@ -20,7 +20,8 @@ public class BurnWeaponAction : GoapAction
     public override void reset()
     {
         // Reset
-        //combatReady = false;
+        combatReady = false;
+
     }
 
     public override bool isDone()
@@ -62,7 +63,8 @@ public class BurnWeaponAction : GoapAction
 
         EnemyStats stats = agent.GetComponent<EnemyStats>();
         combatReady = true;
-        stats.combatReady = true;
+        stats.hasWeapon = false;
+        stats.combatReady = false;
         return true;
     }
 }
