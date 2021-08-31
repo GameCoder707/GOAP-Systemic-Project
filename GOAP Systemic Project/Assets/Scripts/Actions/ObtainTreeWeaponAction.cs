@@ -35,7 +35,7 @@ public class ObtainTreeWeaponAction : GoapAction
     {
         target = null;
 
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 10.0f, interactableLayer);
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
         if (interactables.Length > 0)
         {

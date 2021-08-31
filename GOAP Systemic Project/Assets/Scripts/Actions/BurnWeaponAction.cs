@@ -38,7 +38,7 @@ public class BurnWeaponAction : GoapAction
     {
         target = null;
 
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 10.0f, interactableLayer);
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
         if (interactables.Length > 0)
         {
@@ -63,8 +63,8 @@ public class BurnWeaponAction : GoapAction
 
         EnemyStats stats = agent.GetComponent<EnemyStats>();
         combatReady = true;
-        stats.hasWeapon = false;
-        stats.combatReady = false;
+        //stats.hasWeapon = false;
+        //stats.combatReady = false;
         return true;
     }
 }

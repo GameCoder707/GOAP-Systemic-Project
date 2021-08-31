@@ -37,7 +37,7 @@ public sealed class GoapAgent : MonoBehaviour
 
     void Update()
     {
-        //if (GetComponent<EnemyBehaviour>().playerInRange)
+        if (GetComponent<EnemyBehaviour>().playerInRange)
             stateMachine.Update(this.gameObject);
     }
 
