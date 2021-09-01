@@ -2,31 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BurnWeaponAction : GoapAction
+public class ChopTreeBranchAction : GoapAction
 {
-    private bool combatReady;
+    private bool hasWeapon = false;
 
-    public GameObject fireObject;
+    public GameObject woodenStick;
 
     private LayerMask interactableLayer = 1 << 6;
 
-    public BurnWeaponAction()
-    {
-        addPrecondition("hasWeapon", true);
+    private float workDuration = 2.5f;
+    public float elapsedTime = 0.0f;
 
-        addEffect("combatReady", true);
+    public ChopTreeBranchAction()
+    {
+        addPrecondition("hasCuttingTool", true);
+
+        addEffect("hasWeapon", true);
     }
 
     public override void reset()
     {
         // Reset
-        combatReady = false;
-
+        hasWeapon = false;
     }
 
     public override bool isDone()
     {
-        return combatReady;
+        return hasWeapon;
     }
 
     public override bool requiresInRange()
@@ -44,7 +46,7 @@ public class BurnWeaponAction : GoapAction
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
+                if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
                 {
                     target = interactables[i].gameObject;
                     break;
@@ -52,18 +54,25 @@ public class BurnWeaponAction : GoapAction
             }
         }
 
-
         return target != null;
 
     }
 
     public override bool perform(GameObject agent)
     {
-        Instantiate(fireObject, agent.transform.position + (Vector3.up * 2), agent.transform.rotation, agent.transform);
+        if (elapsedTime >= workDuration)
+        {
+            Instantiate(woodenStick, agent.transform.position + Vector3.up, agent.transform.rotation, agent.transform);
 
-        EnemyStats stats = agent.GetComponent<EnemyStats>();
-        combatReady = true;
+            EnemyStats stats = agent.GetComponent<EnemyStats>();
+            hasWeapon = true;
+            stats.hasWeapon = true;
+            elapsedTime = 0.0f;
+        }
+        else
+            elapsedTime += Time.deltaTime;
 
         return true;
     }
+
 }

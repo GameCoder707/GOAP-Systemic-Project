@@ -19,6 +19,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         worldData.Add(new KeyValuePair<string, object>("hasWeapon", stats.hasWeapon));
         worldData.Add(new KeyValuePair<string, object>("combatReady", stats.combatReady));
+        worldData.Add(new KeyValuePair<string, object>("hasCuttingTool", stats.hasCuttingTool));
 
         PlayerBehaviour player = (PlayerBehaviour)FindObjectOfType(typeof(PlayerBehaviour));
 

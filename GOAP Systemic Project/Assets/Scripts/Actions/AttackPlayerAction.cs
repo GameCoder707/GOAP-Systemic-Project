@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackPlayer : GoapAction
+public class AttackPlayerAction : GoapAction
 {
     private bool playerDead = true;
 
     private LayerMask playerLayer = 1 << 7;
 
-    public AttackPlayer()
+    public AttackPlayerAction()
     {
         addPrecondition("combatReady", true);
 

@@ -2,28 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObtainTreeWeaponAction : GoapAction
+public class PickUpCuttingToolAction : GoapAction
 {
-    private bool hasWeapon = false;
-
-    public GameObject woodenStick;
-
     private LayerMask interactableLayer = 1 << 6;
 
-    public ObtainTreeWeaponAction()
+    private bool hasCuttingTool;
+
+    public PickUpCuttingToolAction()
     {
-        addEffect("hasWeapon", true);
+        addEffect("hasCuttingTool", true);
     }
 
     public override void reset()
     {
         // Reset
-        hasWeapon = false;
+        hasCuttingTool = false;
+
     }
 
     public override bool isDone()
     {
-        return hasWeapon;
+        return hasCuttingTool;
     }
 
     public override bool requiresInRange()
@@ -41,7 +40,7 @@ public class ObtainTreeWeaponAction : GoapAction
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
                 {
                     target = interactables[i].gameObject;
                     break;
@@ -50,16 +49,17 @@ public class ObtainTreeWeaponAction : GoapAction
         }
 
         return target != null;
-
     }
 
     public override bool perform(GameObject agent)
     {
-        Instantiate(woodenStick, agent.transform.position + Vector3.up, agent.transform.rotation, agent.transform);
+        EnemyStats stats = GetComponent<EnemyStats>();
 
-        EnemyStats stats = agent.GetComponent<EnemyStats>();
-        hasWeapon = true;
-        stats.hasWeapon = true;
+        hasCuttingTool = true;
+        stats.hasCuttingTool = true;
+
+        Destroy(target);
+
         return true;
     }
 }
