@@ -6,8 +6,6 @@ public class BurnWeaponAction : GoapAction
 {
     private bool combatReady;
 
-    public GameObject fireObject;
-
     private LayerMask interactableLayer = 1 << 6;
 
     public BurnWeaponAction()
@@ -59,10 +57,12 @@ public class BurnWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        Instantiate(fireObject, agent.transform.position + (Vector3.up * 2), agent.transform.rotation, agent.transform);
+
+        GetComponentInChildren<Weapon>().BurnWeapon();
 
         EnemyStats stats = agent.GetComponent<EnemyStats>();
         combatReady = true;
+        stats.combatReady = true;
 
         return true;
     }

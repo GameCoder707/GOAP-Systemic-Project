@@ -8,6 +8,8 @@ public class AttackPlayerAction : GoapAction
 
     private LayerMask playerLayer = 1 << 7;
 
+    private float attackDelay = 0.0f;
+
     public AttackPlayerAction()
     {
         addPrecondition("combatReady", true);
@@ -46,28 +48,47 @@ public class AttackPlayerAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        EnemyStats stats = agent.GetComponent<EnemyStats>();
-        Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
-
-        if (player.Length > 0)
+        if (GetComponentInChildren<Weapon>() != null)
         {
-            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
+            EnemyStats stats = agent.GetComponent<EnemyStats>();
+            Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
+
+            if (player.Length > 0)
             {
-                if (player[0].GetComponent<PlayerBehaviour>().health > 0)
-                    player[0].GetComponent<PlayerBehaviour>().health -= 20 * Time.deltaTime;
+                if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
+                {
+                    if (attackDelay <= 0)
+                    {
+                        if (player[0].GetComponent<PlayerBehaviour>().health > 0)
+                        {
+                            GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
+
+                            if(player[0].GetComponent<PlayerBehaviour>().health <= 0)
+                            {
+                                playerDead = true;
+                                //stats.hasWeapon = false;
+                                //stats.combatReady = false;
+                                player[0].GetComponent<PlayerBehaviour>().health = 100;
+                            }
+                        }
+
+                        attackDelay = 1.0f;
+                    }
+                    else
+                        attackDelay -= Time.deltaTime;
+
+                }
                 else
                 {
-                    playerDead = true;
-                    stats.hasWeapon = false;
-                    stats.combatReady = false;
-                    player[0].GetComponent<PlayerBehaviour>().health = 100;
+                    transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
+                    attackDelay = 0.2f;
                 }
+
             }
-            else
-                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
+
+            return true;
         }
-
-        return true;
-
+        else
+            return false;
     }
 }

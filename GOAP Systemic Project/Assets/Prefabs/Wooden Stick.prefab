@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5614279205148483505}
   - component: {fileID: 579542211504039154}
   - component: {fileID: 2524282497786908425}
+  - component: {fileID: -9190452530248915561}
   m_Layer: 6
   m_Name: Wooden Stick
   m_TagString: Untagged
@@ -96,3 +97,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &-9190452530248915561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2938129548054615923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1036d1e863cacc4ca4751c8d45eb8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flammable: 1
+  conductive: 0
+  weaponStatus: 0
+  fireEffect: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+  integrity: 5
