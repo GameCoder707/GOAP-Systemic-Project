@@ -12,7 +12,7 @@ public class BurnWeaponAction : GoapAction
     {
         addPrecondition("hasWeapon", true);
 
-        addEffect("combatReady", true);
+        addEffect("isStatusAppliedToWeapon", true);
     }
 
     public override void reset()

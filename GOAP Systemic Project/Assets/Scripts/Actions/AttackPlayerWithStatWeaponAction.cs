@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackPlayerAction : GoapAction
+// Attacking player with a status applied weapon: Burn, Shock, etc
+public class AttackPlayerWithStatWeaponAction : GoapAction
 {
     private bool playerDead = true;
 
@@ -10,11 +11,12 @@ public class AttackPlayerAction : GoapAction
 
     private float attackDelay = 0.0f;
 
-    public AttackPlayerAction()
+    public AttackPlayerWithStatWeaponAction()
     {
         addPrecondition("hasWeapon", true);
+        addPrecondition("isStatusAppliedToWeapon", true);
 
-        addEffect("attackPlayer", true);
+        addEffect("attackPlayerWithStatWeapon", true);
     }
 
     public override void reset()
@@ -63,7 +65,7 @@ public class AttackPlayerAction : GoapAction
                         {
                             GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
 
-                            if(player[0].GetComponent<PlayerBehaviour>().health <= 0)
+                            if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
                             {
                                 playerDead = true;
                                 //stats.hasWeapon = false;

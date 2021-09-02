@@ -20,10 +20,12 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         worldData.Add(new KeyValuePair<string, object>("hasWeapon", stats.hasWeapon));
         worldData.Add(new KeyValuePair<string, object>("combatReady", stats.combatReady));
         worldData.Add(new KeyValuePair<string, object>("hasCuttingTool", stats.hasCuttingTool));
+        worldData.Add(new KeyValuePair<string, object>("isStatusAppliedToWeapon", stats.isStatusAppliedToWeapon));
 
         PlayerBehaviour player = (PlayerBehaviour)FindObjectOfType(typeof(PlayerBehaviour));
 
-        worldData.Add(new KeyValuePair<string, object>("playerDead", player.health <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.health <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.health <= 0));
 
         return worldData;
     }
