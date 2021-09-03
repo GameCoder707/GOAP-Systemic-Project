@@ -56,7 +56,10 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
     {
         // move towards the NextAction's target
         float step = moveSpeed * Time.deltaTime;
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, nextAction.target.transform.position, step);
+
+        Vector3 targetPos = new Vector3(nextAction.target.transform.position.x, gameObject.transform.position.y, nextAction.target.transform.position.z);
+
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, targetPos, step);
 
         if (Vector3.Distance(gameObject.transform.position, nextAction.target.transform.position) <= 1.5f)
         {

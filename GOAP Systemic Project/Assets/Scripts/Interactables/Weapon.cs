@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public enum WEAPON_STATUS { NONE = 0, BURNING = 1, ELECTRIFIED = 2};
 
+    public bool isOwned;
     public bool flammable;
     public bool conductive;
 
