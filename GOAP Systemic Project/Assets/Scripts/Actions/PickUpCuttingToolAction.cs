@@ -42,8 +42,13 @@ public class PickUpCuttingToolAction : GoapAction
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
                 {
-                    target = interactables[i].gameObject;
-                    break;
+                    if(interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
+                    {
+                        interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                        target = interactables[i].gameObject;
+                        break;
+                    }
+
                 }
             }
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightEnemy : GeneralEnemy
+public class MediumEnemy : GeneralEnemy
 {
     private LayerMask interactableLayer = 1 << 6;
 
@@ -46,7 +46,8 @@ public class LightEnemy : GeneralEnemy
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon") ||
+                    interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
                 {
                     return true;
                 }
@@ -55,4 +56,5 @@ public class LightEnemy : GeneralEnemy
 
         return false;
     }
+
 }

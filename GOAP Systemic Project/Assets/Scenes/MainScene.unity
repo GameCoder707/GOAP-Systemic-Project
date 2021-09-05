@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 266633747}
   - component: {fileID: 266633746}
   - component: {fileID: 266633745}
+  - component: {fileID: 266633749}
   m_Layer: 6
   m_Name: Axe - Cutting Tool
   m_TagString: Untagged
@@ -219,6 +220,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &266633749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266633744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf3779a2ea43648b698c1a3f704957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOwned: 0
 --- !u!1 &300981741
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +373,7 @@ GameObject:
   - component: {fileID: 347433521}
   - component: {fileID: 347433520}
   - component: {fileID: 347433519}
+  - component: {fileID: 347433523}
   m_Layer: 6
   m_Name: Axe - Cutting Tool (1)
   m_TagString: Untagged
@@ -443,6 +458,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &347433523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347433518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf3779a2ea43648b698c1a3f704957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOwned: 0
 --- !u!1 &369338119
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +850,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &717126753
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2938129548054615923, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_Name
+      value: Wooden Stick - Weapon (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938129548054615923, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -28.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
 --- !u!1001 &815158089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -835,7 +924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2938129548054615923, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232809110771324623, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_RootOrder
@@ -1013,18 +1102,18 @@ GameObject:
   - component: {fileID: 964950354}
   - component: {fileID: 964950353}
   - component: {fileID: 964950352}
-  - component: {fileID: 964950351}
   - component: {fileID: 964950350}
   - component: {fileID: 964950349}
   - component: {fileID: 964950348}
   - component: {fileID: 964950347}
   - component: {fileID: 964950346}
   - component: {fileID: 964950345}
-  - component: {fileID: 964950344}
   - component: {fileID: 964950343}
   - component: {fileID: 964950342}
-  m_Layer: 0
-  m_Name: Medium Type Enemy (1)
+  - component: {fileID: 964950351}
+  - component: {fileID: 964950344}
+  m_Layer: 8
+  m_Name: Medium Type Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1069,13 +1158,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 964950341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177866707a2484640b4f95a393d8be35, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f1bf74a022d30f43961060eef2cf787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 8
+  cost: 1
   target: {fileID: 0}
   finishedAction: 0
-  woodenStick: {fileID: 2938129548054615923, guid: afca31abd10448242b8f91d659083069, type: 3}
 --- !u!114 &964950345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1175,9 +1263,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 964950341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff551203bd3984346b4e1a3dee905730, type: 3}
+  m_Script: {fileID: 11500000, guid: c059611ed029d324fa8ed6c280ff80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 4
+  type: 1
 --- !u!114 &964950352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,7 +1671,6 @@ GameObject:
   - component: {fileID: 1463450276}
   - component: {fileID: 1463450275}
   - component: {fileID: 1463450279}
-  - component: {fileID: 1463450282}
   - component: {fileID: 1463450283}
   - component: {fileID: 1463450284}
   - component: {fileID: 1463450280}
@@ -1591,8 +1680,10 @@ GameObject:
   - component: {fileID: 1463450285}
   - component: {fileID: 1463450288}
   - component: {fileID: 1463450289}
-  m_Layer: 0
-  m_Name: Medium Type Enemy
+  - component: {fileID: 1463450282}
+  - component: {fileID: 1463450290}
+  m_Layer: 8
+  m_Name: Heavy Type Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,7 +1722,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20951e22bf1941d4a8fd604b450c282b, type: 2}
+  - {fileID: 2100000, guid: c1a1e528bfae0ee42930e63b2555ac65, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1726,9 +1817,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463450274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff551203bd3984346b4e1a3dee905730, type: 3}
+  m_Script: {fileID: 11500000, guid: dd900f8810913b24681a350dfc3b2634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  type: 2
 --- !u!114 &1463450283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1830,6 +1923,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1b52997ac31b454c96f0cd4bdccd5f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
+--- !u!114 &1463450290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463450274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1bf74a022d30f43961060eef2cf787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1

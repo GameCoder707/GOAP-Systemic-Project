@@ -4,7 +4,11 @@ using UnityEngine;
 
 public abstract class GeneralEnemy : MonoBehaviour, IGoap
 {
-    private float moveSpeed = 4;
+    public enum ENEMY_TYPE { LIGHT = 0, MEDIUM = 1, HEAVY = 2}
+
+    public float moveSpeed;
+    public ENEMY_TYPE type;
+
     private EnemyStats stats;
 
     // Start is called before the first frame update
@@ -25,6 +29,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         PlayerBehaviour player = (PlayerBehaviour)FindObjectOfType(typeof(PlayerBehaviour));
 
         worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.health <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.health <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.health <= 0));
 
         return worldData;
