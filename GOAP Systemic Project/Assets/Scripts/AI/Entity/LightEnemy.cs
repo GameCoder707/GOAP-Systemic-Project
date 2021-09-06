@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class LightEnemy : GeneralEnemy
 {
-    private LayerMask interactableLayer = 1 << 6;
-
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();

@@ -38,16 +38,43 @@ public class PickUpCuttingToolAction : GoapAction
 
         if (interactables.Length > 0)
         {
+            bool flag = false;
+
             for (int i = 0; i < interactables.Length; i++)
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
                 {
-                    if(interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
+                    switch(agent.GetComponent<GeneralEnemy>().type)
                     {
-                        interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
-                        target = interactables[i].gameObject;
-                        break;
+                        case GeneralEnemy.ENEMY_TYPE.HEAVY:
+
+                            if(agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(
+                                interactables, "cutting tool", true, GeneralEnemy.ENEMY_TYPE.MEDIUM))
+                            {
+                                if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
+                                {
+                                    interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                    target = interactables[i].gameObject;
+                                    flag = true;
+                                }
+                            }
+
+                            break;
+
+                        case GeneralEnemy.ENEMY_TYPE.MEDIUM:
+
+                            if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
+                            {
+                                interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                target = interactables[i].gameObject;
+                                flag = true;
+                            }
+
+                            break;
                     }
+
+                    if (flag)
+                        break;
 
                 }
             }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MediumEnemy : GeneralEnemy
 {
-    private LayerMask interactableLayer = 1 << 6;
 
     public override HashSet<KeyValuePair<string, object>> createGoalState()
     {
@@ -46,8 +45,8 @@ public class MediumEnemy : GeneralEnemy
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon") ||
-                    interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
+                if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
+                    interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
                     return true;
                 }

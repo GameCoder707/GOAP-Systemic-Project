@@ -11,6 +11,9 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     private EnemyStats stats;
 
+    protected LayerMask interactableLayer = 1 << 6;
+    protected LayerMask enemyLayer = 1 << 8;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,5 +77,41 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         }
         else
             return false;
+    }
+
+    // ENEMY METHODS
+
+    public bool CanEnemyInteractWithObject(Collider[] interactables, string name, bool isEqual, ENEMY_TYPE eType) // WIP Function name
+    {
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 15.0f, enemyLayer);
+
+        List<GameObject> weaponsInArea = new List<GameObject>();
+        List<GameObject> otherEnemiesInArea = new List<GameObject>();
+
+        for (int j = 0; j < interactables.Length; j++)
+            if (interactables[j].gameObject.ToString().ToLower().Contains(name))
+                weaponsInArea.Add(interactables[j].gameObject);
+
+        for (int k = 0; k < enemies.Length; k++)
+        {
+            if (isEqual)
+            {
+                if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type == eType)
+                    otherEnemiesInArea.Add(enemies[k].gameObject);
+            }
+            else
+            {
+                if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type != eType)
+                    otherEnemiesInArea.Add(enemies[k].gameObject);
+            }
+        }
+
+
+        // If the non-heavy enemy count is less than the weapon count, then he can go pick it up
+        if (otherEnemiesInArea.Count < weaponsInArea.Count)
+            return true;
+
+
+        return false;
     }
 }
