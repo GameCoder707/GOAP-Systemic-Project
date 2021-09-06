@@ -48,43 +48,41 @@ public class AttackPlayerWithWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if (GetComponentInChildren<Weapon>() != null)
+        EnemyStats stats = agent.GetComponent<EnemyStats>();
+        Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
+
+        if (GetComponentInChildren<Weapon>() != null && player[0].GetComponent<PlayerBehaviour>().health > 0)
         {
-            EnemyStats stats = agent.GetComponent<EnemyStats>();
-            Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
-
-            if (player.Length > 0)
+            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
             {
-                if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
+                if (attackDelay <= 0)
                 {
-                    if (attackDelay <= 0)
+                    if (player[0].GetComponent<PlayerBehaviour>().health > 0)
                     {
-                        if (player[0].GetComponent<PlayerBehaviour>().health > 0)
+                        GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
+
+                        if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
                         {
-                            GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
-
-                            if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
-                            {
-                                playerDead = true;
-                                //stats.hasWeapon = false;
-                                //stats.combatReady = false;
-                                player[0].GetComponent<PlayerBehaviour>().health = 100;
-                            }
+                            playerDead = true;
+                            //stats.hasWeapon = false;
+                            //stats.combatReady = false;
+                            player[0].GetComponent<PlayerBehaviour>().health = 100;
                         }
-
-                        attackDelay = 1.0f;
                     }
-                    else
-                        attackDelay -= Time.deltaTime;
 
+                    attackDelay = 1.0f;
                 }
                 else
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
-                    attackDelay = 0.2f;
-                }
+                    attackDelay -= Time.deltaTime;
 
             }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
+                attackDelay = 0.2f;
+            }
+
+
 
             return true;
         }

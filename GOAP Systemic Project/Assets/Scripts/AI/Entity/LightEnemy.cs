@@ -46,7 +46,8 @@ public class LightEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
-                    return true;
+                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
+                        return true;
                 }
             }
         }

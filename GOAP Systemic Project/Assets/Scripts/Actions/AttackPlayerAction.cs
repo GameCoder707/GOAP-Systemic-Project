@@ -46,27 +46,25 @@ public class AttackPlayerAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 
-        if (player.Length > 0)
+        if (player[0].gameObject.GetComponent<PlayerBehaviour>().health > 0)
         {
             if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
             {
                 if (attackDelay <= 0)
                 {
-                    if (player[0].GetComponent<PlayerBehaviour>().health > 0)
-                    {
-                        player[0].GetComponent<PlayerBehaviour>().health -= 1;
 
-                        if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
-                        {
-                            playerDead = true;
-                            //stats.hasWeapon = false;
-                            //stats.combatReady = false;
-                            player[0].GetComponent<PlayerBehaviour>().health = 100;
-                        }
+                    player[0].GetComponent<PlayerBehaviour>().health -= 20;
+
+                    if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
+                    {
+                        playerDead = true;
+                        //stats.hasWeapon = false;
+                        //stats.combatReady = false;
+                        player[0].GetComponent<PlayerBehaviour>().health = 100;
                     }
+
 
                     attackDelay = 1.0f;
                 }
@@ -80,9 +78,11 @@ public class AttackPlayerAction : GoapAction
                 attackDelay = 0.2f;
             }
 
+
+            return true;
+
         }
-
-        return true;
-
+        else
+            return false;
     }
 }

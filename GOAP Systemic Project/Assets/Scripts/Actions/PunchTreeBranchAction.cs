@@ -60,7 +60,8 @@ public class PunchTreeBranchAction : GoapAction
     {
         if (elapsedTime >= workDuration)
         {
-            Instantiate(woodenStick, agent.transform.position + Vector3.up, agent.transform.rotation, agent.transform);
+            GameObject obj = Instantiate(woodenStick, agent.transform.position + Vector3.up, agent.transform.rotation, agent.transform);
+            obj.GetComponent<Weapon>().isOwned = true;
 
             EnemyStats stats = agent.GetComponent<EnemyStats>();
             hasWeapon = true;

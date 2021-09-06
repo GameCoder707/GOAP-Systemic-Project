@@ -45,8 +45,9 @@ public class MediumEnemy : GeneralEnemy
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
-                    interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                if (//interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
+                    interactables[i].gameObject.ToString().ToLower().Contains("weapon") ||
+                    interactables[i].gameObject.ToString().ToLower().Contains("tree"))
                 {
                     return true;
                 }

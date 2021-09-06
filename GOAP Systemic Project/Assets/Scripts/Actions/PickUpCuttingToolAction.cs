@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickUpCuttingToolAction : GoapAction
 {
     private LayerMask interactableLayer = 1 << 6;
+    private LayerMask enemyLayer = 1 << 8;
 
     private bool hasCuttingTool;
 
@@ -44,20 +45,32 @@ public class PickUpCuttingToolAction : GoapAction
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("cutting tool"))
                 {
-                    switch(agent.GetComponent<GeneralEnemy>().type)
+                    switch (agent.GetComponent<GeneralEnemy>().type)
                     {
                         case GeneralEnemy.ENEMY_TYPE.HEAVY:
 
-                            if(agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(
-                                interactables, "cutting tool", true, GeneralEnemy.ENEMY_TYPE.MEDIUM))
+                            Collider[] enemiesInArea = Physics.OverlapSphere(transform.position, 15.0f, enemyLayer);
+
+                            if (enemiesInArea.Length > 0)
                             {
-                                if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
-                                {
-                                    interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
-                                    target = interactables[i].gameObject;
-                                    flag = true;
-                                }
+                                // We making sure no medium type enemies need the axe
+                                for (int j = 0; j < enemiesInArea.Length; j++)
+                                    if (enemiesInArea[j].gameObject.GetComponent<GeneralEnemy>().type == GeneralEnemy.ENEMY_TYPE.MEDIUM)
+                                        if (enemiesInArea[j].gameObject.GetComponent<GeneralEnemy>().
+                                            CanEnemyInteractWithObject(interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
+                                        {
+                                            interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                            target = interactables[i].gameObject;
+                                            flag = true;
+                                        }
                             }
+                            else if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
+                            {
+                                interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                target = interactables[i].gameObject;
+                                flag = true;
+                            }
+
 
                             break;
 
