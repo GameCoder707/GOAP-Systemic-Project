@@ -31,9 +31,9 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         PlayerBehaviour player = (PlayerBehaviour)FindObjectOfType(typeof(PlayerBehaviour));
 
-        worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.health <= 0));
-        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.health <= 0));
-        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.health <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.GetHealth() <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.GetHealth() <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.GetHealth() <= 0));
 
         return worldData;
     }

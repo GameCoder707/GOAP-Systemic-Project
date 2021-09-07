@@ -48,21 +48,21 @@ public class AttackPlayerAction : GoapAction
     {
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 
-        if (player[0].gameObject.GetComponent<PlayerBehaviour>().health > 0)
+        if (player.Length > 0)
         {
             if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
             {
                 if (attackDelay <= 0)
                 {
 
-                    player[0].GetComponent<PlayerBehaviour>().health -= 20;
+                    player[0].GetComponent<PlayerBehaviour>().InflictDamage(2f);
 
-                    if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
+                    if (player[0].GetComponent<PlayerBehaviour>().GetHealth() <= 0)
                     {
                         playerDead = true;
                         //stats.hasWeapon = false;
                         //stats.combatReady = false;
-                        player[0].GetComponent<PlayerBehaviour>().health = 100;
+                        //player[0].GetComponent<PlayerBehaviour>().health = 100;
                     }
 
 
@@ -74,7 +74,8 @@ public class AttackPlayerAction : GoapAction
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position,
+                    agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
                 attackDelay = 0.2f;
             }
 

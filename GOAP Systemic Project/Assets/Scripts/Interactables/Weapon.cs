@@ -50,16 +50,16 @@ public class Weapon : MonoBehaviour
                 {
                     case WEAPON_STATUS.BURNING:
                         // Apply burn status
-                        player.health -= damage * 2;
+                        player.InflictDamage(damage, WEAPON_STATUS.BURNING);
                         break;
                     case WEAPON_STATUS.ELECTRIFIED:
                         // Apply shock status
-                        player.health -= damage * 1.5f;
+                        player.InflictDamage(damage, WEAPON_STATUS.ELECTRIFIED);
                         break;
                 }
             }
             else
-                player.health -= damage;
+                player.InflictDamage(damage);
 
             integrity -= 1;
         }

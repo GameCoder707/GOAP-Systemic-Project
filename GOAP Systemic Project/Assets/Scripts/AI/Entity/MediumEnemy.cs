@@ -46,10 +46,21 @@ public class MediumEnemy : GeneralEnemy
             for (int i = 0; i < interactables.Length; i++)
             {
                 if (//interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
-                    interactables[i].gameObject.ToString().ToLower().Contains("weapon") ||
-                    interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                    interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
-                    return true;
+                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
+                        return true;
+                }
+                else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                {
+                    if (GetComponent<EnemyStats>().hasCuttingTool)
+                        return true;
+                    else
+                    {
+                        for (int j = 0; j < interactables.Length; j++)
+                            if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
+                                return true;
+                    }
                 }
             }
         }

@@ -51,38 +51,41 @@ public class AttackPlayerWithWeaponAction : GoapAction
         EnemyStats stats = agent.GetComponent<EnemyStats>();
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 
-        if (GetComponentInChildren<Weapon>() != null && player[0].GetComponent<PlayerBehaviour>().health > 0)
+        if (GetComponentInChildren<Weapon>() != null)
         {
-            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
+            if (player.Length > 0)
             {
-                if (attackDelay <= 0)
+                if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
                 {
-                    if (player[0].GetComponent<PlayerBehaviour>().health > 0)
+                    if (attackDelay <= 0)
                     {
-                        GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
-
-                        if (player[0].GetComponent<PlayerBehaviour>().health <= 0)
+                        if (player[0].GetComponent<PlayerBehaviour>().GetHealth() > 0)
                         {
-                            playerDead = true;
-                            //stats.hasWeapon = false;
-                            //stats.combatReady = false;
-                            player[0].GetComponent<PlayerBehaviour>().health = 100;
-                        }
-                    }
+                            GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
 
-                    attackDelay = 1.0f;
+                            if (player[0].GetComponent<PlayerBehaviour>().GetHealth() <= 0)
+                            {
+                                playerDead = true;
+                                //stats.hasWeapon = false;
+                                //stats.combatReady = false;
+                                //player[0].GetComponent<PlayerBehaviour>().health = 100;
+                            }
+                        }
+
+                        attackDelay = 1.0f;
+                    }
+                    else
+                        attackDelay -= Time.deltaTime;
+
                 }
                 else
-                    attackDelay -= Time.deltaTime;
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position,
+                        agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                    attackDelay = 0.2f;
+                }
 
             }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position, 4 * Time.deltaTime);
-                attackDelay = 0.2f;
-            }
-
-
 
             return true;
         }
