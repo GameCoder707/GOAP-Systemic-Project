@@ -102,10 +102,14 @@ public class PickUpWeaponAction : GoapAction
 
         hasWeapon = true;
         stats.hasWeapon = true;
+        target.GetComponent<Weapon>().WeaponPickedUp();
+
 
         target.transform.parent = agent.transform;
-        target.transform.position = agent.transform.position + Vector3.up;
+        target.transform.position = agent.transform.position - (agent.transform.right * 0.5f);
         target.transform.rotation = Quaternion.identity;
+
+
 
         return true;
     }

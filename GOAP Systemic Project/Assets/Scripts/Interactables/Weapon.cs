@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public enum WEAPON_STATUS { NONE = 0, BURNING = 1, ELECTRIFIED = 2};
+    public enum WEAPON_STATUS { NONE = 0, BURNING = 1, ELECTRIFIED = 2 };
 
     public bool isOwned;
     public bool flammable;
@@ -14,36 +14,47 @@ public class Weapon : MonoBehaviour
 
     public GameObject fireEffect;
 
+    private Animator anim;
+
     // Health of the weapon
     public int integrity;
 
     private int damage = 5;
 
     // Start is called before the first frame update
-    //void Start()
-    //{
-        
-    //}
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     // Update is called once per frame
     protected void MainUpdate()
     {
         // Weapon is a child of the entity
-        if(transform.parent != null)
+        if (transform.parent != null)
         {
-            if(integrity <= 0)
+            if (integrity <= 0)
             {
                 transform.parent.gameObject.GetComponent<EnemyStats>().hasWeapon = false;
                 transform.parent.gameObject.GetComponent<EnemyStats>().combatReady = false;
                 Destroy(gameObject);
             }
         }
+
+        if (anim.GetBool("isSwinging"))
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+                anim.SetBool("isSwinging", false);
+        }
+
     }
 
     public void DamagePlayer(PlayerBehaviour player)
     {
-        if(integrity > 0)
+        if (integrity > 0)
         {
+            anim.SetBool("isSwinging", true);
+
             if (weaponStatus != WEAPON_STATUS.NONE)
             {
                 switch (weaponStatus)
@@ -69,5 +80,13 @@ public class Weapon : MonoBehaviour
     {
         Instantiate(fireEffect, transform.position + Vector3.up, transform.rotation, transform);
         weaponStatus = WEAPON_STATUS.BURNING;
+    }
+
+    public void WeaponPickedUp()
+    {
+        if (anim == null)
+            anim = GetComponent<Animator>();
+
+        anim.SetBool("isOwned", true);
     }
 }
