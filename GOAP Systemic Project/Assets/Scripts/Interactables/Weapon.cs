@@ -53,7 +53,7 @@ public class Weapon : MonoBehaviour
     {
         if (integrity > 0)
         {
-            anim.SetBool("isSwinging", true);
+            //anim.SetBool("isSwinging", true);
 
             if (weaponStatus != WEAPON_STATUS.NONE)
             {
@@ -88,5 +88,11 @@ public class Weapon : MonoBehaviour
             anim = GetComponent<Animator>();
 
         anim.SetBool("isOwned", true);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
     }
 }

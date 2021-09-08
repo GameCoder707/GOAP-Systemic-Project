@@ -50,7 +50,7 @@ public class AttackPlayerAction : GoapAction
 
         if (player.Length > 0)
         {
-            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 2.0f)
+            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 1.5f)
             {
                 if (attackDelay <= 0)
                 {
@@ -74,8 +74,16 @@ public class AttackPlayerAction : GoapAction
             }
             else
             {
+                Vector3 prevPosition = transform.position;
+
                 transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position,
                     agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+
+                Vector3 faceDir = (transform.position - prevPosition).normalized;
+
+                Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+
                 attackDelay = 0.2f;
             }
 
