@@ -101,15 +101,18 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         for (int k = 0; k < enemies.Length; k++)
         {
-            if (isEqual)
+            if(enemies[k].gameObject.GetInstanceID() != gameObject.GetInstanceID())
             {
-                if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type == eType)
-                    otherEnemiesInArea.Add(enemies[k].gameObject);
-            }
-            else
-            {
-                if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type != eType)
-                    otherEnemiesInArea.Add(enemies[k].gameObject);
+                if (isEqual)
+                {
+                    if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type == eType)
+                        otherEnemiesInArea.Add(enemies[k].gameObject);
+                }
+                else
+                {
+                    if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type != eType)
+                        otherEnemiesInArea.Add(enemies[k].gameObject);
+                }
             }
         }
 

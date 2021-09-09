@@ -51,12 +51,20 @@ public class PickUpCuttingToolAction : GoapAction
 
                             Collider[] enemiesInArea = Physics.OverlapSphere(transform.position, 15.0f, enemyLayer);
 
-                            if (enemiesInArea.Length > 0)
+                            List<GameObject> updatedEnemiesInArea = new List<GameObject>();
+
+                            for (int j = 0; j < enemiesInArea.Length; j++)
+                            {
+                                if (enemiesInArea[j].gameObject.GetInstanceID() != agent.gameObject.GetInstanceID())
+                                    updatedEnemiesInArea.Add(enemiesInArea[j].gameObject);
+                            }
+
+                            if (updatedEnemiesInArea.Count > 0)
                             {
                                 // We making sure no medium type enemies need the axe
-                                for (int j = 0; j < enemiesInArea.Length; j++)
-                                    if (enemiesInArea[j].gameObject.GetComponent<GeneralEnemy>().type == GeneralEnemy.ENEMY_TYPE.MEDIUM)
-                                        if (enemiesInArea[j].gameObject.GetComponent<GeneralEnemy>().
+                                for (int k = 0; k < updatedEnemiesInArea.Count; k++)
+                                    if (updatedEnemiesInArea[k].gameObject.GetComponent<GeneralEnemy>().type == GeneralEnemy.ENEMY_TYPE.MEDIUM)
+                                        if (updatedEnemiesInArea[k].gameObject.GetComponent<GeneralEnemy>().
                                             CanEnemyInteractWithObject(interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
                                         {
                                             interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
@@ -66,7 +74,10 @@ public class PickUpCuttingToolAction : GoapAction
                             }
                             else if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
                             {
-                                interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                if (!agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(
+                                    interactables, "weapon", false, GeneralEnemy.ENEMY_TYPE.HEAVY))
+                                    interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+
                                 target = interactables[i].gameObject;
                                 flag = true;
                             }
@@ -78,7 +89,10 @@ public class PickUpCuttingToolAction : GoapAction
 
                             if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
                             {
-                                interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+                                if (!agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(
+                                    interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
+                                    interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
+
                                 target = interactables[i].gameObject;
                                 flag = true;
                             }

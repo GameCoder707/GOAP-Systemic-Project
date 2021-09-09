@@ -5,6 +5,7 @@ using UnityEngine;
 public class BurnWeaponAction : GoapAction
 {
     private bool combatReady;
+    private bool weaponSwung;
 
     private LayerMask interactableLayer = 1 << 6;
 
@@ -58,11 +59,22 @@ public class BurnWeaponAction : GoapAction
     public override bool perform(GameObject agent)
     {
 
-        GetComponentInChildren<Weapon>().BurnWeapon();
+        //GetComponentInChildren<Weapon>().BurnWeapon();
+        if (!weaponSwung)
+        {
+            agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
+            weaponSwung = true;
+        }
 
-        EnemyStats stats = agent.GetComponent<EnemyStats>();
-        combatReady = true;
-        stats.combatReady = true;
+
+        if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
+            agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+        {
+            EnemyStats stats = agent.GetComponent<EnemyStats>();
+            combatReady = true;
+            stats.combatReady = true;
+            weaponSwung = false;
+        }
 
         return true;
     }

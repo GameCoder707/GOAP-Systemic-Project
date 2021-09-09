@@ -14,7 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Burn Info")]
     private const float maxBurnPoints = 5;
-    private float burnPoints = 0;
+    public float burnPoints = 0;
     private float burnDuration = 5.0f;
     private float burnDamage = 5.0f;
 
@@ -87,13 +87,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         health -= damage;
 
-        switch (status)
-        {
-            case Weapon.WEAPON_STATUS.BURNING:
-                if (burnPoints < maxBurnPoints)
-                    burnPoints += 1;
-                break;
-        }
+        //switch (status)
+        //{
+        //    case Weapon.WEAPON_STATUS.BURNING:
+        //        if (burnPoints < maxBurnPoints)
+        //            burnPoints += 1;
+        //        break;
+        //}
 
     }
 

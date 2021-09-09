@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
 
     private Animator anim;
 
+    private bool weaponHit; // To ignore repeated collisions
+
     // Health of the weapon
     public int integrity;
 
@@ -25,6 +27,8 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+
+        weaponHit = false;
     }
 
     // Update is called once per frame
@@ -44,7 +48,11 @@ public class Weapon : MonoBehaviour
         if (anim.GetBool("isSwinging"))
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+            {
                 anim.SetBool("isSwinging", false);
+                weaponHit = false;
+            }
+
         }
 
     }
@@ -78,7 +86,7 @@ public class Weapon : MonoBehaviour
 
     public void BurnWeapon()
     {
-        Instantiate(fireEffect, transform.position + Vector3.up, transform.rotation, transform);
+        Instantiate(fireEffect, transform.position + transform.up, transform.rotation, transform);
         weaponStatus = WEAPON_STATUS.BURNING;
     }
 
@@ -92,7 +100,15 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-            DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
+        if(!weaponHit)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
+                weaponHit = true;
+            }
+
+        }
+
     }
 }
