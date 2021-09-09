@@ -58,14 +58,11 @@ public class BurnWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-
-        //GetComponentInChildren<Weapon>().BurnWeapon();
         if (!weaponSwung)
         {
             agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
             weaponSwung = true;
         }
-
 
         if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
             agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))

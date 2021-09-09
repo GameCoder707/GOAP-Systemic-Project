@@ -43,16 +43,19 @@ public class Weapon : MonoBehaviour
                 transform.parent.gameObject.GetComponent<EnemyStats>().combatReady = false;
                 Destroy(gameObject);
             }
-        }
 
-        if (anim.GetBool("isSwinging"))
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+
+            if (anim.GetBool("isSwinging"))
             {
-                anim.SetBool("isSwinging", false);
-                weaponHit = false;
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+                {
+                    anim.SetBool("isSwinging", false);
+                    weaponHit = false;
+                }
+
             }
 
+            GetComponent<CapsuleCollider>().enabled = anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim");
         }
 
     }
