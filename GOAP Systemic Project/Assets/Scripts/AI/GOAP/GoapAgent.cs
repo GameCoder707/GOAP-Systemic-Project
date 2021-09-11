@@ -19,6 +19,13 @@ public sealed class GoapAgent : MonoBehaviour
 
     private GoapPlanner planner;
 
+    public bool isPatrolling; // Whether it's still or moving in its idle state
+    private float searchTimer; // When the player leaves its detect zone
+    public List<Transform> waypoints;
+    private int currentWaypoint;
+    private Vector3 prevPosition; // Previous Position
+    private float moveSpeed;
+
 
     void Start()
     {
@@ -32,13 +39,61 @@ public sealed class GoapAgent : MonoBehaviour
         createPerformActionState();
         stateMachine.pushState(idleState);
         loadActions();
+
+        moveSpeed = GetComponent<GeneralEnemy>().moveSpeed;
+
     }
 
 
     void Update()
     {
         if (GetComponent<EnemyBehaviour>().playerInRange)
-            stateMachine.Update(this.gameObject);
+        {
+            stateMachine.Update(gameObject);
+            searchTimer = 3.0f;
+        }
+        else
+        {
+            if (searchTimer < 0)
+            {
+                prevPosition = transform.position;
+
+                if (isPatrolling)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
+
+                    if(Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 0.5f)
+                    {
+                        if (currentWaypoint + 1 >= waypoints.Count)
+                            currentWaypoint = 0;
+                        else
+                            currentWaypoint++;
+                    }
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, waypoints[0].position, 0.5f * moveSpeed * Time.deltaTime);
+                }
+
+                Vector3 faceDir = (transform.position - prevPosition).normalized;
+
+                Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 900 * Time.deltaTime);
+            }
+            else
+            {
+                searchTimer -= Time.deltaTime;
+
+                if (searchTimer <= 0)
+                {
+                    stateMachine.popState();
+                    stateMachine.pushState(idleState);
+                }
+
+            }
+
+        }
+
     }
 
 

@@ -20,7 +20,6 @@ public class BurnWeaponAction : GoapAction
     {
         // Reset
         combatReady = false;
-
     }
 
     public override bool isDone()
