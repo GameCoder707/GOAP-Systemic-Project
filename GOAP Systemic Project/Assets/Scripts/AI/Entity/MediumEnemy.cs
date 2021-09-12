@@ -39,33 +39,38 @@ public class MediumEnemy : GeneralEnemy
 
     bool CheckForWeaponSource()
     {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-
-        if (interactables.Length > 0)
+        if (GetComponent<EnemyStats>().hasWeapon)
+            return true;
+        else
         {
-            for (int i = 0; i < interactables.Length; i++)
+            Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+            if (interactables.Length > 0)
             {
-                if (//interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
-                    interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                for (int i = 0; i < interactables.Length; i++)
                 {
-                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
-                        return true;
-                }
-                else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
-                {
-                    if (GetComponent<EnemyStats>().hasCuttingTool)
-                        return true;
-                    else
+                    if (//interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
+                        interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
-                        for (int j = 0; j < interactables.Length; j++)
-                            if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
-                                return true;
+                        if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
+                            return true;
+                    }
+                    else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                    {
+                        if (GetComponent<EnemyStats>().hasCuttingTool)
+                            return true;
+                        else
+                        {
+                            for (int j = 0; j < interactables.Length; j++)
+                                if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
+                                    return true;
+                        }
                     }
                 }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
 }

@@ -98,6 +98,10 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
             return true;
         }
         else
+        {
+            attackDelay = 0.0f;
             return false;
+        }
+
     }
 }

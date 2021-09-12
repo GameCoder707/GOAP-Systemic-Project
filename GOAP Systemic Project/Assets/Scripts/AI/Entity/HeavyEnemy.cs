@@ -20,20 +20,25 @@ public class HeavyEnemy : GeneralEnemy
 
     bool CheckForElementSource()
     {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-
-        if (interactables.Length > 0)
+        if (GetComponent<EnemyStats>().hasWeapon)
+            return true;
+        else
         {
-            for (int i = 0; i < interactables.Length; i++)
+            Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+            if (interactables.Length > 0)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
+                for (int i = 0; i < interactables.Length; i++)
                 {
-                    return true;
+                    if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
+                    {
+                        return true;
+                    }
                 }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     bool CheckForWeaponSource()

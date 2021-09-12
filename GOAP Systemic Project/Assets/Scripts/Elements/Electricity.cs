@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+public class Electricity : MonoBehaviour
 {
     private bool hit = false;
 
@@ -28,7 +28,7 @@ public class Fire : MonoBehaviour
             }
         }
 
-        GetComponent<SphereCollider>().enabled = !hit;
+        GetComponent<CapsuleCollider>().enabled = !hit;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,18 +37,17 @@ public class Fire : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                if (!other.gameObject.GetComponent<PlayerBehaviour>().isBurning())
-                    other.gameObject.GetComponent<PlayerBehaviour>().burnPoints += 1;
+                if (!other.gameObject.GetComponent<PlayerBehaviour>().isElectrified())
+                    other.gameObject.GetComponent<PlayerBehaviour>().IncreaseElectricPoints();
 
                 hit = true;
             }
             else if (other.gameObject.GetComponent<Weapon>() != null)
             {
-                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING)
-                    other.gameObject.GetComponent<Weapon>().BurnWeapon();
+                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.ELECTRIFIED)
+                    other.gameObject.GetComponent<Weapon>().ElectrifyWeapon();
             }
         }
 
     }
-
 }

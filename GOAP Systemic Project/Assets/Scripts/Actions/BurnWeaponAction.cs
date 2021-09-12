@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BurnWeaponAction : GoapAction
 {
-    private bool combatReady;
+    private bool statusApplied;
     private bool weaponSwung;
+    private bool skipAlternateAction;
 
     private LayerMask interactableLayer = 1 << 6;
 
@@ -19,12 +20,12 @@ public class BurnWeaponAction : GoapAction
     public override void reset()
     {
         // Reset
-        combatReady = false;
+        statusApplied = false;
     }
 
     public override bool isDone()
     {
-        return combatReady;
+        return statusApplied;
     }
 
     public override bool requiresInRange()
@@ -57,18 +58,31 @@ public class BurnWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if (!weaponSwung)
-        {
-            agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
-            weaponSwung = true;
-        }
 
-        if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
-            agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+        if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE)
+            skipAlternateAction = true; // We skipping the alternate action because no status effect has been applied prior to this
+
+        if (skipAlternateAction)
+        {
+            if (!weaponSwung)
+            {
+                agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
+                weaponSwung = true;
+            }
+
+            if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
+                agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+            {
+                EnemyStats stats = agent.GetComponent<EnemyStats>();
+                statusApplied = true;
+                weaponSwung = false;
+                skipAlternateAction = false;
+            }
+        }
+        else
         {
             EnemyStats stats = agent.GetComponent<EnemyStats>();
-            combatReady = true;
-            stats.combatReady = true;
+            statusApplied = true;
             weaponSwung = false;
         }
 

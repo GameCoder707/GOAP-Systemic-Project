@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
     public WEAPON_STATUS weaponStatus = WEAPON_STATUS.NONE;
 
     public GameObject fireEffect;
+    public GameObject electricEffect;
 
     private Animator anim;
 
@@ -37,25 +38,28 @@ public class Weapon : MonoBehaviour
         // Weapon is a child of the entity
         if (transform.parent != null)
         {
-            if (integrity <= 0)
+            if(transform.parent.gameObject.GetComponent<GeneralEnemy>() != null)
             {
-                transform.parent.gameObject.GetComponent<EnemyStats>().hasWeapon = false;
-                transform.parent.gameObject.GetComponent<EnemyStats>().combatReady = false;
-                Destroy(gameObject);
-            }
-
-
-            if (anim.GetBool("isSwinging"))
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+                if (integrity <= 0)
                 {
-                    anim.SetBool("isSwinging", false);
-                    weaponHit = false;
+                    transform.parent.gameObject.GetComponent<EnemyStats>().hasWeapon = false;
+                    Destroy(gameObject);
                 }
 
+
+                if (anim.GetBool("isSwinging"))
+                {
+                    if (anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim"))
+                    {
+                        anim.SetBool("isSwinging", false);
+                        weaponHit = false;
+                    }
+
+                }
+
+                GetComponent<CapsuleCollider>().enabled = anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim");
             }
 
-            GetComponent<CapsuleCollider>().enabled = anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim");
         }
 
     }
@@ -64,24 +68,7 @@ public class Weapon : MonoBehaviour
     {
         if (integrity > 0)
         {
-            //anim.SetBool("isSwinging", true);
-
-            if (weaponStatus != WEAPON_STATUS.NONE)
-            {
-                switch (weaponStatus)
-                {
-                    case WEAPON_STATUS.BURNING:
-                        // Apply burn status
-                        player.InflictDamage(damage, WEAPON_STATUS.BURNING);
-                        break;
-                    case WEAPON_STATUS.ELECTRIFIED:
-                        // Apply shock status
-                        player.InflictDamage(damage, WEAPON_STATUS.ELECTRIFIED);
-                        break;
-                }
-            }
-            else
-                player.InflictDamage(damage);
+            player.InflictDamage(damage);
 
             integrity -= 1;
         }
@@ -91,6 +78,12 @@ public class Weapon : MonoBehaviour
     {
         Instantiate(fireEffect, transform.position + transform.up, transform.rotation, transform);
         weaponStatus = WEAPON_STATUS.BURNING;
+    }
+
+    public void ElectrifyWeapon()
+    {
+        Instantiate(electricEffect, transform.position + transform.up, transform.rotation, transform);
+        weaponStatus = WEAPON_STATUS.ELECTRIFIED;
     }
 
     public void WeaponPickedUp()
@@ -103,7 +96,7 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!weaponHit)
+        if (!weaponHit)
         {
             if (other.gameObject.CompareTag("Player"))
             {

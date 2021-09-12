@@ -24,18 +24,6 @@ public class EnemyBehaviour : MonoBehaviour
         else
             playerInRange = false;
 
-        //EReset();
-    }
-
-    private void EReset()
-    {
-        EnemyStats stats = GetComponent<EnemyStats>();
-
-        if(stats.combatReady)
-        {
-            stats.combatReady = false;
-            stats.hasWeapon = false;
-        }
     }
 }
 

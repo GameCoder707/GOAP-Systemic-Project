@@ -38,20 +38,25 @@ public class LightEnemy : GeneralEnemy
 
     bool CheckForWeaponSource()
     {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-
-        if (interactables.Length > 0)
+        if (GetComponent<EnemyStats>().hasWeapon)
+            return true;
+        else
         {
-            for (int i = 0; i < interactables.Length; i++)
+            Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+            if (interactables.Length > 0)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                for (int i = 0; i < interactables.Length; i++)
                 {
-                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
-                        return true;
+                    if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                    {
+                        if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
+                            return true;
+                    }
                 }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 }

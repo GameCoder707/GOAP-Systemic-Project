@@ -30,7 +30,7 @@ public class Weather : MonoBehaviour
             for (int i = 0; i < weaponsUnderWeather.Length; i++)
             {
                 if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Not readding the same weapon to the affecting list
-                    weaponsUnderWeather[i].gameObject.transform.parent != null && // It has to be picked up
+                    weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() != null && // It has to be picked up
                     IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) && // It has to be within weather area
                     weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // No status has been applied yet
                 {
@@ -50,7 +50,7 @@ public class Weather : MonoBehaviour
                     switch (weatherType)
                     {
                         case WEATHER_TYPE.STORM:
-                            affectingWeapons[i].weaponStatus = Weapon.WEAPON_STATUS.ELECTRIFIED;
+                            affectingWeapons[i].ElectrifyWeapon();
                             break;
                     }
 

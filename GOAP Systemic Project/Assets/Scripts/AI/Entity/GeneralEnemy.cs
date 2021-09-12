@@ -25,7 +25,6 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>>();
 
         worldData.Add(new KeyValuePair<string, object>("hasWeapon", stats.hasWeapon));
-        worldData.Add(new KeyValuePair<string, object>("combatReady", stats.combatReady));
         worldData.Add(new KeyValuePair<string, object>("hasCuttingTool", stats.hasCuttingTool));
         worldData.Add(new KeyValuePair<string, object>("isStatusAppliedToWeapon", stats.isStatusAppliedToWeapon));
 
