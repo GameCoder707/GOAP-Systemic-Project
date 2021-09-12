@@ -74,7 +74,7 @@ public class PickUpCuttingToolAction : GoapAction
                             }
                             else if (interactables[i].gameObject.GetComponent<CuttingTool>().isOwned == false)
                             {
-                                if (!agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(
+                                if (!agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject( // Checking if non-heavy enemies have a weapon they can pick up
                                     interactables, "weapon", false, GeneralEnemy.ENEMY_TYPE.HEAVY))
                                     interactables[i].gameObject.GetComponent<CuttingTool>().isOwned = true;
 

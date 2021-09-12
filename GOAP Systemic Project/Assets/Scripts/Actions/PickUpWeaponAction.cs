@@ -42,6 +42,7 @@ public class PickUpWeaponAction : GoapAction
 
             for (int i = 0; i < interactables.Length; i++)
             {
+
                 if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
                     switch (agent.GetComponent<GeneralEnemy>().type)
@@ -50,7 +51,7 @@ public class PickUpWeaponAction : GoapAction
                             if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", false, GeneralEnemy.ENEMY_TYPE.HEAVY))
                             {
                                 if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
-                                    interactables[i].gameObject.transform.parent == null)
+                                    interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
                                 {
                                     interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                     target = interactables[i].gameObject;
@@ -64,7 +65,7 @@ public class PickUpWeaponAction : GoapAction
                             if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
                             {
                                 if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
-                                    interactables[i].gameObject.transform.parent == null)
+                                    interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
                                 {
                                     interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                     target = interactables[i].gameObject;
@@ -75,12 +76,22 @@ public class PickUpWeaponAction : GoapAction
                             break;
 
                         case GeneralEnemy.ENEMY_TYPE.LIGHT: // Light enemies don't check for anything
-                            if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
-                                interactables[i].gameObject.transform.parent == null)
+
+                            if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
                             {
-                                interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                target = interactables[i].gameObject;
-                                flag = true;
+                                if(interactables[i].gameObject.transform.parent == null)
+                                {
+                                    interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                    target = interactables[i].gameObject;
+                                    flag = true;
+                                }
+                                else if (interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
+                                {
+                                    interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                    target = interactables[i].gameObject;
+                                    flag = true;
+                                }
+
                             }
 
                             break;
