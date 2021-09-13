@@ -298,13 +298,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 860502638}
     m_Modifications:
+    - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: flammable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5799999
+      value: -3.97
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.y
@@ -312,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.1
+      value: -11.67
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalRotation.w
@@ -344,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_Name
-      value: Wooden Stick - Weapon
+      value: Wooden Stick - Weapon 1
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
@@ -1160,6 +1164,76 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691214058}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &702048860
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 860502638}
+    m_Modifications:
+    - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: flammable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.5599995
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_Name
+      value: Wooden Stick - Weapon 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
+--- !u!4 &702048861 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
+  m_PrefabInstance: {fileID: 702048860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   type: 0
+  goalName: 
 --- !u!114 &785766294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,6 +1754,7 @@ Transform:
   - {fileID: 1302204395}
   - {fileID: 1265689187}
   - {fileID: 583142776}
+  - {fileID: 702048861}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1973,6 +2049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   type: 1
+  goalName: 
 --- !u!114 &964950352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2422,7 +2499,7 @@ GameObject:
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1265689187
 Transform:
   m_ObjectHideFlags: 0
@@ -2984,6 +3061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   type: 2
+  goalName: 
 --- !u!114 &1840426065
 MonoBehaviour:
   m_ObjectHideFlags: 0

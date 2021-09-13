@@ -26,6 +26,8 @@ public sealed class GoapAgent : MonoBehaviour
     private Vector3 prevPosition; // Previous Position
     private float moveSpeed;
 
+    List<GoapAction> planList = new List<GoapAction>();
+
 
     void Start()
     {
@@ -134,6 +136,7 @@ public sealed class GoapAgent : MonoBehaviour
 
             // Plan
             Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goal);
+
             if (plan != null)
             {
                 // we have a plan, hooray!

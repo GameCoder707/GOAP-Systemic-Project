@@ -29,7 +29,8 @@ public class MediumEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
                 {
-                    return true;
+                    if (CheckForWeaponSource() && flammableWeaponsInArea())
+                        return true;
                 }
             }
         }
@@ -49,8 +50,7 @@ public class MediumEnemy : GeneralEnemy
             {
                 for (int i = 0; i < interactables.Length; i++)
                 {
-                    if (//interactables[i].gameObject.ToString().ToLower().Contains("cutting tool") ||
-                        interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                    if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
                         if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
                             return true;
@@ -71,6 +71,37 @@ public class MediumEnemy : GeneralEnemy
 
             return false;
         }
+    }
+
+    private bool flammableWeaponsInArea()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        if (interactables.Length > 0)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                {
+                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                        return true;
+                }
+                else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                {
+                    if (GetComponent<EnemyStats>().hasCuttingTool)
+                        return true;
+                    else
+                    {
+                        for (int j = 0; j < interactables.Length; j++)
+                            if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
+                                return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+
     }
 
 }

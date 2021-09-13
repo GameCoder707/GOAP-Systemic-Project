@@ -9,11 +9,20 @@ public class LightEnemy : GeneralEnemy
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
         if (CheckForElementSource() && CheckForWeaponSource())
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+            goalName = "attackPlayerWithStatWeapon";
+        }
         else if (CheckForWeaponSource())
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
+            goalName = "attackPlayerWithWeapon";
+        }
         else
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
+            goalName = "attackPlayer";
+        }
 
         return goal;
     }
@@ -28,7 +37,8 @@ public class LightEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
                 {
-                    return true;
+                    if (CheckForWeaponSource() && flammableWeaponsInArea())
+                        return true;
                 }
             }
         }
@@ -58,5 +68,25 @@ public class LightEnemy : GeneralEnemy
 
             return false;
         }
+    }
+
+    private bool flammableWeaponsInArea()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        if (interactables.Length > 0)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                {
+                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+
     }
 }

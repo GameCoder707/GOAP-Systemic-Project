@@ -11,6 +11,8 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     private EnemyStats stats;
 
+    public string goalName;
+
     protected LayerMask interactableLayer = 1 << 6;
     protected LayerMask enemyLayer = 1 << 8;
 
