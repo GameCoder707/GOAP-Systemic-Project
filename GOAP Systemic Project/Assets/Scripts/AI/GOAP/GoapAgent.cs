@@ -64,7 +64,7 @@ public sealed class GoapAgent : MonoBehaviour
                 {
                     transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
 
-                    if(Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 0.5f)
+                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 0.5f)
                     {
                         if (currentWaypoint + 1 >= waypoints.Count)
                             currentWaypoint = 0;
@@ -124,6 +124,11 @@ public sealed class GoapAgent : MonoBehaviour
         return currentActions.Count > 0;
     }
 
+    public Queue<GoapAction> GetActionPlan()
+    {
+        return currentActions;
+    }
+
     private void createIdleState()
     {
         idleState = (fsm, gameObj) =>
@@ -175,6 +180,8 @@ public sealed class GoapAgent : MonoBehaviour
                 return;
             }
 
+            action.prepare(gameObj);
+
             // get the agent to move itself
             if (dataProvider.moveAgent(action))
             {
@@ -190,10 +197,6 @@ public sealed class GoapAgent : MonoBehaviour
         performActionState = (fsm, gameObj) =>
         {
             // perform the action
-
-
-
-
 
             if (!hasActionPlan())
             {
@@ -221,7 +224,10 @@ public sealed class GoapAgent : MonoBehaviour
                 if (inRange)
                 {
                     // we are in range, so perform the action
-                    bool success = action.perform(gameObj);
+
+                    bool success = false;
+
+                    success = action.perform(gameObj);
 
                     if (!success)
                     {

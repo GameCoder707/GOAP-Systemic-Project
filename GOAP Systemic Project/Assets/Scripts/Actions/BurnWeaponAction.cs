@@ -56,6 +56,11 @@ public class BurnWeaponAction : GoapAction
 
     }
 
+    public override int prepare(GameObject agent)
+    {
+        return 2;
+    }
+
     public override bool perform(GameObject agent)
     {
 
@@ -73,7 +78,6 @@ public class BurnWeaponAction : GoapAction
             if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
                 agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
             {
-                EnemyStats stats = agent.GetComponent<EnemyStats>();
                 statusApplied = true;
                 weaponSwung = false;
                 skipAlternateAction = false;
@@ -81,7 +85,6 @@ public class BurnWeaponAction : GoapAction
         }
         else
         {
-            EnemyStats stats = agent.GetComponent<EnemyStats>();
             statusApplied = true;
             weaponSwung = false;
         }

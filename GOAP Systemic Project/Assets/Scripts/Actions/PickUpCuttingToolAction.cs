@@ -110,6 +110,11 @@ public class PickUpCuttingToolAction : GoapAction
         return target != null;
     }
 
+    public override int prepare(GameObject agent)
+    {
+        return 2;
+    }
+
     public override bool perform(GameObject agent)
     {
         EnemyStats stats = GetComponent<EnemyStats>();

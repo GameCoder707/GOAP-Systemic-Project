@@ -58,6 +58,11 @@ public class ChopTreeBranchAction : GoapAction
 
     }
 
+    public override int prepare(GameObject agent)
+    {
+        return 2;
+    }
+
     public override bool perform(GameObject agent)
     {
         if (elapsedTime >= workDuration)

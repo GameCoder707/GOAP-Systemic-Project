@@ -51,6 +51,8 @@ public abstract class GoapAction : MonoBehaviour
 	 */
     public abstract bool checkProceduralPrecondition(GameObject agent);
 
+    public abstract int prepare(GameObject agent);
+
     /**
 	 * Run the action.
 	 * Returns True if the action performed successfully or false

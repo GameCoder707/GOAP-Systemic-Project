@@ -7,6 +7,7 @@ public class PickUpWeaponAction : GoapAction
     private LayerMask interactableLayer = 1 << 6;
 
     private bool hasWeapon;
+    private int prepareResult = 10;
 
     public PickUpWeaponAction()
     {
@@ -32,9 +33,9 @@ public class PickUpWeaponAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        target = null;
-
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        Debug.Log("called");
 
         if (interactables.Length > 0)
         {
@@ -55,7 +56,8 @@ public class PickUpWeaponAction : GoapAction
                                 {
                                     if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
                                     {
-                                        if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                        if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
+                                            interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                         {
                                             interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                             target = interactables[i].gameObject;
@@ -107,9 +109,9 @@ public class PickUpWeaponAction : GoapAction
                             {
                                 if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
                                 {
-                                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
+                                        interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                     {
-                                        Debug.Log(interactables[i].gameObject.name);
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                         target = interactables[i].gameObject;
                                         flag = true;
@@ -117,7 +119,6 @@ public class PickUpWeaponAction : GoapAction
                                 }
                                 else
                                 {
-                                    Debug.Log(agent.GetComponent<GeneralEnemy>().goalName);
                                     interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                     target = interactables[i].gameObject;
                                     flag = true;
@@ -135,6 +136,58 @@ public class PickUpWeaponAction : GoapAction
         }
 
         return target != null;
+    }
+
+    public override int prepare(GameObject agent)
+    {
+        if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
+        {
+            Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+            if (interactables.Length > 0)
+            {
+                for (int i = 0; i < interactables.Length; i++)
+                {
+                    if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                    {
+                        if ((interactables[i].gameObject.GetComponent<Weapon>().flammable &&
+                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "BurnWeaponAction"))
+                            ||
+                            (interactables[i].gameObject.GetComponent<Weapon>().conductive &&
+                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction")
+                            ))
+                        {
+
+                            if (target.GetInstanceID() == interactables[i].gameObject.GetInstanceID())
+                                return 2;
+                            else
+                            {
+                                target.GetComponent<Weapon>().isOwned = false;
+                                target = interactables[i].gameObject;
+                                return 1;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            return 0;
+
+        }
+        else
+            return 2;
+    }
+
+    private bool CheckActionInPlan(Queue<GoapAction> actionPlan, string actionName)
+    {
+        foreach (GoapAction a in actionPlan)
+        {
+            if (a.GetType().Name == actionName)
+                return true;
+        }
+
+        return false;
     }
 
     public override bool perform(GameObject agent)

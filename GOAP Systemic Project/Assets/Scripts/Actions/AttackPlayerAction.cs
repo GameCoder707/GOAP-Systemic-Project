@@ -44,6 +44,11 @@ public class AttackPlayerAction : GoapAction
         return target != null;
     }
 
+    public override int prepare(GameObject agent)
+    {
+        return 2;
+    }
+
     public override bool perform(GameObject agent)
     {
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);

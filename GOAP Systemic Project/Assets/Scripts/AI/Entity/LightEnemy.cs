@@ -8,7 +8,7 @@ public class LightEnemy : GeneralEnemy
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
-        if (CheckForElementSource() && CheckForWeaponSource())
+        if (CheckForElementSource())
         {
             goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
             goalName = "attackPlayerWithStatWeapon";
@@ -30,6 +30,14 @@ public class LightEnemy : GeneralEnemy
     bool CheckForElementSource()
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
+                    statWeaponsInArea("Electric") &&
+                    CheckForWeaponSource())
+                    return true;
 
         if (interactables.Length > 0)
         {
@@ -37,7 +45,7 @@ public class LightEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
                 {
-                    if (CheckForWeaponSource() && flammableWeaponsInArea())
+                    if (CheckForWeaponSource() && statWeaponsInArea("Fire"))
                         return true;
                 }
             }
@@ -70,7 +78,7 @@ public class LightEnemy : GeneralEnemy
         }
     }
 
-    private bool flammableWeaponsInArea()
+    private bool statWeaponsInArea(string elementType)
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
@@ -80,8 +88,17 @@ public class LightEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
-                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
-                        return true;
+                    switch (elementType)
+                    {
+                        case "Fire":
+                            if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                return true;
+                            break;
+                        case "Electric":
+                            if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                return true;
+                            break;
+                    }
                 }
             }
         }
