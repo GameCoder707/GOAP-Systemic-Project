@@ -35,14 +35,12 @@ public class LightEnemy : GeneralEnemy
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
             if (hit.collider.gameObject.name.ToLower().Contains("weather"))
                 if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
-                    statWeaponsInArea("Electric") &&
-                    CheckForWeaponSource())
+                    CheckForWeaponSource("Electric"))
                 {
                     return true;
                 }
                 else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
-                    statWeaponsInArea("Fire") &&
-                    CheckForWeaponSource())
+                    CheckForWeaponSource("Fire"))
                 {
                     return true;
                 }
@@ -54,7 +52,7 @@ public class LightEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
                 {
-                    if (CheckForWeaponSource() && statWeaponsInArea("Fire"))
+                    if (CheckForWeaponSource("Fire"))
                         return true;
                 }
             }
@@ -63,7 +61,7 @@ public class LightEnemy : GeneralEnemy
         return false;
     }
 
-    bool CheckForWeaponSource()
+    bool CheckForWeaponSource(string statusCompatibility = "")
     {
         if (GetComponent<EnemyStats>().hasWeapon)
             return true;
@@ -78,41 +76,30 @@ public class LightEnemy : GeneralEnemy
                     if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
                         if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
-                            return true;
+                        {
+                            if (statusCompatibility != "")
+                            {
+                                switch (statusCompatibility)
+                                {
+                                    case "Fire":
+                                        if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                            return true;
+                                        break;
+                                    case "Electric":
+                                        if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                            return true;
+                                        break;
+                                }
+
+                            }
+                            else
+                                return true;
+                        }
                     }
                 }
             }
 
             return false;
         }
-    }
-
-    private bool statWeaponsInArea(string elementType)
-    {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-
-        if (interactables.Length > 0)
-        {
-            for (int i = 0; i < interactables.Length; i++)
-            {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
-                {
-                    switch (elementType)
-                    {
-                        case "Fire":
-                            if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
-                                return true;
-                            break;
-                        case "Electric":
-                            if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
-                                return true;
-                            break;
-                    }
-                }
-            }
-        }
-
-        return false;
-
     }
 }

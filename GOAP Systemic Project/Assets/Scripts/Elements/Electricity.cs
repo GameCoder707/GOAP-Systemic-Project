@@ -44,7 +44,8 @@ public class Electricity : MonoBehaviour
             }
             else if (other.gameObject.GetComponent<Weapon>() != null)
             {
-                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.ELECTRIFIED)
+                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.ELECTRIFIED &&
+                    other.gameObject.GetComponent<Weapon>().conductive)
                     other.gameObject.GetComponent<Weapon>().ElectrifyWeapon();
             }
         }

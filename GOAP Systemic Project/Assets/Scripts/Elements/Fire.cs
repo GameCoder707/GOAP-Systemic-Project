@@ -44,7 +44,8 @@ public class Fire : MonoBehaviour
             }
             else if (other.gameObject.GetComponent<Weapon>() != null)
             {
-                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING)
+                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING &&
+                    other.gameObject.GetComponent<Weapon>().flammable)
                     other.gameObject.GetComponent<Weapon>().BurnWeapon();
             }
         }
