@@ -37,7 +37,16 @@ public class LightEnemy : GeneralEnemy
                 if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
                     statWeaponsInArea("Electric") &&
                     CheckForWeaponSource())
+                {
                     return true;
+                }
+                else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
+                    statWeaponsInArea("Fire") &&
+                    CheckForWeaponSource())
+                {
+                    return true;
+                }
+
 
         if (interactables.Length > 0)
         {

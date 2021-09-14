@@ -92,6 +92,8 @@ public class Weapon : MonoBehaviour
             anim = GetComponent<Animator>();
 
         anim.SetBool("isOwned", true);
+
+        isOwned = true;
     }
 
     private void OnTriggerEnter(Collider other)

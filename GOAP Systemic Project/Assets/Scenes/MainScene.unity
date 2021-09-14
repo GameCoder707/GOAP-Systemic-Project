@@ -300,11 +300,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: flammable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: conductive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_RootOrder
@@ -312,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: 1.64
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.y
@@ -320,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.04
+      value: -12.58
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1177,7 +1177,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: flammable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1779074664070950575, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: conductive
@@ -1189,7 +1189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5599995
+      value: -1.39
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1197,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.67
+      value: -12.68
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1918,6 +1918,7 @@ GameObject:
   - component: {fileID: 964950342}
   - component: {fileID: 964950351}
   - component: {fileID: 964950344}
+  - component: {fileID: 964950357}
   m_Layer: 8
   m_Name: Medium Entity
   m_TagString: Untagged
@@ -2169,6 +2170,21 @@ Transform:
   m_Father: {fileID: 1328788393}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &964950357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964950341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67331ff581dafd04a897ef60739e62e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
 --- !u!1 &1061749667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,7 +2482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251991652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0.996397, z: -25.8}
+  m_LocalPosition: {x: -16.2, y: 0.996397, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2551,7 +2567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba8f7e23e8602e41923dcef65139e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherType: 3
+  weatherType: 4
   affectAreaX: 15
   affectAreaZ: 15
   affectingWeapons: []
@@ -2616,7 +2632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1328788393
 Transform:
   m_ObjectHideFlags: 0

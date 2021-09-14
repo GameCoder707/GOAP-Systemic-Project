@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weather : MonoBehaviour
 {
-    public enum WEATHER_TYPE { SUNNY = 0, RAINY = 1, SNOW = 2, STORM = 3 }
+    public enum WEATHER_TYPE { SUNNY = 0, RAINY = 1, SNOW = 2, STORM = 3, HEAT_WAVE = 4 }
 
     public WEATHER_TYPE weatherType;
 
@@ -34,30 +34,42 @@ public class Weather : MonoBehaviour
                     IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) && // It has to be within weather area
                     weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // No status has been applied yet
                 {
+
                     affectingWeapons.Add(weaponsUnderWeather[i]);
                     affectTimers.Add(1.0f);
                 }
-
             }
         }
 
-        if(affectingWeapons.Count > 0)
+        if (affectingWeapons.Count > 0)
         {
-            for(int i = 0; i < affectingWeapons.Count; i++)
+            for (int i = 0; i < affectingWeapons.Count; i++)
             {
                 if (affectTimers[i] < 0)
                 {
                     switch (weatherType)
                     {
                         case WEATHER_TYPE.STORM:
-                            affectingWeapons[i].ElectrifyWeapon();
+                            if(affectingWeapons[i].conductive)
+                            {
+                                affectingWeapons[i].ElectrifyWeapon();
+
+                                affectingWeapons.Remove(affectingWeapons[i]);
+                                affectTimers.Remove(affectTimers[i]);
+                                i--;
+                            }
+                            break;
+                        case WEATHER_TYPE.HEAT_WAVE:
+                            if(affectingWeapons[i].flammable)
+                            {
+                                affectingWeapons[i].BurnWeapon();
+
+                                affectingWeapons.Remove(affectingWeapons[i]);
+                                affectTimers.Remove(affectTimers[i]);
+                                i--;
+                            }
                             break;
                     }
-
-                    affectingWeapons.Remove(affectingWeapons[i]);
-                    affectTimers.Remove(affectTimers[i]);
-                    i--;
-
                 }
                 else
                     affectTimers[i] -= Time.deltaTime;

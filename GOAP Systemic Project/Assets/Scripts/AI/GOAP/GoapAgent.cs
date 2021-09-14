@@ -180,13 +180,26 @@ public sealed class GoapAgent : MonoBehaviour
                 return;
             }
 
-            action.prepare(gameObj);
+            if(action.movementPass(gameObj))
+            {
+                if (dataProvider.moveAgent(action))
+                {
+                    fsm.popState();
+                }
+            }
+            else
+            {
+                fsm.popState(); // move
+                fsm.popState(); // perform
+                fsm.pushState(idleState);
+            }
+
 
             // get the agent to move itself
-            if (dataProvider.moveAgent(action))
-            {
-                fsm.popState();
-            }
+            //if (dataProvider.moveAgent(action))
+            //{
+            //    fsm.popState();
+            //}
 
         };
     }

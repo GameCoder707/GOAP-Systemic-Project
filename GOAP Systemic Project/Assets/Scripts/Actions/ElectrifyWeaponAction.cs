@@ -34,7 +34,7 @@ public class ElectrifyWeaponAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        target = null;
+        //target = null;
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
@@ -43,7 +43,6 @@ public class ElectrifyWeaponAction : GoapAction
             if (hit.collider.gameObject.name.ToLower().Contains("weather"))
                 if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM)
                 {
-
                     Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
                     if (interactables.Length > 0)
@@ -53,9 +52,7 @@ public class ElectrifyWeaponAction : GoapAction
                             if (interactables[i].gameObject.name.ToLower().Contains("weapon"))
                             {
                                 if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
-                                {
                                     return true;
-                                }
                             }
                         }
                     }
@@ -63,12 +60,12 @@ public class ElectrifyWeaponAction : GoapAction
 
         }
 
-        return target != null;
+        return false;
     }
 
-    public override int prepare(GameObject agent)
+    public override bool movementPass(GameObject agent)
     {
-        return 2;
+        return true;
     }
 
     public override bool perform(GameObject agent)

@@ -9,12 +9,21 @@ public class MediumEnemy : GeneralEnemy
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
-        if (CheckForElementSource() && CheckForWeaponSource())
+        if (CheckForElementSource())
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+            goalName = "attackPlayerWithStatWeapon";
+        }
         else if (CheckForWeaponSource())
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
+            goalName = "attackPlayerWithWeapon";
+        }
         else
+        {
             goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
+            goalName = "attackPlayer";
+        }
 
         return goal;
     }
@@ -23,13 +32,30 @@ public class MediumEnemy : GeneralEnemy
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
+                    statWeaponsInArea("Electric") &&
+                    CheckForWeaponSource())
+                {
+                    return true;
+                }
+                else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
+                            statWeaponsInArea("Fire") &&
+                            CheckForWeaponSource())
+                {
+                    return true;
+                }
+
         if (interactables.Length > 0)
         {
             for (int i = 0; i < interactables.Length; i++)
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
                 {
-                    if (CheckForWeaponSource() && flammableWeaponsInArea())
+                    if (CheckForWeaponSource() && statWeaponsInArea("Fire"))
                         return true;
                 }
             }
@@ -53,7 +79,10 @@ public class MediumEnemy : GeneralEnemy
                     if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
                         if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false)
+                        {
                             return true;
+                        }
+
                     }
                     else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
                     {
@@ -73,7 +102,7 @@ public class MediumEnemy : GeneralEnemy
         }
     }
 
-    private bool flammableWeaponsInArea()
+    private bool statWeaponsInArea(string elementType)
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
@@ -81,22 +110,36 @@ public class MediumEnemy : GeneralEnemy
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                switch (elementType)
                 {
-                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
-                        return true;
-                }
-                else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
-                {
-                    if (GetComponent<EnemyStats>().hasCuttingTool)
-                        return true;
-                    else
-                    {
-                        for (int j = 0; j < interactables.Length; j++)
-                            if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
+                    case "Fire":
+                        if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                        {
+                            if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
                                 return true;
-                    }
+                        }
+                        else if (interactables[i].gameObject.ToString().ToLower().Contains("tree"))
+                        {
+                            if (GetComponent<EnemyStats>().hasCuttingTool)
+                                return true;
+                            else
+                            {
+                                for (int j = 0; j < interactables.Length; j++)
+                                    if (interactables[j].gameObject.ToString().ToLower().Contains("cutting tool"))
+                                        return true;
+                            }
+                        }
+                        break;
+                    case "Electric":
+                        if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                        {
+                            if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                return true;
+                        }
+                        break;
                 }
+
+
             }
         }
 

@@ -44,9 +44,10 @@ public class AttackPlayerAction : GoapAction
         return target != null;
     }
 
-    public override int prepare(GameObject agent)
+    public override bool movementPass(GameObject agent)
     {
-        return 2;
+        return true;
+
     }
 
     public override bool perform(GameObject agent)

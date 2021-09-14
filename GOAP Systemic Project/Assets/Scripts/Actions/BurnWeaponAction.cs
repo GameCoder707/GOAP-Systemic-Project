@@ -56,9 +56,18 @@ public class BurnWeaponAction : GoapAction
 
     }
 
-    public override int prepare(GameObject agent)
+    public override bool movementPass(GameObject agent)
     {
-        return 2;
+        if (GetComponentInChildren<Weapon>() != null)
+        {
+            if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+
     }
 
     public override bool perform(GameObject agent)

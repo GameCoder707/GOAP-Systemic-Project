@@ -93,12 +93,12 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
     {
         Collider[] enemies = Physics.OverlapSphere(transform.position, 15.0f, enemyLayer);
 
-        List<GameObject> weaponsInArea = new List<GameObject>();
+        List<GameObject> interactablesInArea = new List<GameObject>();
         List<GameObject> otherEnemiesInArea = new List<GameObject>();
 
         for (int j = 0; j < interactables.Length; j++)
             if (interactables[j].gameObject.ToString().ToLower().Contains(name))
-                weaponsInArea.Add(interactables[j].gameObject);
+                interactablesInArea.Add(interactables[j].gameObject);
 
         for (int k = 0; k < enemies.Length; k++)
         {
@@ -107,21 +107,24 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
                 if (isEqual)
                 {
                     if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type == eType)
+                        if(enemies[k].GetComponentInChildren<Weapon>() == null &&
+                            enemies[k].GetComponent<EnemyStats>().hasCuttingTool == false) // Ignoring enemies who already have a weapon
                         otherEnemiesInArea.Add(enemies[k].gameObject);
                 }
                 else
                 {
                     if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type != eType)
-                        otherEnemiesInArea.Add(enemies[k].gameObject);
+                        if (enemies[k].GetComponentInChildren<Weapon>() == null &&
+                            enemies[k].GetComponent<EnemyStats>().hasCuttingTool == false)
+                            otherEnemiesInArea.Add(enemies[k].gameObject);
                 }
             }
         }
 
 
         // If the non-heavy enemy count is less than the weapon count, then he can go pick it up
-        if (otherEnemiesInArea.Count < weaponsInArea.Count)
+        if (otherEnemiesInArea.Count < interactablesInArea.Count)
             return true;
-
 
         return false;
     }

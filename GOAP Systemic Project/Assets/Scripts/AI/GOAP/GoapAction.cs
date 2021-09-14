@@ -51,7 +51,8 @@ public abstract class GoapAction : MonoBehaviour
 	 */
     public abstract bool checkProceduralPrecondition(GameObject agent);
 
-    public abstract int prepare(GameObject agent);
+    // To check if object is moving towards the right target
+    public abstract bool movementPass(GameObject agent); 
 
     /**
 	 * Run the action.
