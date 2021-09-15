@@ -71,11 +71,7 @@ public class ElectrifyWeaponAction : GoapAction
     public override bool perform(GameObject agent)
     {
         if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.ELECTRIFIED)
-        {
             statusApplied = true;
-            Destroy(target);
-        }
-
 
         return true;
     }

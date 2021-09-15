@@ -34,8 +34,8 @@ public class PickUpWeaponAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        if (weaponLocked == false)
-        {
+        //if (weaponLocked == false)
+        //{
             Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
             if (interactables.Length > 0)
@@ -143,9 +143,9 @@ public class PickUpWeaponAction : GoapAction
             }
 
             return target != null;
-        }
-        else
-            return true;
+        //}
+        //else
+            //return true;
         
     }
 

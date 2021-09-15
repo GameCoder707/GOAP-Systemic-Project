@@ -27,41 +27,7 @@ public class LightEnemy : GeneralEnemy
         return goal;
     }
 
-    bool CheckForElementSource()
-    {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
-            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
-                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
-                    CheckForWeaponSource("Electric"))
-                {
-                    return true;
-                }
-                else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
-                    CheckForWeaponSource("Fire"))
-                {
-                    return true;
-                }
-
-
-        if (interactables.Length > 0)
-        {
-            for (int i = 0; i < interactables.Length; i++)
-            {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
-                {
-                    if (CheckForWeaponSource("Fire"))
-                        return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    bool CheckForWeaponSource(string statusCompatibility = "")
+    protected override bool CheckForWeaponSource(string statusCompatibility = "")
     {
         if (GetComponent<EnemyStats>().hasWeapon)
             return true;

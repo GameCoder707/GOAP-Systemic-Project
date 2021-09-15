@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class GeneralEnemy : MonoBehaviour, IGoap
 {
-    public enum ENEMY_TYPE { LIGHT = 0, MEDIUM = 1, HEAVY = 2}
+    public enum ENEMY_TYPE { LIGHT = 0, MEDIUM = 1, HEAVY = 2 }
 
     public float moveSpeed;
     public ENEMY_TYPE type;
@@ -88,6 +88,41 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
     }
 
     // ENEMY METHODS
+    protected virtual bool CheckForWeaponSource(string statusCompatibility = "") { return false; }
+
+    protected bool CheckForElementSource()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
+                    CheckForWeaponSource("Electric"))
+                {
+                    return true;
+                }
+                else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
+                            CheckForWeaponSource("Fire"))
+                {
+                    return true;
+                }
+
+        if (interactables.Length > 0)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
+                {
+                    if (CheckForWeaponSource("Fire"))
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public bool CanEnemyInteractWithObject(Collider[] interactables, string name, bool isEqual, ENEMY_TYPE eType) // WIP Function name
     {
@@ -102,14 +137,14 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         for (int k = 0; k < enemies.Length; k++)
         {
-            if(enemies[k].gameObject.GetInstanceID() != gameObject.GetInstanceID())
+            if (enemies[k].gameObject.GetInstanceID() != gameObject.GetInstanceID())
             {
                 if (isEqual)
                 {
                     if (enemies[k].gameObject.GetComponent<GeneralEnemy>().type == eType)
-                        if(enemies[k].GetComponentInChildren<Weapon>() == null &&
-                            enemies[k].GetComponent<EnemyStats>().hasCuttingTool == false) // Ignoring enemies who already have a weapon
-                        otherEnemiesInArea.Add(enemies[k].gameObject);
+                        if (enemies[k].GetComponentInChildren<Weapon>() == null && // Ignoring enemies who already have a weapon or a cutting tool
+                            enemies[k].GetComponent<EnemyStats>().hasCuttingTool == false)
+                            otherEnemiesInArea.Add(enemies[k].gameObject);
                 }
                 else
                 {
@@ -122,10 +157,10 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         }
 
 
-        // If the non-heavy enemy count is less than the weapon count, then he can go pick it up
+        // If the enemy buddy count is less than the weapon count, then he can go pick it up
         if (otherEnemiesInArea.Count < interactablesInArea.Count)
             return true;
-
-        return false;
+        else
+            return false;
     }
 }
