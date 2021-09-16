@@ -36,79 +36,22 @@ public class PickUpWeaponAction : GoapAction
     {
         //if (weaponLocked == false)
         //{
-            Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
-            if (interactables.Length > 0)
+        if (interactables.Length > 0)
+        {
+            bool flag = false;
+
+            for (int i = 0; i < interactables.Length; i++)
             {
-                bool flag = false;
 
-                for (int i = 0; i < interactables.Length; i++)
+                if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                 {
-
-                    if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
+                    switch (agent.GetComponent<GeneralEnemy>().type)
                     {
-                        switch (agent.GetComponent<GeneralEnemy>().type)
-                        {
-                            case GeneralEnemy.ENEMY_TYPE.HEAVY: // Heavy enemies checks for non-heavy enemies
-                                if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", false, GeneralEnemy.ENEMY_TYPE.HEAVY))
-                                {
-                                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
-                                        interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
-                                    {
-                                        if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
-                                        {
-                                            if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
-                                                interactables[i].gameObject.GetComponent<Weapon>().conductive)
-                                            {
-                                                interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                                target = interactables[i].gameObject;
-                                                weaponLocked = true;
-                                                flag = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                            target = interactables[i].gameObject;
-                                            weaponLocked = true;
-                                            flag = true;
-                                        }
-                                    }
-                                }
-
-                                break;
-
-                            case GeneralEnemy.ENEMY_TYPE.MEDIUM: // Medium enemy checks for light enemies
-                                if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
-                                {
-                                    if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
-                                     interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
-                                    {
-                                        if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
-                                        {
-                                            if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
-                                                interactables[i].gameObject.GetComponent<Weapon>().conductive)
-                                            {
-                                                interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                                target = interactables[i].gameObject;
-                                                weaponLocked = true;
-                                                flag = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                            target = interactables[i].gameObject;
-                                            weaponLocked = true;
-                                            flag = true;
-                                        }
-                                    }
-                                }
-
-                                break;
-
-                            case GeneralEnemy.ENEMY_TYPE.LIGHT: // Light enemies don't check for anything
-
+                        case GeneralEnemy.ENEMY_TYPE.HEAVY: // Heavy enemies checks for non-heavy enemies
+                            if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", false, GeneralEnemy.ENEMY_TYPE.HEAVY))
+                            {
                                 if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
                                     interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
                                 {
@@ -118,35 +61,101 @@ public class PickUpWeaponAction : GoapAction
                                             interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                         {
                                             interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
                                             target = interactables[i].gameObject;
-                                            weaponLocked = true;
+                                            //weaponLocked = true;
                                             flag = true;
                                         }
                                     }
                                     else
                                     {
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
                                         target = interactables[i].gameObject;
-                                        weaponLocked = true;
+                                        //weaponLocked = true;
                                         flag = true;
                                     }
                                 }
+                            }
 
-                                break;
-                        }
-
-                        if (flag)
                             break;
 
+                        case GeneralEnemy.ENEMY_TYPE.MEDIUM: // Medium enemy checks for light enemies
+                            if (agent.GetComponent<GeneralEnemy>().CanEnemyInteractWithObject(interactables, "weapon", true, GeneralEnemy.ENEMY_TYPE.LIGHT))
+                            {
+                                if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
+                                 interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
+                                {
+                                    if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
+                                    {
+                                        if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
+                                            interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                        {
+                                            interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                            target = interactables[i].gameObject;
+                                            //weaponLocked = true;
+                                            flag = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                        target = interactables[i].gameObject;
+                                        //weaponLocked = true;
+                                        flag = true;
+                                    }
+                                }
+                            }
+
+                            break;
+
+                        case GeneralEnemy.ENEMY_TYPE.LIGHT: // Light enemies don't check for anything
+
+                            if (interactables[i].gameObject.GetComponent<Weapon>().isOwned == false &&
+                                interactables[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() == null)
+                            {
+
+                                Debug.Log(interactables[i].gameObject.GetComponent<Weapon>().name);
+
+                                if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
+                                {
+                                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
+                                        interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                    {
+                                        interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                        target = interactables[i].gameObject;
+                                        //weaponLocked = true;
+                                        flag = true;
+                                    }
+                                }
+                                else
+                                {
+                                    interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
+                                    interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                    target = interactables[i].gameObject;
+                                    //weaponLocked = true;
+                                    flag = true;
+                                }
+                            }
+
+                            break;
                     }
+
+                    if (flag)
+                        break;
+
                 }
             }
+        }
 
-            return target != null;
+        return target != null;
         //}
         //else
-            //return true;
-        
+        //return true;
+
     }
 
     public override bool movementPass(GameObject agent)
@@ -161,28 +170,28 @@ public class PickUpWeaponAction : GoapAction
                 {
                     if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
-                        if ((interactables[i].gameObject.GetComponent<Weapon>().flammable &&
+                        if (((interactables[i].gameObject.GetComponent<Weapon>().flammable &&
                             CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "BurnWeaponAction"))
                             ||
                             (interactables[i].gameObject.GetComponent<Weapon>().conductive &&
-                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction")
-                            ))
+                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction"))) &&
+                            interactables[i].gameObject.GetComponent<Weapon>().owner == GetComponent<GeneralEnemy>())
                         {
-
-                            //if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
-                            //    return true;
                             if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
                             {
                                 target.GetComponent<Weapon>().isOwned = false;
+                                target.GetComponent<Weapon>().owner = null;
                                 target = interactables[i].gameObject;
                             }
 
                             return true;
-
                         }
                     }
                 }
             }
+
+            target.GetComponent<Weapon>().isOwned = false;
+            target.GetComponent<Weapon>().owner = null;
 
             return false;
 
@@ -208,7 +217,7 @@ public class PickUpWeaponAction : GoapAction
 
         hasWeapon = true;
         stats.hasWeapon = true;
-        target.GetComponent<Weapon>().WeaponPickedUp();
+        target.GetComponent<Weapon>().WeaponPickedUp(GetComponent<GeneralEnemy>());
 
 
         target.transform.parent = agent.transform;

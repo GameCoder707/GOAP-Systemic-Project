@@ -51,7 +51,8 @@ public class ElectrifyWeaponAction : GoapAction
                         {
                             if (interactables[i].gameObject.name.ToLower().Contains("weapon"))
                             {
-                                if (interactables[i].gameObject.GetComponent<Weapon>().conductive)
+                                if (interactables[i].gameObject.GetComponent<Weapon>().conductive &&
+                                    interactables[i].gameObject.GetComponent<Weapon>().owner == GetComponent<GeneralEnemy>())
                                     return true;
                             }
                         }

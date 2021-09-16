@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public enum WEAPON_STATUS { NONE = 0, BURNING = 1, ELECTRIFIED = 2 };
 
     public bool isOwned;
+    public GeneralEnemy owner;
     public bool flammable;
     public bool conductive;
 
@@ -38,7 +39,7 @@ public class Weapon : MonoBehaviour
         // Weapon is a child of the entity
         if (transform.parent != null)
         {
-            if(transform.parent.gameObject.GetComponent<GeneralEnemy>() != null)
+            if (transform.parent.gameObject.GetComponent<GeneralEnemy>() != null)
             {
                 if (integrity <= 0)
                 {
@@ -76,17 +77,23 @@ public class Weapon : MonoBehaviour
 
     public void BurnWeapon()
     {
-        Instantiate(fireEffect, transform.position + transform.up, transform.rotation, transform);
-        weaponStatus = WEAPON_STATUS.BURNING;
+        if (weaponStatus != WEAPON_STATUS.BURNING)
+        {
+            Instantiate(fireEffect, transform.position + transform.up, transform.rotation, transform);
+            weaponStatus = WEAPON_STATUS.BURNING;
+        }
     }
 
     public void ElectrifyWeapon()
     {
-        Instantiate(electricEffect, transform.position + transform.up, transform.rotation, transform);
-        weaponStatus = WEAPON_STATUS.ELECTRIFIED;
+        if (weaponStatus != WEAPON_STATUS.ELECTRIFIED)
+        {
+            Instantiate(electricEffect, transform.position + transform.up, transform.rotation, transform);
+            weaponStatus = WEAPON_STATUS.ELECTRIFIED;
+        }
     }
 
-    public void WeaponPickedUp()
+    public void WeaponPickedUp(GeneralEnemy _owner)
     {
         if (anim == null)
             anim = GetComponent<Animator>();
@@ -94,6 +101,7 @@ public class Weapon : MonoBehaviour
         anim.SetBool("isOwned", true);
 
         isOwned = true;
+        owner = _owner;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,8 +113,6 @@ public class Weapon : MonoBehaviour
                 DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
                 weaponHit = true;
             }
-
         }
-
     }
 }

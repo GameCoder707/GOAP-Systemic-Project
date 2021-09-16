@@ -12,6 +12,7 @@ public class Weather : MonoBehaviour
     public float affectAreaZ;
 
     public List<Weapon> affectingWeapons = new List<Weapon>();
+    public List<Weapon> affectedWeapons = new List<Weapon>();
     private List<float> affectTimers = new List<float>();
 
     // Start is called before the first frame update
@@ -29,12 +30,12 @@ public class Weather : MonoBehaviour
         {
             for (int i = 0; i < weaponsUnderWeather.Length; i++)
             {
-                if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Not readding the same weapon to the affecting list
+                if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
+                    !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
                     weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() != null && // It has to be picked up
                     IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) && // It has to be within weather area
                     weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // No status has been applied yet
                 {
-
                     affectingWeapons.Add(weaponsUnderWeather[i]);
                     affectTimers.Add(1.0f);
                 }
@@ -53,9 +54,11 @@ public class Weather : MonoBehaviour
                             if(affectingWeapons[i].conductive)
                             {
                                 affectingWeapons[i].ElectrifyWeapon();
+                                affectedWeapons.Add(affectingWeapons[i]);
 
                                 affectingWeapons.Remove(affectingWeapons[i]);
                                 affectTimers.Remove(affectTimers[i]);
+
                                 i--;
                             }
                             break;
@@ -63,6 +66,7 @@ public class Weather : MonoBehaviour
                             if(affectingWeapons[i].flammable)
                             {
                                 affectingWeapons[i].BurnWeapon();
+                                affectedWeapons.Add(affectingWeapons[i]);
 
                                 affectingWeapons.Remove(affectingWeapons[i]);
                                 affectTimers.Remove(affectTimers[i]);
@@ -73,6 +77,18 @@ public class Weather : MonoBehaviour
                 }
                 else
                     affectTimers[i] -= Time.deltaTime;
+            }
+        }
+
+        if(affectedWeapons.Count > 0)
+        {
+            for(int i = 0; i < affectedWeapons.Count; i++)
+            {
+                if(affectedWeapons[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
+                {
+                    affectedWeapons.Remove(affectedWeapons[i]);
+                    i--;
+                }
             }
         }
 

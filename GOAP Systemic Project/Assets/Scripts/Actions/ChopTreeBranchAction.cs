@@ -69,7 +69,7 @@ public class ChopTreeBranchAction : GoapAction
         {
             GameObject obj = Instantiate(woodenStick, agent.transform.position + (agent.transform.right * 0.5f), agent.transform.rotation, agent.transform);
             obj.GetComponent<Weapon>().isOwned = true;
-            obj.GetComponent<Weapon>().WeaponPickedUp();
+            obj.GetComponent<Weapon>().WeaponPickedUp(GetComponent<GeneralEnemy>());
 
             EnemyStats stats = agent.GetComponent<EnemyStats>();
             hasWeapon = true;
