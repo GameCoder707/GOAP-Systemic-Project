@@ -9,8 +9,9 @@ public class PlayerBehaviour : MonoBehaviour
     private const float maxHealth = 100;
     private float health = maxHealth;
 
-    [Header("Movement")]
+    [Header("Movement and Aim")]
     private float moveSpeed = 7.0f;
+    private LayerMask aimMask = 1 << 9;
 
     [Header("Burn Info")]
     private const float maxBurnPoints = 5;
@@ -49,7 +50,11 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         if (electricPoints < maxElectricPoints)
+        {
             Move();
+            Aim();
+            Attack();
+        }
 
         StatusEffects();
 
@@ -75,7 +80,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         // Apply Shock Effect
-        if(electricPoints >= maxElectricPoints)
+        if (electricPoints >= maxElectricPoints)
         {
             if (electricDuration <= 0)
             {
@@ -122,6 +127,29 @@ public class PlayerBehaviour : MonoBehaviour
         if (moveVector.magnitude > 0.01f)
         {
             transform.position += (moveVector.normalized * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    void Aim()
+    {
+        Vector3 mousePos = Input.mousePosition;
+
+        Ray camRay = Camera.main.ScreenPointToRay(mousePos); // Ray casted from screen position into the world
+        RaycastHit hit;
+
+        if (Physics.Raycast(camRay, out hit, Mathf.Infinity, aimMask))
+        {
+            Vector3 aimTarget = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            transform.LookAt(aimTarget);
+        }
+    }
+
+    void Attack()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("Called");
+            GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
         }
     }
 

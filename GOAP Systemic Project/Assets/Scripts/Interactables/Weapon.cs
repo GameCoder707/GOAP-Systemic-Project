@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     public GameObject fireEffect;
     public GameObject electricEffect;
 
-    private Animator anim;
+    public Animator anim;
 
     private bool weaponHit; // To ignore repeated collisions
 
@@ -30,6 +30,9 @@ public class Weapon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
+        if (transform.parent.gameObject.GetComponent<PlayerBehaviour>() != null)
+            anim.SetBool("isOwned", true);
+
         weaponHit = false;
     }
 
@@ -39,7 +42,8 @@ public class Weapon : MonoBehaviour
         // Weapon is a child of the entity
         if (transform.parent != null)
         {
-            if (transform.parent.gameObject.GetComponent<GeneralEnemy>() != null)
+            if (transform.parent.gameObject.GetComponent<GeneralEnemy>() != null ||
+                transform.parent.gameObject.GetComponent<PlayerBehaviour>() != null)
             {
                 if (integrity <= 0)
                 {
@@ -106,11 +110,16 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!weaponHit)
+        if (!weaponHit && other.gameObject.GetInstanceID() != transform.parent.gameObject.GetInstanceID())
         {
             if (other.gameObject.CompareTag("Player"))
             {
                 DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
+                weaponHit = true;
+            }
+            else if(other.gameObject.CompareTag("Enemy"))
+            {
+                other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
                 weaponHit = true;
             }
         }

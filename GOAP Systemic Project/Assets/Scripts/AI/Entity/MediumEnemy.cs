@@ -31,7 +31,26 @@ public class MediumEnemy : GeneralEnemy
     protected override bool CheckForWeaponSource(string statusCompatibility = "")
     {
         if (GetComponent<EnemyStats>().hasWeapon)
-            return true;
+        {
+            if (statusCompatibility != "")
+            {
+                switch (statusCompatibility)
+                {
+                    case "Fire":
+                        if (GetComponentInChildren<Weapon>().flammable)
+                            return true;
+                        break;
+                    case "Electric":
+                        if (GetComponentInChildren<Weapon>().conductive)
+                            return true;
+                        break;
+                }
+
+                return false;
+            }
+            else
+                return true;
+        }
         else
         {
             Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);

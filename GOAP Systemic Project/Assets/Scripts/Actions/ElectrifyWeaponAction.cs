@@ -71,9 +71,20 @@ public class ElectrifyWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.ELECTRIFIED)
-            statusApplied = true;
+        RaycastHit hit;
 
-        return true;
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM)
+                {
+                    if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.ELECTRIFIED)
+                        statusApplied = true;
+
+                    return true;
+                }
+        }
+
+        return false;
     }
 }

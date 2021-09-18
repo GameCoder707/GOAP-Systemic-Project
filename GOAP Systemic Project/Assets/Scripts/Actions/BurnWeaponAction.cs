@@ -42,7 +42,7 @@ public class BurnWeaponAction : GoapAction
         RaycastHit hit;
 
         if (interactables.Length > 0)
-        { 
+        {
             if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
             {
                 if (hit.collider.gameObject.name.ToLower().Contains("weather"))
@@ -56,6 +56,23 @@ public class BurnWeaponAction : GoapAction
                                 {
                                     if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
                                         return true;
+                                }
+                                else if (interactables[i].gameObject.name.ToLower().Contains("tree"))
+                                {
+                                    switch (agent.GetComponent<GeneralEnemy>().type)
+                                    {
+                                        case GeneralEnemy.ENEMY_TYPE.HEAVY:
+                                            return true;
+                                        case GeneralEnemy.ENEMY_TYPE.MEDIUM:
+                                            for (int j = 0; j < interactables.Length; j++)
+                                            {
+                                                if (interactables[j].gameObject.name.ToLower().Contains("cutting tool"))
+                                                    return true;
+                                            }
+                                            break;
+                                        case GeneralEnemy.ENEMY_TYPE.LIGHT:
+                                            break;
+                                    }
                                 }
                             }
                         }
@@ -93,7 +110,7 @@ public class BurnWeaponAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if(target != null)
+        if (target != null)
         {
             if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE)
                 skipAlternateAction = true; // We skipping the alternate action because no status effect has been applied prior to this
@@ -102,7 +119,8 @@ public class BurnWeaponAction : GoapAction
             {
                 if (!weaponSwung)
                 {
-                    agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
+                    //agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
+                    agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
                     weaponSwung = true;
                 }
 
@@ -120,13 +138,27 @@ public class BurnWeaponAction : GoapAction
                 weaponSwung = false;
             }
 
+            return true;
+
         }
         else
         {
-            if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING)
-                statusApplied = true;
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                    if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE)
+                    {
+                        if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING)
+                            statusApplied = true;
+
+                        return true;
+                    }
+            }
+
+            return false;
         }
 
-        return true;
     }
 }

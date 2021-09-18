@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weather : MonoBehaviour
 {
@@ -15,11 +16,13 @@ public class Weather : MonoBehaviour
     public List<Weapon> affectedWeapons = new List<Weapon>();
     private List<float> affectTimers = new List<float>();
 
-    // Start is called before the first frame update
-    //void Start()
-    //{
+    public Text weatherInfo;
 
-    //}
+    // Start is called before the first frame update
+    void Start()
+    {
+        weatherInfo.text = "Weather: " + weatherType.ToString();
+    }
 
     // Update is called once per frame
     void Update()
@@ -46,12 +49,13 @@ public class Weather : MonoBehaviour
         {
             for (int i = 0; i < affectingWeapons.Count; i++)
             {
-                if (affectTimers[i] < 0)
+
+                switch (weatherType)
                 {
-                    switch (weatherType)
-                    {
-                        case WEATHER_TYPE.STORM:
-                            if(affectingWeapons[i].conductive)
+                    case WEATHER_TYPE.STORM:
+                        if (affectingWeapons[i].conductive)
+                        {
+                            if (affectTimers[i] < 0)
                             {
                                 affectingWeapons[i].ElectrifyWeapon();
                                 affectedWeapons.Add(affectingWeapons[i]);
@@ -61,9 +65,14 @@ public class Weather : MonoBehaviour
 
                                 i--;
                             }
-                            break;
-                        case WEATHER_TYPE.HEAT_WAVE:
-                            if(affectingWeapons[i].flammable)
+                            else
+                                affectTimers[i] -= Time.deltaTime;
+                        }
+                        break;
+                    case WEATHER_TYPE.HEAT_WAVE:
+                        if (affectingWeapons[i].flammable)
+                        {
+                            if (affectTimers[i] < 0)
                             {
                                 affectingWeapons[i].BurnWeapon();
                                 affectedWeapons.Add(affectingWeapons[i]);
@@ -72,17 +81,18 @@ public class Weather : MonoBehaviour
                                 affectTimers.Remove(affectTimers[i]);
                                 i--;
                             }
-                            break;
-                    }
+                            else
+                                affectTimers[i] -= Time.deltaTime;
+                        }
+                        break;
                 }
-                else
-                    affectTimers[i] -= Time.deltaTime;
             }
+            
         }
 
         if(affectedWeapons.Count > 0)
         {
-            for(int i = 0; i < affectedWeapons.Count; i++)
+            for(int i = 0; i<affectedWeapons.Count; i++)
             {
                 if(affectedWeapons[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
                 {
@@ -95,13 +105,13 @@ public class Weather : MonoBehaviour
     }
 
     private bool IsWeaponInArea(Vector3 weaponPos)
-    {
-        if (weaponPos.x >= transform.position.x - affectAreaX &&
-            weaponPos.x <= transform.position.x + affectAreaX &&
-            weaponPos.z >= transform.position.z - affectAreaZ &&
-            weaponPos.z <= transform.position.z + affectAreaZ)
-            return true;
-        else
-            return false;
-    }
+{
+    if (weaponPos.x >= transform.position.x - affectAreaX &&
+        weaponPos.x <= transform.position.x + affectAreaX &&
+        weaponPos.z >= transform.position.z - affectAreaZ &&
+        weaponPos.z <= transform.position.z + affectAreaZ)
+        return true;
+    else
+        return false;
+}
 }
