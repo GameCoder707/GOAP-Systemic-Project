@@ -8,20 +8,28 @@ public class LightEnemy : GeneralEnemy
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
-        if (CheckForElementSource())
+        if(!GetComponent<EnemyBehaviour>().isHealthy())
         {
-            goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
-            goalName = "attackPlayerWithStatWeapon";
+            goal.Add(new KeyValuePair<string, object>("canAttack", true));
+            goalName = "canAttack";
         }
-        else if (CheckForWeaponSource())
+        else // Combat Goals
         {
-            goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
-            goalName = "attackPlayerWithWeapon";
-        }
-        else
-        {
-            goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
-            goalName = "attackPlayer";
+            if (CheckForElementSource())
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goalName = "attackPlayerWithStatWeapon";
+            }
+            else if (CheckForWeaponSource())
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
+                goalName = "attackPlayerWithWeapon";
+            }
+            else
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
+                goalName = "attackPlayer";
+            }
         }
 
         return goal;

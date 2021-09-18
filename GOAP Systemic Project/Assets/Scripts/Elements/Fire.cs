@@ -35,7 +35,7 @@ public class Fire : MonoBehaviour
     {
         if (!hit)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
             {
                 if (!other.gameObject.GetComponent<PlayerBehaviour>().isBurning())
                     other.gameObject.GetComponent<PlayerBehaviour>().burnPoints += 1;

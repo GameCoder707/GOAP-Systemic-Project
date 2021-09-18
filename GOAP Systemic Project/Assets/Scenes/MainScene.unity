@@ -444,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -1598,7 +1598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -1828,6 +1828,7 @@ GameObject:
   - component: {fileID: 785766292}
   - component: {fileID: 785766293}
   - component: {fileID: 785766297}
+  - component: {fileID: 785766306}
   m_Layer: 8
   m_Name: Light Entity
   m_TagString: Enemy
@@ -1983,7 +1984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInRange: 0
-  health: 100
+  health: 0
 --- !u!114 &785766301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2079,6 +2080,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785766290}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &785766306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785766290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a37c11dffd68a148a72554cb3930bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
 --- !u!1 &842720038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,6 +2587,7 @@ GameObject:
   - component: {fileID: 964950351}
   - component: {fileID: 964950344}
   - component: {fileID: 964950357}
+  - component: {fileID: 964950358}
   m_Layer: 8
   m_Name: Med Enemy
   m_TagString: Enemy
@@ -2839,6 +2856,21 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   finishedAction: 0
+--- !u!114 &964950358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964950341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a37c11dffd68a148a72554cb3930bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
 --- !u!1 &1015479776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2933,7 +2965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1061749668
 Transform:
   m_ObjectHideFlags: 0
@@ -3550,7 +3582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1328788393
 Transform:
   m_ObjectHideFlags: 0
@@ -4662,6 +4694,7 @@ GameObject:
   - component: {fileID: 1840426062}
   - component: {fileID: 1840426064}
   - component: {fileID: 1840426077}
+  - component: {fileID: 1840426078}
   m_Layer: 8
   m_Name: Hvy Enemy
   m_TagString: Enemy
@@ -4938,6 +4971,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67331ff581dafd04a897ef60739e62e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
+--- !u!114 &1840426078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840426060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a37c11dffd68a148a72554cb3930bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1

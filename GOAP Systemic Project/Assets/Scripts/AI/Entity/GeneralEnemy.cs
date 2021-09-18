@@ -35,6 +35,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.GetHealth() <= 0));
+        worldData.Add(new KeyValuePair<string, object>("canAttack", GetComponent<EnemyBehaviour>().health >= 25));
 
         return worldData;
     }

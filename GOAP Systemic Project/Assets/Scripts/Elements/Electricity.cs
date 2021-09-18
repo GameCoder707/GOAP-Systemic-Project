@@ -35,7 +35,7 @@ public class Electricity : MonoBehaviour
     {
         if (!hit)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
             {
                 if (!other.gameObject.GetComponent<PlayerBehaviour>().isElectrified())
                     other.gameObject.GetComponent<PlayerBehaviour>().IncreaseElectricPoints();

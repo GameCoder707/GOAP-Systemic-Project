@@ -8,13 +8,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     private LayerMask playerLayer = 1 << 7;
 
-    public float health = 100.0f;
+    public const float maxHealth = 50.0f;
+    public float health;
 
     // Start is called before the first frame update
-    //void Start()
-    //{
-        
-    //}
+    void Start()
+    {
+        health = maxHealth;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -26,6 +27,19 @@ public class EnemyBehaviour : MonoBehaviour
         else
             playerInRange = false;
 
+        if(!isHealthy())
+        {
+            health += Time.deltaTime;
+        }
+
+    }
+
+    public bool isHealthy()
+    {
+        if (health >= 0.5 * maxHealth)
+            return true;
+        else
+            return false;
     }
 }
 

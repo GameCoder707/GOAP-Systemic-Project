@@ -59,7 +59,7 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
         EnemyStats stats = agent.GetComponent<EnemyStats>();
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 
-        if (GetComponentInChildren<Weapon>() != null)
+        if (GetComponentInChildren<Weapon>() != null && agent.GetComponent<EnemyBehaviour>().isHealthy())
         {
             if(player.Length > 0)
             {

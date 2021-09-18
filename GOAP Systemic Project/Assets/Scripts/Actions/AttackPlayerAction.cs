@@ -54,7 +54,7 @@ public class AttackPlayerAction : GoapAction
     {
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 
-        if (player.Length > 0)
+        if (player.Length > 0 && agent.GetComponent<EnemyBehaviour>().isHealthy())
         {
             if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 1.5f)
             {
