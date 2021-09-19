@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Electricity : Element
 {
-    // Start is called before the first frame update
-    //void Start()
-    //{
+    public int power;
 
-    //}
+    // Start is called before the first frame update
+    void Start()
+    {
+        power = 1;
+        rainEffectTimer = 1.0f;
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,6 +19,32 @@ public class Electricity : Element
         MainUpdate();
 
         GetComponent<CapsuleCollider>().enabled = !hit;
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+            {
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.RAINY)
+                {
+                    if (rainEffectTimer < 0)
+                    {
+                        power = 2;
+                    }
+                    else
+                        rainEffectTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    power = 1;
+                    rainEffectTimer = 1.0f;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +56,13 @@ public class Electricity : Element
                 (other.gameObject.CompareTag("Enemy") && GetComponentInParent<GeneralEnemy>() == null))
             {
                 if (!other.gameObject.GetComponent<Entity>().isElectrified())
-                    other.gameObject.GetComponent<Entity>().IncreaseElectricPoints();
+                {
+                    if (power == 0)
+                        power = 1;
+
+                    other.gameObject.GetComponent<Entity>().IncreaseElectricPoints(power);
+                }
+
 
                 hit = true;
             }

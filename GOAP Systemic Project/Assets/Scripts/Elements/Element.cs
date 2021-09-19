@@ -7,6 +7,7 @@ public class Element : MonoBehaviour
     protected bool hit = false;
 
     protected float hitDelay;
+    protected float rainEffectTimer;
 
     // Start is called before the first frame update
     //void Start()

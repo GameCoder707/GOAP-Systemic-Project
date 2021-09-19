@@ -8,6 +8,7 @@ public class Fire : Element
     void Start()
     {
         hitDelay = 0.5f;
+        rainEffectTimer = 1.0f;
     }
 
     // Update is called once per frame
@@ -16,6 +17,31 @@ public class Fire : Element
         MainUpdate();
 
         GetComponent<SphereCollider>().enabled = !hit;
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+            {
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.RAINY)
+                {
+                    if (rainEffectTimer < 0)
+                    {
+                        if (GetComponentInParent<Weapon>() != null)
+                            GetComponentInParent<Weapon>().weaponStatus = Weapon.WEAPON_STATUS.NONE;
+
+                        Destroy(gameObject);
+                    }
+                    else
+                        rainEffectTimer -= Time.deltaTime;
+                }
+
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)

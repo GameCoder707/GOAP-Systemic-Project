@@ -27,114 +27,73 @@ public class Weather : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Weapon[] weaponsUnderWeather = FindObjectsOfType<Weapon>();
-
-        if (weaponsUnderWeather.Length > 0)
+        if(weatherType != WEATHER_TYPE.RAINY)
         {
-            for (int i = 0; i < weaponsUnderWeather.Length; i++)
+            Weapon[] weaponsUnderWeather = FindObjectsOfType<Weapon>();
+
+            if (weaponsUnderWeather.Length > 0)
             {
-                if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
-                    !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
-                    weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<Entity>() != null && // It has to be picked up
-                    IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position)) // It has to be within weather area
+                for (int i = 0; i < weaponsUnderWeather.Length; i++)
                 {
-                    if(weatherType == WEATHER_TYPE.RAINY)
+                    if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
+                        !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
+                        weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<Entity>() != null && // It has to be picked up
+                        IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) &&
+                        weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // It has to be within weather area
                     {
-                        if (weaponsUnderWeather[i].weaponStatus != Weapon.WEAPON_STATUS.NONE)
-                        {
-                            affectingWeapons.Add(weaponsUnderWeather[i]);
-                            affectTimers.Add(1.0f);
-                        }
-                    }
-                    else
-                    {
-                        if(weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
-                        {
-                            affectingWeapons.Add(weaponsUnderWeather[i]);
-                            affectTimers.Add(1.0f);
-                        }
+                        affectingWeapons.Add(weaponsUnderWeather[i]);
+                        affectTimers.Add(1.0f);
                     }
                 }
             }
-        }
 
-        if (affectingWeapons.Count > 0)
-        {
-            for (int i = 0; i < affectingWeapons.Count; i++)
+            if (affectingWeapons.Count > 0)
             {
-                switch (weatherType)
+                for (int i = 0; i < affectingWeapons.Count; i++)
                 {
-                    case WEATHER_TYPE.STORM:
-                        if (affectingWeapons[i].conductive)
-                        {
-                            if (affectTimers[i] < 0)
+                    switch (weatherType)
+                    {
+                        case WEATHER_TYPE.STORM:
+                            if (affectingWeapons[i].conductive)
                             {
-                                affectingWeapons[i].ElectrifyWeapon();
-                                affectedWeapons.Add(affectingWeapons[i]);
+                                if (affectTimers[i] < 0)
+                                {
+                                    affectingWeapons[i].ElectrifyWeapon();
+                                    affectedWeapons.Add(affectingWeapons[i]);
 
-                                affectingWeapons.Remove(affectingWeapons[i]);
-                                affectTimers.Remove(affectTimers[i]);
+                                    affectingWeapons.Remove(affectingWeapons[i]);
+                                    affectTimers.Remove(affectTimers[i]);
 
-                                i--;
+                                    i--;
+                                }
+                                else
+                                    affectTimers[i] -= Time.deltaTime;
                             }
-                            else
-                                affectTimers[i] -= Time.deltaTime;
-                        }
-                        break;
-                    case WEATHER_TYPE.HEAT_WAVE:
-                        if (affectingWeapons[i].flammable)
-                        {
-                            if (affectTimers[i] < 0)
+                            break;
+                        case WEATHER_TYPE.HEAT_WAVE:
+                            if (affectingWeapons[i].flammable)
                             {
-                                affectingWeapons[i].BurnWeapon();
-                                affectedWeapons.Add(affectingWeapons[i]);
-
-                                affectingWeapons.Remove(affectingWeapons[i]);
-                                affectTimers.Remove(affectTimers[i]);
-                                i--;
-                            }
-                            else
-                                affectTimers[i] -= Time.deltaTime;
-                        }
-                        break;
-                    case WEATHER_TYPE.RAINY:
-                        if (affectTimers[i] < 0)
-                        {
-                            switch (affectingWeapons[i].weaponStatus)
-                            {
-                                case Weapon.WEAPON_STATUS.BURNING: // Putting out fire
-                                    affectingWeapons[i].NullifyWeapon();
+                                if (affectTimers[i] < 0)
+                                {
+                                    affectingWeapons[i].BurnWeapon();
                                     affectedWeapons.Add(affectingWeapons[i]);
 
                                     affectingWeapons.Remove(affectingWeapons[i]);
                                     affectTimers.Remove(affectTimers[i]);
                                     i--;
-
-                                    break;
+                                }
+                                else
+                                    affectTimers[i] -= Time.deltaTime;
                             }
-                        }
-                        else
-                            affectTimers[i] -= Time.deltaTime;
-
-                        break;
-                }
-            }
-
-        }
-
-        if (affectedWeapons.Count > 0)
-        {
-            for (int i = 0; i < affectedWeapons.Count; i++)
-            {
-                if (weatherType == WEATHER_TYPE.RAINY)
-                {
-                    if (affectedWeapons[i].weaponStatus != Weapon.WEAPON_STATUS.NONE)
-                    {
-                        affectedWeapons.Remove(affectedWeapons[i]);
-                        i--;
+                            break;
                     }
                 }
-                else
+
+            }
+
+            if (affectedWeapons.Count > 0)
+            {
+                for (int i = 0; i < affectedWeapons.Count; i++)
                 {
                     if (affectedWeapons[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
                     {
@@ -144,7 +103,6 @@ public class Weather : MonoBehaviour
                 }
             }
         }
-
     }
 
     private bool IsWeaponInArea(Vector3 weaponPos)

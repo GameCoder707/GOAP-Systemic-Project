@@ -63,9 +63,9 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void IncreaseElectricPoints()
+    public void IncreaseElectricPoints(int power)
     {
-        electricPoints += 1;
+        electricPoints += power;
 
         if (electricPoints >= maxElectricPoints)
             health -= electricDamage;
