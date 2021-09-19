@@ -79,6 +79,12 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    public void NullifyWeapon()
+    {
+        Destroy(GetComponentInChildren<Element>().gameObject);
+        weaponStatus = WEAPON_STATUS.NONE;
+    }
+
     public void BurnWeapon()
     {
         if (weaponStatus != WEAPON_STATUS.BURNING)

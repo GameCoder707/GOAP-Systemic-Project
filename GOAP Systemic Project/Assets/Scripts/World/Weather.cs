@@ -35,12 +35,25 @@ public class Weather : MonoBehaviour
             {
                 if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
                     !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
-                    weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<GeneralEnemy>() != null && // It has to be picked up
-                    IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) && // It has to be within weather area
-                    weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // No status has been applied yet
+                    weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<Entity>() != null && // It has to be picked up
+                    IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position)) // It has to be within weather area
                 {
-                    affectingWeapons.Add(weaponsUnderWeather[i]);
-                    affectTimers.Add(1.0f);
+                    if(weatherType == WEATHER_TYPE.RAINY)
+                    {
+                        if (weaponsUnderWeather[i].weaponStatus != Weapon.WEAPON_STATUS.NONE)
+                        {
+                            affectingWeapons.Add(weaponsUnderWeather[i]);
+                            affectTimers.Add(1.0f);
+                        }
+                    }
+                    else
+                    {
+                        if(weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
+                        {
+                            affectingWeapons.Add(weaponsUnderWeather[i]);
+                            affectTimers.Add(1.0f);
+                        }
+                    }
                 }
             }
         }
@@ -49,7 +62,6 @@ public class Weather : MonoBehaviour
         {
             for (int i = 0; i < affectingWeapons.Count; i++)
             {
-
                 switch (weatherType)
                 {
                     case WEATHER_TYPE.STORM:
@@ -85,19 +97,50 @@ public class Weather : MonoBehaviour
                                 affectTimers[i] -= Time.deltaTime;
                         }
                         break;
+                    case WEATHER_TYPE.RAINY:
+                        if (affectTimers[i] < 0)
+                        {
+                            switch (affectingWeapons[i].weaponStatus)
+                            {
+                                case Weapon.WEAPON_STATUS.BURNING: // Putting out fire
+                                    affectingWeapons[i].NullifyWeapon();
+                                    affectedWeapons.Add(affectingWeapons[i]);
+
+                                    affectingWeapons.Remove(affectingWeapons[i]);
+                                    affectTimers.Remove(affectTimers[i]);
+                                    i--;
+
+                                    break;
+                            }
+                        }
+                        else
+                            affectTimers[i] -= Time.deltaTime;
+
+                        break;
                 }
             }
-            
+
         }
 
-        if(affectedWeapons.Count > 0)
+        if (affectedWeapons.Count > 0)
         {
-            for(int i = 0; i<affectedWeapons.Count; i++)
+            for (int i = 0; i < affectedWeapons.Count; i++)
             {
-                if(affectedWeapons[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
+                if (weatherType == WEATHER_TYPE.RAINY)
                 {
-                    affectedWeapons.Remove(affectedWeapons[i]);
-                    i--;
+                    if (affectedWeapons[i].weaponStatus != Weapon.WEAPON_STATUS.NONE)
+                    {
+                        affectedWeapons.Remove(affectedWeapons[i]);
+                        i--;
+                    }
+                }
+                else
+                {
+                    if (affectedWeapons[i].weaponStatus == Weapon.WEAPON_STATUS.NONE)
+                    {
+                        affectedWeapons.Remove(affectedWeapons[i]);
+                        i--;
+                    }
                 }
             }
         }
@@ -105,13 +148,13 @@ public class Weather : MonoBehaviour
     }
 
     private bool IsWeaponInArea(Vector3 weaponPos)
-{
-    if (weaponPos.x >= transform.position.x - affectAreaX &&
-        weaponPos.x <= transform.position.x + affectAreaX &&
-        weaponPos.z >= transform.position.z - affectAreaZ &&
-        weaponPos.z <= transform.position.z + affectAreaZ)
-        return true;
-    else
-        return false;
-}
+    {
+        if (weaponPos.x >= transform.position.x - affectAreaX &&
+            weaponPos.x <= transform.position.x + affectAreaX &&
+            weaponPos.z >= transform.position.z - affectAreaZ &&
+            weaponPos.z <= transform.position.z + affectAreaZ)
+            return true;
+        else
+            return false;
+    }
 }

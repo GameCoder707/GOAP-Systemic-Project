@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+public class Fire : Element
 {
-    private bool hit = false;
-
-    private float hitDelay;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -17,16 +13,7 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hit)
-        {
-            hitDelay -= Time.deltaTime;
-
-            if (hitDelay <= 0)
-            {
-                hit = false;
-                hitDelay = 0.5f;
-            }
-        }
+        MainUpdate();
 
         GetComponent<SphereCollider>().enabled = !hit;
     }
