@@ -444,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -985,6 +985,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340954204}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &348228679
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1584155138}
+    m_Modifications:
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903605895248913148, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_Name
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5065e497fc26cb74086344b20013c978, type: 3}
 --- !u!1 &369338119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,7 +1659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -1983,8 +2044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0561278417a4c8046947241194f723e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInRange: 0
   health: 0
+  burnPoints: 0
+  electricPoints: 0
+  playerInRange: 0
 --- !u!114 &785766301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2714,8 +2777,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0561278417a4c8046947241194f723e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInRange: 0
   health: 100
+  burnPoints: 0
+  electricPoints: 0
+  playerInRange: 0
 --- !u!114 &964950350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3348,7 +3413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251991652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.09, y: 0.996397, z: -17.61}
+  m_LocalPosition: {x: -13.09, y: 0.996397, z: 1.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 946131679}
@@ -3369,6 +3434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08956d3fc17e6f04a90ac61d87178ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   burnPoints: 0
   electricPoints: 0
   healthFill: {fileID: 1516436768}
@@ -3436,7 +3502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba8f7e23e8602e41923dcef65139e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherType: 3
+  weatherType: 4
   affectAreaX: 15
   affectAreaZ: 15
   affectingWeapons: []
@@ -4052,6 +4118,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1779074664070950575, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
       propertyPath: isOwned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779074664070950575, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
+      propertyPath: flammable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779074664070950575, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
+      propertyPath: conductive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779074664070950575, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
+      propertyPath: weaponStatus
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4218533297987956518, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
@@ -4867,8 +4945,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0561278417a4c8046947241194f723e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInRange: 0
   health: 100
+  burnPoints: 0
+  electricPoints: 0
+  playerInRange: 0
 --- !u!114 &1840426072
 MonoBehaviour:
   m_ObjectHideFlags: 0

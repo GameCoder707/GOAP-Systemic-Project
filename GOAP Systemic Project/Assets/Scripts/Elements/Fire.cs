@@ -6,13 +6,13 @@ public class Fire : MonoBehaviour
 {
     private bool hit = false;
 
-    private float hitDelay = 0.3f;
+    private float hitDelay;
 
     // Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
+    void Start()
+    {
+        hitDelay = 0.5f;
+    }
 
     // Update is called once per frame
     void Update()
@@ -24,7 +24,7 @@ public class Fire : MonoBehaviour
             if (hitDelay <= 0)
             {
                 hit = false;
-                hitDelay = 0.3f;
+                hitDelay = 0.5f;
             }
         }
 
@@ -35,10 +35,12 @@ public class Fire : MonoBehaviour
     {
         if (!hit)
         {
-            if (other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
+            if ((other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
+                ||
+                (other.gameObject.CompareTag("Enemy") && GetComponentInParent<GeneralEnemy>() == null))
             {
-                if (!other.gameObject.GetComponent<PlayerBehaviour>().isBurning())
-                    other.gameObject.GetComponent<PlayerBehaviour>().burnPoints += 1;
+                if (!other.gameObject.GetComponent<Entity>().isBurning())
+                    other.gameObject.GetComponent<Entity>().burnPoints += 1;
 
                 hit = true;
             }

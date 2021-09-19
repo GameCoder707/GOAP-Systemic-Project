@@ -3,29 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerBehaviour : MonoBehaviour
+public class PlayerBehaviour : Entity
 {
-    [Header("Health")]
-    private const float maxHealth = 100;
-    private float health = maxHealth;
-
     [Header("Movement and Aim")]
     private float moveSpeed = 7.0f;
     private LayerMask aimMask = 1 << 9;
 
-    [Header("Burn Info")]
-    private const float maxBurnPoints = 5;
-    public float burnPoints = 0;
-    private float burnDuration = 5.0f;
-    private float burnDamage = 5.0f;
-
-    [Header("Electric Info")]
-    private const float maxElectricPoints = 5;
-    public float electricPoints = 0;
-    private float electricDuration = 1.5f;
-    private float electricDamage = 3.0f;
-
-    [Header("UI")]
+    [Header("HUD")]
     public Image healthFill;
     public GameObject burnMeterObj;
     public Image burnMeterFill;
@@ -33,10 +17,11 @@ public class PlayerBehaviour : MonoBehaviour
     public Image electricMeterFill;
 
     // Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
+    void Start()
+    {
+        maxHealth = 100;
+        health = maxHealth;
+    }
 
     // Update is called once per frame
     void Update()
@@ -49,6 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
             burnDuration = 5.0f;
         }
 
+        StatusEffects();
+
         if (electricPoints < maxElectricPoints)
         {
             Move();
@@ -56,40 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
             Attack();
         }
 
-        StatusEffects();
-
         DisplayHUD();
-    }
-
-    void StatusEffects()
-    {
-        // Apply Burn Effect
-        if (burnPoints >= maxBurnPoints)
-        {
-            if (burnDuration <= 0)
-            {
-                burnPoints = 0;
-                burnDuration = 5.0f;
-            }
-            else
-            {
-                health -= burnDamage * Time.deltaTime;
-
-                burnDuration -= Time.deltaTime;
-            }
-        }
-
-        // Apply Shock Effect
-        if (electricPoints >= maxElectricPoints)
-        {
-            if (electricDuration <= 0)
-            {
-                electricPoints = 0;
-                electricDuration = 1.5f;
-            }
-            else
-                electricDuration -= Time.deltaTime;
-        }
     }
 
     void DisplayHUD()
@@ -148,7 +102,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            Debug.Log("Called");
             GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
         }
     }
@@ -158,17 +111,4 @@ public class PlayerBehaviour : MonoBehaviour
         health -= damage;
     }
 
-    public void IncreaseElectricPoints()
-    {
-        electricPoints += 1;
-
-        if (electricPoints >= maxElectricPoints)
-            health -= electricDamage;
-    }
-
-    public bool isBurning() { return burnPoints >= maxBurnPoints; }
-
-    public bool isElectrified() { return electricPoints >= maxElectricPoints; }
-
-    public float GetHealth() { return health; }
 }

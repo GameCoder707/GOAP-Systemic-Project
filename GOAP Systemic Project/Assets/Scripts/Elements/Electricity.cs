@@ -35,10 +35,12 @@ public class Electricity : MonoBehaviour
     {
         if (!hit)
         {
-            if (other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
+            if ((other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
+                ||
+                (other.gameObject.CompareTag("Enemy") && GetComponentInParent<GeneralEnemy>() == null))
             {
-                if (!other.gameObject.GetComponent<PlayerBehaviour>().isElectrified())
-                    other.gameObject.GetComponent<PlayerBehaviour>().IncreaseElectricPoints();
+                if (!other.gameObject.GetComponent<Entity>().isElectrified())
+                    other.gameObject.GetComponent<Entity>().IncreaseElectricPoints();
 
                 hit = true;
             }

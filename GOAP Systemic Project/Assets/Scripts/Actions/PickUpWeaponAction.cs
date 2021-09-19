@@ -170,18 +170,35 @@ public class PickUpWeaponAction : GoapAction
                 {
                     if (interactables[i].gameObject.ToString().ToLower().Contains("weapon"))
                     {
-                        if (((interactables[i].gameObject.GetComponent<Weapon>().flammable &&
+                        if ((interactables[i].gameObject.GetComponent<Weapon>().flammable &&
                             CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "BurnWeaponAction"))
                             ||
                             (interactables[i].gameObject.GetComponent<Weapon>().conductive &&
-                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction"))) &&
-                            interactables[i].gameObject.GetComponent<Weapon>().owner == GetComponent<GeneralEnemy>())
+                            CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction")))
                         {
-                            if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
+
+                            if(interactables[i].gameObject.GetComponent<Weapon>().owner == GetComponent<GeneralEnemy>())
+                            {
+                                if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
+                                {
+                                    target.GetComponent<Weapon>().isOwned = false;
+                                    target.GetComponent<Weapon>().owner = null;
+
+                                    target = interactables[i].gameObject;
+
+                                    target.GetComponent<Weapon>().isOwned = true;
+                                    target.GetComponent<Weapon>().owner = agent.GetComponent<GeneralEnemy>();
+                                }
+                            }
+                            else
                             {
                                 target.GetComponent<Weapon>().isOwned = false;
                                 target.GetComponent<Weapon>().owner = null;
+
                                 target = interactables[i].gameObject;
+
+                                target.GetComponent<Weapon>().isOwned = true;
+                                target.GetComponent<Weapon>().owner = agent.GetComponent<GeneralEnemy>();
                             }
 
                             return true;

@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : Entity
 {
     public bool playerInRange = false;
 
     private LayerMask playerLayer = 1 << 7;
 
-    public const float maxHealth = 50.0f;
-    public float health;
+    //public const float maxHealth = 50.0f;
+    //public float health;
 
     // Start is called before the first frame update
     void Start()
     {
+        maxHealth = 50;
         health = maxHealth;
     }
 
@@ -22,7 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Collider[] player = Physics.OverlapSphere(transform.position, 15, playerLayer);
 
-        if (player.Length > 0)
+        if (player.Length > 0 && electricPoints < maxElectricPoints)
             playerInRange = true;
         else
             playerInRange = false;
@@ -31,6 +32,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             health += Time.deltaTime;
         }
+
+        StatusEffects();
 
     }
 
