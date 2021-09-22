@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class GeneralEnemy : MonoBehaviour, IGoap
 {
@@ -78,7 +79,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, nextAction.target.transform.position) <= 1.5f)
+        if (Vector3.Distance(transform.position, targetPos) <= 1.5f)
         {
             // we are at the target location, we are done
             nextAction.setInRange(true);

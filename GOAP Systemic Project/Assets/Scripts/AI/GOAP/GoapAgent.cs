@@ -43,7 +43,6 @@ public sealed class GoapAgent : MonoBehaviour
         loadActions();
 
         moveSpeed = GetComponent<GeneralEnemy>().moveSpeed;
-
     }
 
 

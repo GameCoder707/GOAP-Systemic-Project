@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // Attacking player with a status applied weapon: Burn, Shock, etc
 public class AttackPlayerWithStatWeaponAction : GoapAction
@@ -62,7 +63,7 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
         if (GetComponentInChildren<Weapon>() != null && agent.GetComponent<EnemyBehaviour>().isHealthy())
         {
 
-            if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= 1.5f)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= 2f)
             {
                 if (attackDelay <= 0)
                 {
@@ -89,7 +90,9 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
                 Vector3 prevPosition = transform.position;
 
                 transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
-                    agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                //GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
+                //GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 

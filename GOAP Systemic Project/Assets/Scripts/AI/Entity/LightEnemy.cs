@@ -8,7 +8,7 @@ public class LightEnemy : GeneralEnemy
     {
         HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
 
-        if(!GetComponent<EnemyBehaviour>().isHealthy())
+        if (!GetComponent<EnemyBehaviour>().isHealthy())
         {
             goal.Add(new KeyValuePair<string, object>("canAttack", true));
             goalName = "canAttack";

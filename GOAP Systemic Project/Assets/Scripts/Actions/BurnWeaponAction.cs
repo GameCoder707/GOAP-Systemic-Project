@@ -117,12 +117,12 @@ public class BurnWeaponAction : GoapAction
 
             if (skipAlternateAction)
             {
-                if (!weaponSwung)
-                {
+                //if (!weaponSwung)
+                //{
                     //agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
-                    agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
-                    weaponSwung = true;
-                }
+                    
+                    //weaponSwung = true;
+                //}
 
                 if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
                     agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
@@ -130,6 +130,10 @@ public class BurnWeaponAction : GoapAction
                     statusApplied = true;
                     weaponSwung = false;
                     skipAlternateAction = false;
+                }
+                else if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+                {
+                    agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
                 }
             }
             else
