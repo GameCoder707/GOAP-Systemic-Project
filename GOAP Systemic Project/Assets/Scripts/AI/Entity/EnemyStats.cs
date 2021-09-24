@@ -7,6 +7,12 @@ public class EnemyStats : MonoBehaviour
     public bool hasWeapon = false;
     public bool hasCuttingTool = false;
 
+    private void Start()
+    {
+        if (GetComponentInChildren<Weapon>() != null)
+            hasWeapon = true;
+    }
+
     public bool isStatusAppliedToWeapon
     {
         get

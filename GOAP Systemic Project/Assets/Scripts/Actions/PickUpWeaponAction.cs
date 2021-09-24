@@ -34,8 +34,9 @@ public class PickUpWeaponAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        //if (weaponLocked == false)
-        //{
+        if (agent.GetComponent<EnemyStats>().hasWeapon)
+            return false;
+
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
         if (interactables.Length > 0)
@@ -61,7 +62,7 @@ public class PickUpWeaponAction : GoapAction
                                             interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                         {
                                             interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                             target = interactables[i].gameObject;
                                             //weaponLocked = true;
                                             flag = true;
@@ -70,7 +71,7 @@ public class PickUpWeaponAction : GoapAction
                                     else
                                     {
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                         target = interactables[i].gameObject;
                                         //weaponLocked = true;
                                         flag = true;
@@ -92,7 +93,7 @@ public class PickUpWeaponAction : GoapAction
                                             interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                         {
                                             interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                            interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                             target = interactables[i].gameObject;
                                             //weaponLocked = true;
                                             flag = true;
@@ -101,7 +102,7 @@ public class PickUpWeaponAction : GoapAction
                                     else
                                     {
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                         target = interactables[i].gameObject;
                                         //weaponLocked = true;
                                         flag = true;
@@ -122,7 +123,7 @@ public class PickUpWeaponAction : GoapAction
                                         interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                     {
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                        interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                         target = interactables[i].gameObject;
                                         //weaponLocked = true;
                                         flag = true;
@@ -131,7 +132,7 @@ public class PickUpWeaponAction : GoapAction
                                 else
                                 {
                                     interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
-                                    interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<GeneralEnemy>();
+                                    interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                     target = interactables[i].gameObject;
                                     //weaponLocked = true;
                                     flag = true;
@@ -149,9 +150,6 @@ public class PickUpWeaponAction : GoapAction
         }
 
         return target != null;
-        //}
-        //else
-        //return true;
 
     }
 
@@ -174,7 +172,7 @@ public class PickUpWeaponAction : GoapAction
                             CheckActionInPlan(agent.GetComponent<GoapAgent>().GetActionPlan(), "ElectrifyWeaponAction")))
                         {
 
-                            if (interactables[i].gameObject.GetComponent<Weapon>().owner == GetComponent<GeneralEnemy>())
+                            if (interactables[i].gameObject.GetComponent<Weapon>().owner == agent.GetComponent<Entity>())
                                 return true;
                             else if (interactables[i].gameObject.GetComponent<Weapon>().owner == null)
                             {
@@ -187,7 +185,7 @@ public class PickUpWeaponAction : GoapAction
                                 target = interactables[i].gameObject;
 
                                 target.GetComponent<Weapon>().isOwned = true;
-                                target.GetComponent<Weapon>().owner = agent.GetComponent<GeneralEnemy>();
+                                target.GetComponent<Weapon>().owner = agent.GetComponent<Entity>();
 
                                 return true;
 
@@ -223,7 +221,7 @@ public class PickUpWeaponAction : GoapAction
 
         hasWeapon = true;
         stats.hasWeapon = true;
-        target.GetComponent<Weapon>().WeaponPickedUp(GetComponent<GeneralEnemy>());
+        target.GetComponent<Weapon>().WeaponPickedUp(GetComponent<Entity>());
 
 
         target.transform.parent = agent.transform;

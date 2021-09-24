@@ -48,34 +48,38 @@ public class BurnWeaponAction : GoapAction
                 if (hit.collider.gameObject.name.ToLower().Contains("weather"))
                     if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE)
                     {
-                        if (interactables.Length > 0)
+                        if (agent.GetComponent<EnemyStats>().hasWeapon)
                         {
-                            for (int i = 0; i < interactables.Length; i++)
+                            if (agent.GetComponentInChildren<Weapon>().flammable)
+                                return true;
+                        }
+
+                        for (int i = 0; i < interactables.Length; i++)
+                        {
+                            if (interactables[i].gameObject.name.ToLower().Contains("weapon"))
                             {
-                                if (interactables[i].gameObject.name.ToLower().Contains("weapon"))
+                                if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                    return true;
+                            }
+                            else if (interactables[i].gameObject.name.ToLower().Contains("tree"))
+                            {
+                                switch (agent.GetComponent<GeneralEnemy>().type)
                                 {
-                                    if (interactables[i].gameObject.GetComponent<Weapon>().flammable)
+                                    case GeneralEnemy.ENEMY_TYPE.LIGHT:
+                                        break;
+                                    case GeneralEnemy.ENEMY_TYPE.HEAVY:
                                         return true;
-                                }
-                                else if (interactables[i].gameObject.name.ToLower().Contains("tree"))
-                                {
-                                    switch (agent.GetComponent<GeneralEnemy>().type)
-                                    {
-                                        case GeneralEnemy.ENEMY_TYPE.HEAVY:
-                                            return true;
-                                        case GeneralEnemy.ENEMY_TYPE.MEDIUM:
-                                            for (int j = 0; j < interactables.Length; j++)
-                                            {
-                                                if (interactables[j].gameObject.name.ToLower().Contains("cutting tool"))
-                                                    return true;
-                                            }
-                                            break;
-                                        case GeneralEnemy.ENEMY_TYPE.LIGHT:
-                                            break;
-                                    }
+                                    case GeneralEnemy.ENEMY_TYPE.MEDIUM:
+                                        for (int j = 0; j < interactables.Length; j++)
+                                        {
+                                            if (interactables[j].gameObject.name.ToLower().Contains("cutting tool"))
+                                                return true;
+                                        }
+                                        break;
                                 }
                             }
                         }
+
                     }
 
             }
@@ -119,9 +123,9 @@ public class BurnWeaponAction : GoapAction
             {
                 //if (!weaponSwung)
                 //{
-                    //agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
-                    
-                    //weaponSwung = true;
+                //agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
+
+                //weaponSwung = true;
                 //}
 
                 if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&

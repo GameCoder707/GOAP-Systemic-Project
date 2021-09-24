@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour
     public enum WEAPON_STATUS { NONE = 0, BURNING = 1, ELECTRIFIED = 2 };
 
     public bool isOwned;
-    public GeneralEnemy owner;
+    public Entity owner;
     public bool flammable;
     public bool conductive;
 
@@ -30,8 +30,8 @@ public class Weapon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        if (transform.parent.gameObject.GetComponent<PlayerBehaviour>() != null)
-            anim.SetBool("isOwned", true);
+        if (transform.parent.gameObject.GetComponent<Entity>() != null)
+            WeaponPickedUp(transform.parent.gameObject.GetComponent<Entity>());
 
         weaponHit = false;
     }
@@ -97,7 +97,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void WeaponPickedUp(GeneralEnemy _owner)
+    public void WeaponPickedUp(Entity _owner)
     {
         if (anim == null)
             anim = GetComponent<Animator>();

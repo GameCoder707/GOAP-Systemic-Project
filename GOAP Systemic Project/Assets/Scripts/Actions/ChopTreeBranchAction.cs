@@ -38,6 +38,9 @@ public class ChopTreeBranchAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
+        if (agent.GetComponent<EnemyStats>().hasWeapon)
+            return false;
+
         target = null;
 
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
@@ -69,7 +72,7 @@ public class ChopTreeBranchAction : GoapAction
         {
             GameObject obj = Instantiate(woodenStick, agent.transform.position + (agent.transform.right * 0.5f), agent.transform.rotation, agent.transform);
             obj.GetComponent<Weapon>().isOwned = true;
-            obj.GetComponent<Weapon>().WeaponPickedUp(GetComponent<GeneralEnemy>());
+            obj.GetComponent<Weapon>().WeaponPickedUp(GetComponent<Entity>());
 
             EnemyStats stats = agent.GetComponent<EnemyStats>();
             hasWeapon = true;
