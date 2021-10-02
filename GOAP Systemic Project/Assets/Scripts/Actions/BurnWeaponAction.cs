@@ -46,7 +46,10 @@ public class BurnWeaponAction : GoapAction
             if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
             {
                 if (hit.collider.gameObject.name.ToLower().Contains("weather"))
-                    if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE)
+                {
+                    if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.RAINY)
+                        return false;
+                    else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE)
                     {
                         if (agent.GetComponent<EnemyStats>().hasWeapon)
                         {
@@ -81,7 +84,7 @@ public class BurnWeaponAction : GoapAction
                         }
 
                     }
-
+                }
             }
 
             for (int i = 0; i < interactables.Length; i++)

@@ -16,6 +16,8 @@ public class PlayerBehaviour : Entity
     public GameObject electricMeterObj;
     public Image electricMeterFill;
 
+    public Text weatherInfo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,17 @@ public class PlayerBehaviour : Entity
         }
 
         DisplayHUD();
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                weatherInfo.text = "Weather: " + hit.collider.gameObject.GetComponent<Weather>().weatherType.ToString();
+        }
     }
 
     void DisplayHUD()

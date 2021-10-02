@@ -269,7 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8657933478000345421}
-  - component: {fileID: 1779074664070950575}
+  - component: {fileID: 2472412720969828658}
   - component: {fileID: 5187268557889323855}
   - component: {fileID: 6397328096307317481}
   - component: {fileID: 2666771615442736517}
@@ -296,7 +296,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1779074664070950575
+--- !u!114 &2472412720969828658
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,16 +305,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8759657634921839409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1036d1e863cacc4ca4751c8d45eb8d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9917a5df45947a74fbf21344d6369613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOwned: 0
+  owner: {fileID: 0}
   flammable: 0
   conductive: 1
   weaponStatus: 0
-  fireEffect: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+  fireEffect: {fileID: 0}
   electricEffect: {fileID: 5349555377433495506, guid: 15be8e0c01311a44ea3ce9933d9db6b2, type: 3}
-  integrity: 5
+  anim: {fileID: 0}
+  integrity: 7
 --- !u!136 &5187268557889323855
 CapsuleCollider:
   m_ObjectHideFlags: 0

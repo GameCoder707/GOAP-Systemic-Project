@@ -54,50 +54,40 @@ public class AttackPlayerWithWeaponAction : GoapAction
     public override bool perform(GameObject agent)
     {
         EnemyStats stats = agent.GetComponent<EnemyStats>();
-        Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
+        PlayerBehaviour player = FindObjectOfType<PlayerBehaviour>();
 
         if (GetComponentInChildren<Weapon>() != null && agent.GetComponent<EnemyBehaviour>().isHealthy())
         {
-            if (player.Length > 0)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= 1.5f)
             {
-                if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 1.5f)
+                if (attackDelay <= 0)
                 {
-                    if (attackDelay <= 0)
+                    if (player.GetHealth() > 0)
                     {
-                        if (player[0].GetComponent<PlayerBehaviour>().GetHealth() > 0)
-                        {
-                            GetComponentInChildren<Weapon>().GetComponent<Animator>().SetBool("isSwinging", true);
+                        GetComponentInChildren<Weapon>().GetComponent<Animator>().SetBool("isSwinging", true);
 
-                            if (player[0].GetComponent<PlayerBehaviour>().GetHealth() <= 0)
-                            {
-                                playerDead = true;
-                                //stats.hasWeapon = false;
-                                //stats.combatReady = false;
-                                //player[0].GetComponent<PlayerBehaviour>().health = 100;
-                            }
-                        }
-
-                        attackDelay = 1.0f;
+                        if (player.GetHealth() <= 0)
+                            playerDead = true;
                     }
-                    else
-                        attackDelay -= Time.deltaTime;
 
+                    attackDelay = 1.0f;
                 }
                 else
-                {
-                    Vector3 prevPosition = transform.position;
+                    attackDelay -= Time.deltaTime;
+            }
+            else
+            {
+                Vector3 prevPosition = transform.position;
 
-                    transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position,
-                        agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
+                    agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
 
-                    Vector3 faceDir = (transform.position - prevPosition).normalized;
+                Vector3 faceDir = (transform.position - prevPosition).normalized;
 
-                    Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+                Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
 
-                    attackDelay = 0.2f;
-                }
-
+                attackDelay = 0.2f;
             }
 
             return true;

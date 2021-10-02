@@ -21,25 +21,28 @@ public class Fire : Element
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+        if(!gameObject.name.ToLower().Contains("fire source")) // Rain doesn't affect fire sources
         {
-            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
             {
-                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.RAINY)
+                if (hit.collider.gameObject.name.ToLower().Contains("weather"))
                 {
-                    if (rainEffectTimer < 0)
+                    if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.RAINY)
                     {
-                        if (GetComponentInParent<Weapon>() != null)
-                            GetComponentInParent<Weapon>().weaponStatus = Weapon.WEAPON_STATUS.NONE;
+                        if (rainEffectTimer < 0)
+                        {
+                            if (GetComponentInParent<Weapon>() != null)
+                                GetComponentInParent<Weapon>().weaponStatus = Weapon.WEAPON_STATUS.NONE;
 
-                        Destroy(gameObject);
+                            Destroy(gameObject);
+                        }
+                        else
+                            rainEffectTimer -= Time.deltaTime;
                     }
-                    else
-                        rainEffectTimer -= Time.deltaTime;
-                }
 
+                }
             }
         }
     }

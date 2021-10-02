@@ -30,8 +30,11 @@ public class Weapon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        if (transform.parent.gameObject.GetComponent<Entity>() != null)
-            WeaponPickedUp(transform.parent.gameObject.GetComponent<Entity>());
+        if(transform.parent != null)
+        {
+            if (transform.parent.gameObject.GetComponent<Entity>() != null)
+                WeaponPickedUp(transform.parent.gameObject.GetComponent<Entity>());
+        }
 
         weaponHit = false;
     }
@@ -117,7 +120,7 @@ public class Weapon : MonoBehaviour
                 DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
                 weaponHit = true;
             }
-            else if(other.gameObject.CompareTag("Enemy"))
+            else if (other.gameObject.CompareTag("Enemy"))
             {
                 other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
                 weaponHit = true;

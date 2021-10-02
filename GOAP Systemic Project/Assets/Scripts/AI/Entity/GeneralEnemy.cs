@@ -115,7 +115,8 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         {
             for (int i = 0; i < interactables.Length; i++)
             {
-                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire"))
+                if (interactables[i].gameObject.ToString().ToLower().Contains("campfire") &&
+                    hit.collider.gameObject.GetComponent<Weather>().weatherType != Weather.WEATHER_TYPE.RAINY)
                 {
                     if (CheckForWeaponSource("Fire"))
                         return true;

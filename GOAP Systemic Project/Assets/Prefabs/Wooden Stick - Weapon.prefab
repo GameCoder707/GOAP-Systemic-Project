@@ -309,12 +309,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOwned: 0
+  owner: {fileID: 0}
   flammable: 1
   conductive: 0
   weaponStatus: 0
   fireEffect: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
-  electricEffect: {fileID: 5349555377433495506, guid: 15be8e0c01311a44ea3ce9933d9db6b2, type: 3}
-  integrity: 5
+  electricEffect: {fileID: 0}
+  anim: {fileID: 0}
+  integrity: 4
 --- !u!136 &5187268557889323855
 CapsuleCollider:
   m_ObjectHideFlags: 0

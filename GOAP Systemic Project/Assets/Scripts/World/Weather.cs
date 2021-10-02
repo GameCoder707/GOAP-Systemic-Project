@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Weather : MonoBehaviour
 {
@@ -16,18 +15,14 @@ public class Weather : MonoBehaviour
     public List<Weapon> affectedWeapons = new List<Weapon>();
     private List<float> affectTimers = new List<float>();
 
-    public Text weatherInfo;
-
     // Start is called before the first frame update
-    void Start()
-    {
-        weatherInfo.text = "Weather: " + weatherType.ToString();
-    }
+    //void Start()
+    //{
+    //}
 
-    // Update is called once per frame
     void Update()
     {
-        if(weatherType != WEATHER_TYPE.RAINY)
+        if (weatherType != WEATHER_TYPE.RAINY)
         {
             Weapon[] weaponsUnderWeather = FindObjectsOfType<Weapon>();
 
@@ -35,14 +30,17 @@ public class Weather : MonoBehaviour
             {
                 for (int i = 0; i < weaponsUnderWeather.Length; i++)
                 {
-                    if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
-                        !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
-                        weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<Entity>() != null && // It has to be picked up
-                        IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) &&
-                        weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // It has to be within weather area
+                    if (weaponsUnderWeather[i].transform.parent != null)
                     {
-                        affectingWeapons.Add(weaponsUnderWeather[i]);
-                        affectTimers.Add(1.0f);
+                        if (!affectingWeapons.Contains(weaponsUnderWeather[i]) && // Don't readd the weapon if it's currently being affected...
+                            !affectedWeapons.Contains(weaponsUnderWeather[i]) && // or has a status element applied to it
+                            weaponsUnderWeather[i].gameObject.transform.parent.gameObject.GetComponent<Entity>() != null && // It has to be picked up
+                            IsWeaponInArea(weaponsUnderWeather[i].gameObject.transform.position) &&
+                            weaponsUnderWeather[i].weaponStatus == Weapon.WEAPON_STATUS.NONE) // It has to be within weather area
+                        {
+                            affectingWeapons.Add(weaponsUnderWeather[i]);
+                            affectTimers.Add(1.0f);
+                        }
                     }
                 }
             }
