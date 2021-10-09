@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-
 
 public sealed class GoapAgent : MonoBehaviour
 {
@@ -28,6 +28,7 @@ public sealed class GoapAgent : MonoBehaviour
 
     List<GoapAction> planList = new List<GoapAction>();
 
+    private NavMeshAgent agent;
 
     void Start()
     {
@@ -43,13 +44,15 @@ public sealed class GoapAgent : MonoBehaviour
         loadActions();
 
         moveSpeed = GetComponent<GeneralEnemy>().moveSpeed;
+        prevPosition = transform.position;
+        agent = GetComponent<NavMeshAgent>();
     }
-
 
     void Update()
     {
         if (GetComponent<EnemyBehaviour>().playerInRange)
         {
+            agent.isStopped = false;
             stateMachine.Update(gameObject);
             searchTimer = 3.0f;
         }
@@ -57,13 +60,15 @@ public sealed class GoapAgent : MonoBehaviour
         {
             if (searchTimer < 0)
             {
-                prevPosition = transform.position;
+                agent.isStopped = false;
 
                 if (isPatrolling)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
+                    //transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
+                    agent.SetDestination(waypoints[currentWaypoint].position);
+                    agent.speed = 0.5f * moveSpeed;
 
-                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 0.5f)
+                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 1.5f)
                     {
                         if (currentWaypoint + 1 >= waypoints.Count)
                             currentWaypoint = 0;
@@ -73,16 +78,21 @@ public sealed class GoapAgent : MonoBehaviour
                 }
                 else
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, waypoints[0].position, 0.5f * moveSpeed * Time.deltaTime);
+                    //transform.position = Vector3.MoveTowards(transform.position, waypoints[0].position, 0.5f * moveSpeed * Time.deltaTime);
+                    agent.SetDestination(waypoints[0].position);
+                    agent.speed = 0.5f * moveSpeed;
                 }
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
                 Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 900 * Time.deltaTime);
+
+                prevPosition = transform.position;
             }
             else
             {
+                agent.isStopped = true;
                 searchTimer -= Time.deltaTime;
 
                 if (searchTimer <= 0)
@@ -90,11 +100,8 @@ public sealed class GoapAgent : MonoBehaviour
                     stateMachine.popState();
                     stateMachine.pushState(idleState);
                 }
-
             }
-
         }
-
     }
 
 

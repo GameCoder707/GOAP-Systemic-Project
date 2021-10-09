@@ -1318,7 +1318,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8657933478000345421, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1543,23 +1543,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 785766291}
+    m_TransformParent: {fileID: 860502638}
     m_Modifications:
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.638366
+      value: -3.119999
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8020096
+      value: 7.38
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.552902
+      value: -14.209999
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1827,6 +1827,7 @@ GameObject:
   - component: {fileID: 785766297}
   - component: {fileID: 785766306}
   - component: {fileID: 785766308}
+  - component: {fileID: 785766307}
   m_Layer: 8
   m_Name: Light Entity
   m_TagString: Enemy
@@ -1846,7 +1847,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1226320106}
-  - {fileID: 702048861}
   m_Father: {fileID: 1061749668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2096,6 +2096,28 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   finishedAction: 0
+--- !u!195 &785766307
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785766290}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.75
+  m_Speed: 5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!54 &785766308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2255,6 +2277,7 @@ Transform:
   - {fileID: 301873580}
   - {fileID: 2098144504}
   - {fileID: 583142776}
+  - {fileID: 702048861}
   - {fileID: 1302204395}
   - {fileID: 1265689187}
   - {fileID: 1491604245}
@@ -2600,6 +2623,7 @@ GameObject:
   - component: {fileID: 964950357}
   - component: {fileID: 964950358}
   - component: {fileID: 964950360}
+  - component: {fileID: 964950359}
   m_Layer: 8
   m_Name: Med Enemy
   m_TagString: Enemy
@@ -2885,6 +2909,28 @@ MonoBehaviour:
   cost: 1
   target: {fileID: 0}
   finishedAction: 0
+--- !u!195 &964950359
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964950341}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.75
+  m_Speed: 4
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!54 &964950360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3454,7 +3500,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 860502638}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1265689188
 MonoBehaviour:
@@ -3468,7 +3514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba8f7e23e8602e41923dcef65139e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherType: 3
+  weatherType: 0
   affectAreaX: 15
   affectAreaZ: 15
   affectingWeapons: []
@@ -3596,7 +3642,7 @@ Transform:
   - {fileID: 291103291}
   - {fileID: 1061749668}
   m_Father: {fileID: 860502638}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1328788392
 GameObject:
@@ -4724,6 +4770,7 @@ GameObject:
   - component: {fileID: 1840426077}
   - component: {fileID: 1840426078}
   - component: {fileID: 1840426079}
+  - component: {fileID: 1840426080}
   m_Layer: 8
   m_Name: Hvy Enemy
   m_TagString: Enemy
@@ -5038,6 +5085,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!195 &1840426080
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840426060}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.75
+  m_Speed: 3
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1900494480
 GameObject:
   m_ObjectHideFlags: 0

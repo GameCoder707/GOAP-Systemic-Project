@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackPlayerWithWeaponAction : GoapAction
 {
@@ -9,6 +10,8 @@ public class AttackPlayerWithWeaponAction : GoapAction
     private LayerMask playerLayer = 1 << 7;
 
     private float attackDelay = 0.0f;
+
+    private Vector3 prevPosition;
 
     public AttackPlayerWithWeaponAction()
     {
@@ -77,10 +80,10 @@ public class AttackPlayerWithWeaponAction : GoapAction
             }
             else
             {
-                Vector3 prevPosition = transform.position;
-
-                transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
-                    agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                //transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
+                //agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
+                GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
@@ -88,6 +91,8 @@ public class AttackPlayerWithWeaponAction : GoapAction
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
 
                 attackDelay = 0.2f;
+
+                prevPosition = transform.position;
             }
 
             return true;
@@ -95,6 +100,8 @@ public class AttackPlayerWithWeaponAction : GoapAction
         else
         {
             attackDelay = 0.0f;
+            GetComponent<NavMeshAgent>().isStopped = true;
+
             return false;
         }
 

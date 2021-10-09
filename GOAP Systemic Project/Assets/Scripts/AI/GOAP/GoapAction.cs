@@ -68,7 +68,6 @@ public abstract class GoapAction : MonoBehaviour
 	 */
     public abstract bool requiresInRange();
 
-
     /**
 	 * Are we in range of the target?
 	 * The MoveTo state will set this and it gets reset each time this action is performed.
@@ -82,7 +81,6 @@ public abstract class GoapAction : MonoBehaviour
     {
         this.inRange = inRange;
     }
-
 
     public void addPrecondition(string key, object value)
     {

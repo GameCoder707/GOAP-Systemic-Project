@@ -12,6 +12,8 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
 
     private float attackDelay = 0.0f;
 
+    private Vector3 prevPosition;
+
     public AttackPlayerWithStatWeaponAction()
     {
         addPrecondition("hasWeapon", true);
@@ -67,8 +69,6 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
             {
                 if (attackDelay <= 0)
                 {
-                    //GetComponentInChildren<Weapon>().DamagePlayer(player[0].GetComponent<PlayerBehaviour>());
-
                     GetComponentInChildren<Weapon>().GetComponent<Animator>().SetBool("isSwinging", true);
 
                     if (player.GetComponent<Entity>().GetHealth() <= 0)
@@ -87,12 +87,10 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
             }
             else
             {
-                Vector3 prevPosition = transform.position;
-
-                transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
-                agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
-                //GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
-                //GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
+                //transform.position = Vector3.MoveTowards(transform.position, player.gameObject.transform.position,
+                //agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
+                GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
@@ -100,6 +98,8 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
 
                 attackDelay = 0.2f;
+
+                prevPosition = transform.position;
             }
 
 
@@ -108,6 +108,8 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
         else
         {
             attackDelay = 0.0f;
+            GetComponent<NavMeshAgent>().isStopped = true;
+
             return false;
         }
 

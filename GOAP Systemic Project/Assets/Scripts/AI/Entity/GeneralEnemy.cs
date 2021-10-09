@@ -14,13 +14,21 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     public string goalName;
 
+    private NavMeshAgent agent;
+
     protected LayerMask interactableLayer = 1 << 6;
     protected LayerMask enemyLayer = 1 << 8;
+
+    private Vector3 prevPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        prevPosition = transform.position;
+
         stats = GetComponent<EnemyStats>();
+
+        agent = GetComponent<NavMeshAgent>();
     }
 
     public HashSet<KeyValuePair<string, object>> getWorldState()
@@ -70,14 +78,16 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         Vector3 targetPos = new Vector3(nextAction.target.transform.position.x, transform.position.y, nextAction.target.transform.position.z);
 
-        Vector3 prevPosition = transform.position;
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+        // transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+        agent.SetDestination(targetPos);
+        agent.speed = moveSpeed;
 
         Vector3 faceDir = (transform.position - prevPosition).normalized;
 
         Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+
+        prevPosition = transform.position;
 
         if (Vector3.Distance(transform.position, targetPos) <= 1.5f)
         {
