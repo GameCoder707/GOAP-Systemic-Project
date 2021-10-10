@@ -80,6 +80,19 @@ public class GoapPlanner
             queue.Enqueue(a);
         }
 
+        List<GoapAction> resettingActions = new List<GoapAction>();
+
+        foreach (GoapAction a in availableActions)
+            resettingActions.Add(a);
+
+        for(int i = 0; i < resettingActions.Count; i++)
+        {
+            if(!result.Contains(resettingActions[i]))
+            {
+                resettingActions[i].secondaryReset();
+            }
+        }
+
         // hooray we have a plan!
         return queue;
     }

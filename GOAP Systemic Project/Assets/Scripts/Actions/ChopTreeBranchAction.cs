@@ -26,6 +26,8 @@ public class ChopTreeBranchAction : GoapAction
         hasWeapon = false;
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return hasWeapon;

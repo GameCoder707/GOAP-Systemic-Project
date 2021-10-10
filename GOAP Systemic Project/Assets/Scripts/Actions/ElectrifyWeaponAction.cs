@@ -22,6 +22,8 @@ public class ElectrifyWeaponAction : GoapAction
         statusApplied = false;
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return statusApplied;

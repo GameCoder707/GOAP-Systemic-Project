@@ -22,6 +22,8 @@ public abstract class GoapAction : MonoBehaviour
 
     public bool finishedAction = false;
 
+    public float minimumDistance = 1.5f;
+
     public GoapAction()
     {
         preconditions = new HashSet<KeyValuePair<string, object>>();
@@ -39,6 +41,8 @@ public abstract class GoapAction : MonoBehaviour
 	 * Reset any variables that need to be reset before planning happens again.
 	 */
     public abstract void reset();
+
+    public abstract void secondaryReset();
 
     /**
 	 * Is the action done?

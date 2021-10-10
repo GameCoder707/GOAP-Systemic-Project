@@ -22,6 +22,8 @@ public class AttackPlayerAction : GoapAction
 
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return playerDead;

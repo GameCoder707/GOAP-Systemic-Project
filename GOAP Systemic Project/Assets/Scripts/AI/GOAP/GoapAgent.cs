@@ -67,6 +67,7 @@ public sealed class GoapAgent : MonoBehaviour
                     //transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
                     agent.SetDestination(waypoints[currentWaypoint].position);
                     agent.speed = 0.5f * moveSpeed;
+                    agent.stoppingDistance = 0f;
 
                     if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 1.5f)
                     {
@@ -186,7 +187,7 @@ public sealed class GoapAgent : MonoBehaviour
                 return;
             }
 
-            if(action.movementPass(gameObj))
+            if (action.movementPass(gameObj))
             {
                 if (dataProvider.moveAgent(action))
                 {

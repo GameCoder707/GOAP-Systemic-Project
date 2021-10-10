@@ -17,6 +17,8 @@ public class FleeAction : GoapAction
         canAttack = false;
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return canAttack;

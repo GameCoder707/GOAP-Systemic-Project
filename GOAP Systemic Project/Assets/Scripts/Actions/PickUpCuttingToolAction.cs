@@ -21,6 +21,8 @@ public class PickUpCuttingToolAction : GoapAction
 
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return hasCuttingTool;

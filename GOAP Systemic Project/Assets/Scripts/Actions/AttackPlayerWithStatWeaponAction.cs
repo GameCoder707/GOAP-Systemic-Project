@@ -29,6 +29,8 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
 
     }
 
+    public override void secondaryReset() { }
+
     public override bool isDone()
     {
         return playerDead;
@@ -91,6 +93,7 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
                 //agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
                 GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
                 GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
+                GetComponent<NavMeshAgent>().stoppingDistance = minimumDistance;
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 

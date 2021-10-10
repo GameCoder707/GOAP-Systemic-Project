@@ -16,7 +16,12 @@ public class MediumEnemy : GeneralEnemy
         }
         else // Combat Goals
         {
-            if (CheckForElementSource())
+            if (CheckForCover())
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
+                goalName = "attackPlayerFromCover";
+            }
+            else if (CheckForElementSource())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";

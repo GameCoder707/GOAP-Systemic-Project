@@ -44,6 +44,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         worldData.Add(new KeyValuePair<string, object>("attackPlayer", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.GetHealth() <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerFromCover", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("canAttack", GetComponent<EnemyBehaviour>().health >= 25));
 
         return worldData;
@@ -80,6 +81,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         // transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
         agent.SetDestination(targetPos);
+        agent.stoppingDistance = nextAction.minimumDistance;
         agent.speed = moveSpeed;
 
         Vector3 faceDir = (transform.position - prevPosition).normalized;
@@ -89,7 +91,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         prevPosition = transform.position;
 
-        if (Vector3.Distance(transform.position, targetPos) <= 1.5f)
+        if (Vector3.Distance(transform.position, targetPos) <= nextAction.minimumDistance)
         {
             // we are at the target location, we are done
             nextAction.setInRange(true);
@@ -101,6 +103,26 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     // ENEMY METHODS
     protected virtual bool CheckForWeaponSource(string statusCompatibility = "") { return false; }
+
+    protected bool CheckForCover()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+        PlayerBehaviour player = FindObjectOfType<PlayerBehaviour>();
+
+        if (interactables.Length > 0 && Vector3.Distance(player.gameObject.transform.position, transform.position) >= 6f)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.name.ToLower().Contains("cover"))
+                {
+                    if (!interactables[i].gameObject.GetComponent<Barrier>().occupied)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     protected bool CheckForElementSource()
     {
@@ -123,6 +145,8 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         if (interactables.Length > 0)
         {
+
+
             for (int i = 0; i < interactables.Length; i++)
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire") &&

@@ -20,6 +20,18 @@ public class PickUpWeaponAction : GoapAction
         hasWeapon = false;
         weaponLocked = false;
 
+        secondaryReset();
+
+    }
+
+    public override void secondaryReset()
+    {
+        if(target != null)
+        {
+            target.GetComponent<Weapon>().isOwned = false;
+            target.GetComponent<Weapon>().owner = null;
+            target = null;
+        }
     }
 
     public override bool isDone()
@@ -122,6 +134,7 @@ public class PickUpWeaponAction : GoapAction
                                     if (interactables[i].gameObject.GetComponent<Weapon>().flammable ||
                                         interactables[i].gameObject.GetComponent<Weapon>().conductive)
                                     {
+
                                         interactables[i].gameObject.GetComponent<Weapon>().isOwned = true;
                                         interactables[i].gameObject.GetComponent<Weapon>().owner = GetComponent<Entity>();
                                         target = interactables[i].gameObject;
@@ -155,6 +168,7 @@ public class PickUpWeaponAction : GoapAction
 
     public override bool movementPass(GameObject agent)
     {
+
         if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
         {
             Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
@@ -176,6 +190,8 @@ public class PickUpWeaponAction : GoapAction
                                 return true;
                             else if (interactables[i].gameObject.GetComponent<Weapon>().owner == null)
                             {
+
+
                                 if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
                                 {
                                     target.GetComponent<Weapon>().isOwned = false;

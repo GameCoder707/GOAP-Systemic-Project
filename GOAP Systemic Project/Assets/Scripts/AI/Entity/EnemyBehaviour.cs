@@ -8,9 +8,6 @@ public class EnemyBehaviour : Entity
 
     private LayerMask playerLayer = 1 << 7;
 
-    //public const float maxHealth = 50.0f;
-    //public float health;
-
     // Start is called before the first frame update
     void Start()
     {
