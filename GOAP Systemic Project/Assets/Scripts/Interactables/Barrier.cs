@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-    public Transform posA;
-    public Transform posB;
+    public GameObject posA;
+    public GameObject posB;
 
     public bool occupied;
 
-    // Start is called before the first frame update
-    //void Start()
-    //{
+    private LayerMask coverLayer;
 
-    //}
+    // Start is called before the first frame update
+    void Start()
+    {
+        coverLayer = 1 << 10;
+    }
 
     // Update is called once per frame
     //void Update()
     //{
-        
+
     //}
+
+    public GameObject GetCoverPos()
+    {
+        GameObject player = FindObjectOfType<PlayerBehaviour>().gameObject;
+
+        if (Physics.Linecast(posA.transform.position, player.transform.position, coverLayer))
+            return posA;
+        else
+            return posB;
+
+    }
 }

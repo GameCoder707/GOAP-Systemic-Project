@@ -8,9 +8,19 @@ public class AttackPlayerFromCoverAction : GoapAction
 
     private LayerMask interactableLayer = 1 << 6;
 
+    private ObjectPool stonePool;
+
+    private float attackDelay;
+
     public AttackPlayerFromCoverAction()
     {
         addEffect("attackPlayerFromCover", true);
+    }
+
+    private void Start()
+    {
+        stonePool = GameObject.Find("Stone Pool").GetComponent<ObjectPool>();
+        attackDelay = 0.0f;
     }
 
     public override void reset()
@@ -35,15 +45,15 @@ public class AttackPlayerFromCoverAction : GoapAction
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
-        if(interactables.Length > 0)
+        if (interactables.Length > 0)
         {
-            for(int i = 0; i < interactables.Length; i++)
+            for (int i = 0; i < interactables.Length; i++)
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("cover"))
                 {
                     if (!interactables[i].gameObject.GetComponent<Barrier>().occupied)
                     {
-                        target = interactables[i].gameObject.GetComponent<Barrier>().posB.gameObject;
+                        target = interactables[i].gameObject.GetComponent<Barrier>().GetCoverPos();
                         interactables[i].gameObject.GetComponent<Barrier>().occupied = true;
                         break;
                     }
@@ -61,10 +71,36 @@ public class AttackPlayerFromCoverAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        PlayerBehaviour player = FindObjectOfType<PlayerBehaviour>();
+        Transform player = FindObjectOfType<PlayerBehaviour>().gameObject.transform;
 
-        if (Vector3.Distance(player.gameObject.transform.position, transform.position) >= 6f)
+        if (Vector3.Distance(player.position, transform.position) >= 6f)
+        {
+
+            Vector3 faceDir = (player.position - agent.transform.position).normalized;
+
+            Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+            agent.transform.rotation = Quaternion.RotateTowards(agent.transform.rotation, lookRotation, 1200 * Time.deltaTime);
+
+            if (attackDelay <= 0)
+            {
+                GameObject obj = stonePool.GetPooledObject();
+                obj.transform.position = agent.transform.position + (Vector3.up * 1.2f);
+                obj.transform.rotation = agent.transform.rotation;
+                obj.SetActive(true);
+
+                Vector3 aimDir = (player.position - obj.transform.position).normalized;
+
+                obj.GetComponent<Rigidbody>().AddForce(aimDir * 10.0f, ForceMode.Impulse);
+
+                //agent.transform.LookAt(player.gameObject.transform);
+
+                attackDelay = 1.25f;
+            }
+            else
+                attackDelay -= Time.deltaTime;
+
             return true;
+        }
         else
             return false;
 
