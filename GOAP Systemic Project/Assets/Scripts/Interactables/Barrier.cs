@@ -6,6 +6,7 @@ public class Barrier : MonoBehaviour
 {
     public GameObject posA;
     public GameObject posB;
+    private GameObject occupyingPos;
 
     public bool occupied;
 
@@ -28,9 +29,26 @@ public class Barrier : MonoBehaviour
         GameObject player = FindObjectOfType<PlayerBehaviour>().gameObject;
 
         if (Physics.Linecast(posA.transform.position, player.transform.position, coverLayer))
+        {
+            occupyingPos = posA;
             return posA;
+        }
         else
+        {
+            occupyingPos = posB;
             return posB;
+        }
 
+
+    }
+
+    public bool GetCoverStatus()
+    {
+        GameObject player = FindObjectOfType<PlayerBehaviour>().gameObject;
+
+        if (Physics.Linecast(occupyingPos.transform.position, player.transform.position, coverLayer))
+            return true;
+        else
+            return false;
     }
 }

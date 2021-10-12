@@ -188,10 +188,11 @@ public class PickUpWeaponAction : GoapAction
 
                             if (interactables[i].gameObject.GetComponent<Weapon>().owner == agent.GetComponent<Entity>())
                                 return true;
+                            else if (target.GetComponent<Weapon>().conductive == interactables[i].GetComponent<Weapon>().conductive ||
+                                target.GetComponent<Weapon>().flammable == interactables[i].GetComponent<Weapon>().flammable)
+                                return true;
                             else if (interactables[i].gameObject.GetComponent<Weapon>().owner == null)
                             {
-
-
                                 if (target.GetInstanceID() != interactables[i].gameObject.GetInstanceID())
                                 {
                                     target.GetComponent<Weapon>().isOwned = false;

@@ -73,7 +73,7 @@ public class AttackPlayerFromCoverAction : GoapAction
     {
         Transform player = FindObjectOfType<PlayerBehaviour>().gameObject.transform;
 
-        if (Vector3.Distance(player.position, transform.position) >= 6f)
+        if (Vector3.Distance(player.position, transform.position) >= 6f && target.GetComponentInParent<Barrier>().GetCoverStatus())
         {
 
             Vector3 faceDir = (player.position - agent.transform.position).normalized;
@@ -102,7 +102,11 @@ public class AttackPlayerFromCoverAction : GoapAction
             return true;
         }
         else
+        {
+            target.GetComponentInParent<Barrier>().occupied = false;
             return false;
+        }
+
 
     }
 }
