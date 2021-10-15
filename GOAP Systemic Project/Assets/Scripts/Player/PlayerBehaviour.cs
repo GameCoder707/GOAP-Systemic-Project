@@ -9,13 +9,6 @@ public class PlayerBehaviour : Entity
     private float moveSpeed = 7.0f;
     private LayerMask aimMask = 1 << 9;
 
-    [Header("HUD")]
-    public Image healthFill;
-    public GameObject burnMeterObj;
-    public Image burnMeterFill;
-    public GameObject electricMeterObj;
-    public Image electricMeterFill;
-
     public Text weatherInfo;
 
     // Start is called before the first frame update
@@ -45,7 +38,7 @@ public class PlayerBehaviour : Entity
             Attack();
         }
 
-        DisplayHUD();
+        DisplayUIElements();
     }
 
     private void FixedUpdate()
@@ -57,31 +50,6 @@ public class PlayerBehaviour : Entity
             if (hit.collider.gameObject.name.ToLower().Contains("weather"))
                 weatherInfo.text = "Weather: " + hit.collider.gameObject.GetComponent<Weather>().weatherType.ToString();
         }
-    }
-
-    void DisplayHUD()
-    {
-        healthFill.fillAmount = health / maxHealth;
-
-        // Burn Meter Display
-        if (burnPoints > 0)
-        {
-            burnMeterObj.SetActive(true);
-
-            burnMeterFill.fillAmount = burnPoints / maxBurnPoints;
-        }
-        else
-            burnMeterObj.SetActive(false);
-
-        // Electric Meter Display
-        if (electricPoints > 0)
-        {
-            electricMeterObj.SetActive(true);
-
-            electricMeterFill.fillAmount = electricPoints / maxElectricPoints;
-        }
-        else
-            electricMeterObj.SetActive(false);
     }
 
     void Move()

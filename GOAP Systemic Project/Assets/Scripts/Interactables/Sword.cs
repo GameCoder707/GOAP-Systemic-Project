@@ -5,10 +5,12 @@ using UnityEngine;
 public class Sword : Weapon
 {
     // Start is called before the first frame update
-    //void Start()
-    //{
-        
-    //}
+    void Start()
+    {
+        damage = 7;
+
+        MainStart();
+    }
 
     // Update is called once per frame
     void Update()

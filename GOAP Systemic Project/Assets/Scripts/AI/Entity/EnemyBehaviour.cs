@@ -8,6 +8,8 @@ public class EnemyBehaviour : Entity
 
     private LayerMask playerLayer = 1 << 7;
 
+    public GameObject canvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,13 @@ public class EnemyBehaviour : Entity
         }
 
         StatusEffects();
+        DisplayUIElements();
 
+    }
+
+    private void LateUpdate()
+    {
+        canvas.transform.position = transform.position + (Vector3.up * 2f);
     }
 
     public bool isHealthy()

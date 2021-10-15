@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Entity : MonoBehaviour
 {
@@ -20,16 +21,23 @@ public class Entity : MonoBehaviour
     protected float electricDuration = 1.5f;
     protected float electricDamage = 3.0f;
 
+    [Header("UI")]
+    public Image healthFill;
+    public GameObject burnMeterObj;
+    public Image burnMeterFill;
+    public GameObject electricMeterObj;
+    public Image electricMeterFill;
+
     // Start is called before the first frame update
     //void Start()
     //{
-        
+
     //}
 
     // Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 
     protected void StatusEffects()
@@ -61,6 +69,31 @@ public class Entity : MonoBehaviour
             else
                 electricDuration -= Time.deltaTime;
         }
+    }
+
+    protected void DisplayUIElements()
+    {
+        healthFill.fillAmount = health / maxHealth;
+
+        // Burn Meter Display
+        if (burnPoints > 0)
+        {
+            burnMeterObj.SetActive(true);
+
+            burnMeterFill.fillAmount = burnPoints / maxBurnPoints;
+        }
+        else
+            burnMeterObj.SetActive(false);
+
+        // Electric Meter Display
+        if (electricPoints > 0)
+        {
+            electricMeterObj.SetActive(true);
+
+            electricMeterFill.fillAmount = electricPoints / maxElectricPoints;
+        }
+        else
+            electricMeterObj.SetActive(false);
     }
 
     public void IncreaseElectricPoints(int power)

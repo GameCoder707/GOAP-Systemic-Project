@@ -19,14 +19,15 @@ public class Weapon : MonoBehaviour
     public Animator anim;
 
     private bool weaponHit; // To ignore repeated collisions
+    private bool attackStance; // Is the weapon ready to attack
 
     // Health of the weapon
     public int integrity;
 
-    private int damage = 5;
+    protected int damage;
 
     // Start is called before the first frame update
-    void Start()
+    protected void MainStart()
     {
         anim = GetComponent<Animator>();
 
@@ -37,6 +38,7 @@ public class Weapon : MonoBehaviour
         }
 
         weaponHit = false;
+        attackStance = false;
     }
 
     // Update is called once per frame
@@ -48,12 +50,13 @@ public class Weapon : MonoBehaviour
             if (transform.parent.gameObject.GetComponent<GeneralEnemy>() != null ||
                 transform.parent.gameObject.GetComponent<PlayerBehaviour>() != null)
             {
+                attackStance = true;
+
                 if (integrity <= 0)
                 {
                     transform.parent.gameObject.GetComponent<EnemyStats>().hasWeapon = false;
                     Destroy(gameObject);
                 }
-
 
                 if (anim.GetBool("isSwinging"))
                 {
@@ -66,8 +69,8 @@ public class Weapon : MonoBehaviour
                 }
 
                 GetComponent<CapsuleCollider>().enabled = anim.GetCurrentAnimatorStateInfo(0).IsName("WeaponSwingAnim");
-            }
 
+            }
         }
 
     }
@@ -113,18 +116,23 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!weaponHit && other.gameObject.GetInstanceID() != transform.parent.gameObject.GetInstanceID())
+        if(attackStance)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (!weaponHit &&
+                other.gameObject.GetInstanceID() != transform.parent.gameObject.GetInstanceID())
             {
-                DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
-                weaponHit = true;
-            }
-            else if (other.gameObject.CompareTag("Enemy"))
-            {
-                other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
-                weaponHit = true;
+                if (other.gameObject.CompareTag("Player"))
+                {
+                    DamagePlayer(other.gameObject.GetComponent<PlayerBehaviour>());
+                    weaponHit = true;
+                }
+                else if (other.gameObject.CompareTag("Enemy"))
+                {
+                    other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
+                    weaponHit = true;
+                }
             }
         }
+
     }
 }
