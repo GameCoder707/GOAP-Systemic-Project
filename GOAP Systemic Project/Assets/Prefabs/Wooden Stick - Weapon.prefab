@@ -326,7 +326,7 @@ MonoBehaviour:
   flammable: 1
   conductive: 0
   weaponStatus: 0
-  fireEffect: {fileID: 9151994293938411055, guid: 5065e497fc26cb74086344b20013c978, type: 3}
+  fireEffect: {fileID: 1725317912486240, guid: e55149ba6f4d00741984987e258c3378, type: 3}
   electricEffect: {fileID: 0}
   anim: {fileID: 0}
   integrity: 4
