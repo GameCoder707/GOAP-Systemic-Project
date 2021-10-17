@@ -15,7 +15,12 @@ public class HeavyEnemy : GeneralEnemy
         }
         else // Combat Goals
         {
-            if (CheckForCover())
+            if(CheckForObjects())
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayerWithObjects", true));
+                goalName = "attackPlayerWithObjects";
+            }
+            else if (CheckForCover())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";

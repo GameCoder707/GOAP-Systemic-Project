@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackPlayerAction : GoapAction
 {
@@ -9,6 +10,8 @@ public class AttackPlayerAction : GoapAction
     private LayerMask playerLayer = 1 << 7;
 
     private float attackDelay = 0.0f;
+
+    private Vector3 prevPosition;
 
     public AttackPlayerAction()
     {
@@ -49,43 +52,35 @@ public class AttackPlayerAction : GoapAction
     public override bool movementPass(GameObject agent)
     {
         return true;
-
     }
 
     public override bool perform(GameObject agent)
     {
-        Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
+        PlayerBehaviour player = FindObjectOfType<PlayerBehaviour>();
 
-        if (player.Length > 0 && agent.GetComponent<EnemyBehaviour>().isHealthy())
+        if (agent.GetComponent<EnemyBehaviour>().isHealthy())
         {
-            if (Vector3.Distance(transform.position, player[0].gameObject.transform.position) <= 1.5f)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) <= 1.5f)
             {
                 if (attackDelay <= 0)
                 {
+                    player.GetComponent<PlayerBehaviour>().InflictDamage(2f);
 
-                    player[0].GetComponent<PlayerBehaviour>().InflictDamage(2f);
-
-                    if (player[0].GetComponent<PlayerBehaviour>().GetHealth() <= 0)
+                    if (player.GetComponent<PlayerBehaviour>().GetHealth() <= 0)
                     {
                         playerDead = true;
-                        //stats.hasWeapon = false;
-                        //stats.combatReady = false;
-                        //player[0].GetComponent<PlayerBehaviour>().health = 100;
                     }
-
 
                     attackDelay = 1.0f;
                 }
                 else
                     attackDelay -= Time.deltaTime;
-
             }
             else
             {
-                Vector3 prevPosition = transform.position;
-
-                transform.position = Vector3.MoveTowards(transform.position, player[0].gameObject.transform.position,
-                    agent.GetComponent<GeneralEnemy>().moveSpeed * Time.deltaTime);
+                GetComponent<NavMeshAgent>().SetDestination(player.gameObject.transform.position);
+                GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
+                GetComponent<NavMeshAgent>().stoppingDistance = minimumDistance;
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
@@ -93,11 +88,11 @@ public class AttackPlayerAction : GoapAction
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
 
                 attackDelay = 0.2f;
+
+                prevPosition = transform.position;
             }
 
-
             return true;
-
         }
         else
             return false;

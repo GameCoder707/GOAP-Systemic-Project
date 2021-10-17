@@ -45,6 +45,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("attackPlayerFromCover", player.GetHealth() <= 0));
+        worldData.Add(new KeyValuePair<string, object>("attackPlayerWithObjects", player.GetHealth() <= 0));
         worldData.Add(new KeyValuePair<string, object>("canAttack", GetComponent<EnemyBehaviour>().health >= 25));
 
         return worldData;
@@ -103,6 +104,25 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     // ENEMY METHODS
     protected virtual bool CheckForWeaponSource(string statusCompatibility = "") { return false; }
+
+    protected bool CheckForObjects()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        if (interactables.Length > 0)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
+                {
+                    if(!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     protected bool CheckForCover()
     {
