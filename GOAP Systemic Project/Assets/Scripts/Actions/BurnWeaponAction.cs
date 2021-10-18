@@ -6,7 +6,7 @@ public class BurnWeaponAction : GoapAction
 {
     private bool statusApplied;
     private bool weaponSwung;
-    private bool skipAlternateAction;
+    private bool performAction;
 
     private LayerMask interactableLayer = 1 << 6;
 
@@ -122,23 +122,16 @@ public class BurnWeaponAction : GoapAction
         if (target != null)
         {
             if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE)
-                skipAlternateAction = true; // We skipping the alternate action because no status effect has been applied prior to this
+                performAction = true; // We can perform this action if no status has been applied prior to this
 
-            if (skipAlternateAction)
+            if (performAction)
             {
-                //if (!weaponSwung)
-                //{
-                //agent.GetComponentInChildren<Animator>().SetBool("isSwinging", true);
-
-                //weaponSwung = true;
-                //}
-
                 if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
                     agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
                 {
                     statusApplied = true;
                     weaponSwung = false;
-                    skipAlternateAction = false;
+                    performAction = false;
                 }
                 else if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
                 {
@@ -146,10 +139,7 @@ public class BurnWeaponAction : GoapAction
                 }
             }
             else
-            {
                 statusApplied = true;
-                weaponSwung = false;
-            }
 
             return true;
 

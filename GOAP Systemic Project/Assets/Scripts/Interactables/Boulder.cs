@@ -9,20 +9,27 @@ public class Boulder : MonoBehaviour
 
     public bool isTinyMoving;
     public bool isPushed;
+    public bool isStatusApplied;
+
+    public GameObject fireEffectSource; // Fire prefab
+    private GameObject fireEffect;
 
     private LayerMask groundLayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        tinyMoveAmount = 0.01f;
+        tinyMoveAmount = 0.015f;
         isTinyMoving = true;
 
         groundLayer = 1 << 0;
+        fireEffect = Instantiate(fireEffectSource);
+        fireEffect.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        fireEffect.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(isTinyMoving)
         {
@@ -35,12 +42,13 @@ public class Boulder : MonoBehaviour
         }
         else
         {
-            RaycastHit hit;
-
             if (!Physics.Raycast(transform.position, -Vector3.up, 5.0f, groundLayer))
-                GetComponent<Rigidbody>().useGravity = true;
+                gameObject.SetActive(false);
         }
 
+        if(isStatusApplied)
+            fireEffect.transform.position = transform.position + Vector3.up;
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,5 +57,11 @@ public class Boulder : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerBehaviour>().InflictDamage(15.0f);
         }
+    }
+
+    public void BurnBoulder()
+    {
+        fireEffect.SetActive(true);
+        isStatusApplied = true;
     }
 }

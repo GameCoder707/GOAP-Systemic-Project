@@ -20,7 +20,7 @@ public class LightEnemy : GeneralEnemy
                 goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";
             }
-            else if (CheckForElementSource())
+            else if (CheckForFireSource() || CheckForElectricSource())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";

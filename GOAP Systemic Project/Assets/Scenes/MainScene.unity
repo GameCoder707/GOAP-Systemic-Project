@@ -875,7 +875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &291103291
 Transform:
   m_ObjectHideFlags: 0
@@ -2921,6 +2921,7 @@ Transform:
   - {fileID: 422308523}
   - {fileID: 908325364}
   - {fileID: 144682114}
+  - {fileID: 1797870658}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3551,7 +3552,6 @@ GameObject:
   - component: {fileID: 964950347}
   - component: {fileID: 964950346}
   - component: {fileID: 964950345}
-  - component: {fileID: 964950343}
   - component: {fileID: 964950342}
   - component: {fileID: 964950351}
   - component: {fileID: 964950344}
@@ -3560,6 +3560,8 @@ GameObject:
   - component: {fileID: 964950360}
   - component: {fileID: 964950359}
   - component: {fileID: 964950361}
+  - component: {fileID: 964950362}
+  - component: {fileID: 964950343}
   m_Layer: 8
   m_Name: Med Enemy
   m_TagString: Enemy
@@ -3913,6 +3915,22 @@ MonoBehaviour:
   target: {fileID: 0}
   finishedAction: 0
   minimumDistance: 0.1
+--- !u!114 &964950362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964950341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a90693af9bfa3a4e89dc59792b758ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  target: {fileID: 0}
+  finishedAction: 0
+  minimumDistance: 2.5
 --- !u!1 &982010271
 GameObject:
   m_ObjectHideFlags: 0
@@ -4969,7 +4987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1328788393
 Transform:
   m_ObjectHideFlags: 0
@@ -6136,12 +6154,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797870653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.69, y: 1.63, z: -21.24}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.89, y: 8.752009, z: -6.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 860502638}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1797870659
 Rigidbody:
@@ -6173,6 +6191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTinyMoving: 0
   isPushed: 0
+  isStatusApplied: 0
+  fireEffectSource: {fileID: 1725317912486240, guid: e55149ba6f4d00741984987e258c3378, type: 3}
 --- !u!1 &1840426060
 GameObject:
   m_ObjectHideFlags: 0

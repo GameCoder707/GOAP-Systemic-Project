@@ -105,24 +105,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
     // ENEMY METHODS
     protected virtual bool CheckForWeaponSource(string statusCompatibility = "") { return false; }
 
-    protected bool CheckForObjects()
-    {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
-
-        if (interactables.Length > 0)
-        {
-            for (int i = 0; i < interactables.Length; i++)
-            {
-                if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
-                {
-                    if(!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
-                        return true;
-                }
-            }
-        }
-
-        return false;
-    }
+    protected virtual bool CheckForObjects() { return false; }
 
     protected bool CheckForCover()
     {
@@ -144,7 +127,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         return false;
     }
 
-    protected bool CheckForElementSource()
+    public bool CheckForFireSource()
     {
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
@@ -152,12 +135,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
             if (hit.collider.gameObject.name.ToLower().Contains("weather"))
-                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
-                    CheckForWeaponSource("Electric"))
-                {
-                    return true;
-                }
-                else if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.HEAT_WAVE &&
                             CheckForWeaponSource("Fire"))
                 {
                     return true;
@@ -165,8 +143,6 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
         if (interactables.Length > 0)
         {
-
-
             for (int i = 0; i < interactables.Length; i++)
             {
                 if (interactables[i].gameObject.ToString().ToLower().Contains("campfire") &&
@@ -177,6 +153,21 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
                 }
             }
         }
+
+        return false;
+    }
+
+    protected bool CheckForElectricSource()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
+            if (hit.collider.gameObject.name.ToLower().Contains("weather"))
+                if (hit.collider.gameObject.GetComponent<Weather>().weatherType == Weather.WEATHER_TYPE.STORM &&
+                    CheckForWeaponSource("Electric"))
+                {
+                    return true;
+                }
 
         return false;
     }

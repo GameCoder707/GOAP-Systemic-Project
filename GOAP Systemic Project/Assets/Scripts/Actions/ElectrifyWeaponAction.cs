@@ -36,7 +36,6 @@ public class ElectrifyWeaponAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        //target = null;
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
@@ -49,6 +48,13 @@ public class ElectrifyWeaponAction : GoapAction
 
                     if (interactables.Length > 0)
                     {
+                        for (int i = 0; i < interactables.Length; i++)
+                        {
+                            if (interactables[i].gameObject.name.ToLower().Contains("boulder") &&
+                                agent.GetComponent<GeneralEnemy>().CheckForFireSource())
+                                    return false;
+                        }
+
                         for (int i = 0; i < interactables.Length; i++)
                         {
                             if (interactables[i].gameObject.name.ToLower().Contains("weapon"))

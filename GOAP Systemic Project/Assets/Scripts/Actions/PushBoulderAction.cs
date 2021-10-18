@@ -7,6 +7,7 @@ public class PushBoulderAction : GoapAction
 {
     private bool boulderPushed;
     private bool positionSet;
+    private bool waitForStatusEffect;
 
     private Vector3 pushPos;
 
@@ -45,8 +46,12 @@ public class PushBoulderAction : GoapAction
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
-                    target = interactables[i].gameObject;
-                    break;
+                    if(!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
+                    {
+                        target = interactables[i].gameObject;
+                        break;
+                    }
+
                 }
             }
         }

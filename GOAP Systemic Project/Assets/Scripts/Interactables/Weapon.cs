@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
-        if(transform.parent != null)
+        if (transform.parent != null)
         {
             if (transform.parent.gameObject.GetComponent<Entity>() != null)
                 WeaponPickedUp(transform.parent.gameObject.GetComponent<Entity>());
@@ -116,7 +116,7 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(attackStance)
+        if (attackStance)
         {
             if (!weaponHit &&
                 other.gameObject.GetInstanceID() != transform.parent.gameObject.GetInstanceID())
@@ -129,6 +129,13 @@ public class Weapon : MonoBehaviour
                 else if (other.gameObject.CompareTag("Enemy"))
                 {
                     other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
+                    weaponHit = true;
+                }
+                else if (other.gameObject.GetComponent<Boulder>() != null)
+                {
+                    if (weaponStatus == WEAPON_STATUS.BURNING)
+                        other.gameObject.GetComponent<Boulder>().BurnBoulder();
+
                     weaponHit = true;
                 }
             }
