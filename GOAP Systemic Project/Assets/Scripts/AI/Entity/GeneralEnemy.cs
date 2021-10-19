@@ -75,12 +75,15 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     public bool moveAgent(GoapAction nextAction)
     {
-        // move towards the NextAction's target
-        float step = moveSpeed * Time.deltaTime;
+        Vector3 targetPos = Vector3.zero;
 
-        Vector3 targetPos = new Vector3(nextAction.target.transform.position.x, transform.position.y, nextAction.target.transform.position.z);
+        if (nextAction.target.GetComponent<Boulder>() != null)
+            targetPos = new Vector3(nextAction.target.GetComponent<Boulder>().startPos.x,
+                transform.position.y, nextAction.target.GetComponent<Boulder>().startPos.z);
+        else
+            targetPos = new Vector3(nextAction.target.transform.position.x,
+                transform.position.y, nextAction.target.transform.position.z);
 
-        // transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
         agent.SetDestination(targetPos);
         agent.stoppingDistance = nextAction.minimumDistance;
         agent.speed = moveSpeed;
@@ -88,7 +91,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         Vector3 faceDir = (transform.position - prevPosition).normalized;
 
         Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 800 * Time.deltaTime);
 
         prevPosition = transform.position;
 

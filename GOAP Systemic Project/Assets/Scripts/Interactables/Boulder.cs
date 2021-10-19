@@ -16,6 +16,8 @@ public class Boulder : MonoBehaviour
 
     private LayerMask groundLayer;
 
+    public Vector3 startPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,29 +28,34 @@ public class Boulder : MonoBehaviour
         fireEffect = Instantiate(fireEffectSource);
         fireEffect.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
         fireEffect.SetActive(false);
+
+        startPos = transform.position;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isTinyMoving)
+        if (isStatusApplied && fireEffect != null)
+            fireEffect.transform.position = transform.position + Vector3.up;
+
+        if (isTinyMoving)
         {
             if (swap)
-                transform.position = transform.position + (transform.right * tinyMoveAmount);
+                transform.position = transform.position - (transform.up * tinyMoveAmount);
             else
-                transform.position = transform.position - (transform.right * tinyMoveAmount);
+                transform.position = transform.position + (transform.up * tinyMoveAmount);
 
             swap = !swap;
         }
         else
         {
             if (!Physics.Raycast(transform.position, -Vector3.up, 5.0f, groundLayer))
-                gameObject.SetActive(false);
-        }
+            {
+                Destroy(fireEffect);
+                Destroy(gameObject);
+            }
 
-        if(isStatusApplied)
-            fireEffect.transform.position = transform.position + Vector3.up;
-        
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -18,8 +18,8 @@ public class MediumEnemy : GeneralEnemy
         {
             if (CheckForObjects())
             {
-                goal.Add(new KeyValuePair<string, object>("attackPlayerWithObjects", true));
-                goalName = "attackPlayerWithObjects";
+                goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goalName = "attackPlayerWithStatWeapon";
             }
             if (CheckForCover())
             {
@@ -57,6 +57,7 @@ public class MediumEnemy : GeneralEnemy
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
                     if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                        !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied &&
                         CheckForFireSource())
                         return true;
                 }
@@ -68,7 +69,7 @@ public class MediumEnemy : GeneralEnemy
 
     protected override bool CheckForWeaponSource(string statusCompatibility = "")
     {
-        if (GetComponent<EnemyStats>().hasWeapon)
+        if (GetComponentInChildren<Weapon>() != null)
         {
             if (statusCompatibility != "")
             {

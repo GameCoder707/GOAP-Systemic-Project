@@ -13,7 +13,7 @@ public class BurnBoulderAction : GoapAction
         addPrecondition("hasWeapon", true);
         addPrecondition("isStatusAppliedToWeapon", true);
 
-        addEffect("attackPlayerWithObjects", true);
+        addEffect("attackPlayerWithStatWeapon", true);
     }
 
     public override void reset()
@@ -36,7 +36,7 @@ public class BurnBoulderAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
-        if(agent.GetComponentInChildren<Weapon>() != null)
+        if (agent.GetComponentInChildren<Weapon>() != null)
         {
             if (agent.GetComponentInChildren<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING)
                 return false;
@@ -50,7 +50,8 @@ public class BurnBoulderAction : GoapAction
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
-                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
+                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                        !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied)
                     {
                         target = interactables[i].gameObject;
                         break;
@@ -66,6 +67,9 @@ public class BurnBoulderAction : GoapAction
     {
         if (agent.GetComponentInChildren<Weapon>() != null)
         {
+            if (target.GetComponent<Boulder>().isPushed)
+                return false;
+
             if (agent.GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING)
                 return true;
             else
@@ -77,15 +81,19 @@ public class BurnBoulderAction : GoapAction
 
     public override bool perform(GameObject agent)
     {
-        if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+        if (!target.GetComponent<Boulder>().isPushed)
         {
-            agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
+            if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+            {
+                agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
+            }
+
+            if (target.GetComponent<Boulder>().isStatusApplied)
+                boulderBurned = true;
+
+            return true;
         }
-
-        if (target.GetComponent<Boulder>().isStatusApplied)
-            boulderBurned = true;
-
-        return true;
-
+        else
+            return false;
     }
 }

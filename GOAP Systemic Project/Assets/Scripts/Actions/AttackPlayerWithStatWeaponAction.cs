@@ -9,6 +9,7 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
     private bool playerDead = true;
 
     private LayerMask playerLayer = 1 << 7;
+    private LayerMask interactableLayer = 1 << 6;
 
     private float attackDelay = 0.0f;
 
@@ -44,6 +45,16 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
     public override bool checkProceduralPrecondition(GameObject agent)
     {
         target = null;
+
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        for (int i = 0; i < interactables.Length; i++)
+        {
+            if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
+                if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                    !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied)
+                    return false;
+        }
 
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);
 

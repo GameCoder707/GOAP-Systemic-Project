@@ -12,6 +12,7 @@ public class PushBoulderAction : GoapAction
     private Vector3 pushPos;
 
     private LayerMask interactableLayer = 1 << 6;
+    private LayerMask enemyLayer = 1 << 8;
 
     public PushBoulderAction()
     {
@@ -79,21 +80,53 @@ public class PushBoulderAction : GoapAction
             positionSet = true;
         }
 
-        if (Vector3.Distance(agent.transform.position, pushPos) <= 0.8f)
+        if (Vector3.Distance(agent.transform.position, pushPos) <= 1f)
         {
             agent.GetComponent<NavMeshAgent>().isStopped = true;
 
-            Vector3 pushDir = (player.position - target.transform.position).normalized;
-            pushDir = new Vector3(pushDir.x, 0.0f, pushDir.z);
+            if (!waitForStatusEffect)
+            {
+                Collider[] surroundingEnemies = Physics.OverlapSphere(transform.position, 17.0f, enemyLayer);
 
-            target.GetComponent<Rigidbody>().AddForce(pushDir * 15.0f, ForceMode.Impulse);
-            target.GetComponent<Boulder>().isPushed = true;
+                if (surroundingEnemies.Length > 0)
+                {
+                    for (int i = 0; i < surroundingEnemies.Length; i++)
+                    {
+                        if (surroundingEnemies[i].gameObject.GetComponent<GeneralEnemy>().type != GeneralEnemy.ENEMY_TYPE.HEAVY)
+                        {
+                            if (surroundingEnemies[i].gameObject.GetComponent<GeneralEnemy>().CheckForFireSource())
+                            {
+                                waitForStatusEffect = true;
+                                break;
+                            }
+                        }
+                    }
 
-            boulderPushed = true;
+                    if(!waitForStatusEffect)
+                    {
+                        Debug.Log("Pushing coz no enemies can burn");
+                        PushBoulder(player);
+                    }
+
+                }
+                else // No enemies to burn boulder
+                {
+                    Debug.Log("Pushing coz no enemies");
+                    PushBoulder(player);
+                }
+
+            }
+            else
+            {
+                if (target.GetComponent<Boulder>().isStatusApplied)
+                {
+                    Debug.Log("Pushing coz some enemy burned it");
+                    PushBoulder(player);
+                }
+            }
         }
         else
         {
-            Debug.Log(Vector3.Distance(agent.transform.position, pushPos));
             GetComponent<NavMeshAgent>().SetDestination(pushPos);
             GetComponent<NavMeshAgent>().speed = agent.GetComponent<GeneralEnemy>().moveSpeed;
             GetComponent<NavMeshAgent>().stoppingDistance = 0;
@@ -101,5 +134,16 @@ public class PushBoulderAction : GoapAction
 
         return true;
 
+    }
+
+    void PushBoulder(Transform player)
+    {
+        Vector3 pushDir = (player.position - target.transform.position).normalized;
+        pushDir = new Vector3(pushDir.x, 0.0f, pushDir.z);
+
+        target.GetComponent<Rigidbody>().AddForce(pushDir * 15.0f, ForceMode.Impulse);
+        target.GetComponent<Boulder>().isPushed = true;
+
+        boulderPushed = true;
     }
 }
