@@ -8,17 +8,22 @@ public class BurnBoulderAction : GoapAction
 
     private LayerMask interactableLayer = 1 << 6;
 
+    private float actionDelay; // A small wait after burning the boulder
+
     public BurnBoulderAction()
     {
         addPrecondition("hasWeapon", true);
         addPrecondition("isStatusAppliedToWeapon", true);
 
         addEffect("attackPlayerWithStatWeapon", true);
+
+        actionDelay = 0.3f;
     }
 
     public override void reset()
     {
         // Reset
+        actionDelay = 0.3f;
         boulderBurned = false;
     }
 
@@ -83,13 +88,20 @@ public class BurnBoulderAction : GoapAction
     {
         if (!target.GetComponent<Boulder>().isPushed)
         {
-            if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+            if (target.GetComponent<Boulder>().isStatusApplied)
+            {
+                if (actionDelay <= 0)
+                {
+                    actionDelay = 0.3f;
+                    boulderBurned = true;
+                }
+                else
+                    actionDelay -= Time.deltaTime;
+            }
+            else if (agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
             {
                 agent.GetComponentInChildren<Weapon>().anim.SetBool("isSwinging", true);
             }
-
-            if (target.GetComponent<Boulder>().isStatusApplied)
-                boulderBurned = true;
 
             return true;
         }

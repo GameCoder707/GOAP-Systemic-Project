@@ -17,8 +17,6 @@ public class Electricity : Element
     void Update()
     {
         MainUpdate();
-
-        GetComponent<CapsuleCollider>().enabled = !hit;
     }
 
     private void FixedUpdate()

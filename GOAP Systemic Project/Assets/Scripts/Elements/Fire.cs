@@ -15,13 +15,11 @@ public class Fire : Element
     void Update()
     {
         MainUpdate();
-
-        GetComponent<SphereCollider>().enabled = !hit;
     }
 
     private void FixedUpdate()
     {
-        if(!gameObject.name.ToLower().Contains("fire source")) // Rain doesn't affect fire sources
+        if (!gameObject.name.ToLower().Contains("fire source")) // Rain doesn't affect fire sources
         {
             RaycastHit hit;
 
@@ -65,6 +63,11 @@ public class Fire : Element
                 if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING &&
                     other.gameObject.GetComponent<Weapon>().flammable)
                     other.gameObject.GetComponent<Weapon>().BurnWeapon();
+            }
+            else if (other.gameObject.GetComponent<Boulder>() != null)
+            {
+                if (!other.gameObject.GetComponent<Boulder>().isStatusApplied)
+                    other.gameObject.GetComponent<Boulder>().BurnBoulder();
             }
         }
 

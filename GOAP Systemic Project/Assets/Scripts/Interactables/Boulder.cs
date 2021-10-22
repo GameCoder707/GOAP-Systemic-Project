@@ -63,6 +63,9 @@ public class Boulder : MonoBehaviour
         if(other.gameObject.GetComponent<PlayerBehaviour>() != null)
         {
             other.gameObject.GetComponent<PlayerBehaviour>().InflictDamage(15.0f);
+
+            if (isStatusApplied && !other.gameObject.GetComponent<PlayerBehaviour>().isBurning())
+                other.gameObject.GetComponent<PlayerBehaviour>().burnPoints += 2;
         }
     }
 

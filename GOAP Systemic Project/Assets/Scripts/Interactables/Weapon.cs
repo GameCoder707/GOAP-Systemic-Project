@@ -131,13 +131,6 @@ public class Weapon : MonoBehaviour
                     other.gameObject.GetComponent<EnemyBehaviour>().health -= damage;
                     weaponHit = true;
                 }
-                else if (other.gameObject.GetComponent<Boulder>() != null)
-                {
-                    if (weaponStatus == WEAPON_STATUS.BURNING)
-                        other.gameObject.GetComponent<Boulder>().BurnBoulder();
-
-                    weaponHit = true;
-                }
             }
         }
 

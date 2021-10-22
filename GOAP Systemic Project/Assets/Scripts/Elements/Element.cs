@@ -28,5 +28,17 @@ public class Element : MonoBehaviour
                 hitDelay = 0.5f;
             }
         }
+
+        if(transform.parent != null)
+        {
+            if(transform.parent.gameObject.GetComponent<Weapon>() != null)
+            {
+                if (!transform.parent.gameObject.GetComponent<Animator>().GetBool("isSwinging"))
+                    GetComponent<SphereCollider>().enabled = false;
+                else
+                    GetComponent<SphereCollider>().enabled = !hit;
+            }
+            
+        }
     }
 }
