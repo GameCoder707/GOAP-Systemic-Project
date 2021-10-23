@@ -15,7 +15,12 @@ public class LightEnemy : GeneralEnemy
         }
         else // Combat Goals
         {
-            if (CheckForCover())
+            if (CheckForObjects())
+            {
+                goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goalName = "attackPlayerWithStatWeapon";
+            }
+            else if (CheckForCover())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";
@@ -38,6 +43,27 @@ public class LightEnemy : GeneralEnemy
         }
 
         return goal;
+    }
+
+    protected override bool CheckForObjects()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
+
+        if (interactables.Length > 0)
+        {
+            for (int i = 0; i < interactables.Length; i++)
+            {
+                if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
+                {
+                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                        !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied &&
+                        CheckForFireSource())
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     protected override bool CheckForWeaponSource(string statusCompatibility = "")

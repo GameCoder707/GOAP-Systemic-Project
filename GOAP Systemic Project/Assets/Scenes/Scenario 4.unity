@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 63bc34e4f8f590e478ad224aa4c64fee, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 5a3d6eafbabf49f4eaccce0d0c03f5b6, type: 2}
 --- !u!1 &73840102
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &291103291
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,7 +1163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1666979826326867590, guid: 2a949fd6b4d661e40be4a5fc7bcc89ae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a949fd6b4d661e40be4a5fc7bcc89ae, type: 3}
@@ -1556,7 +1556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &422308520
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1920,7 +1920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &691214059
 Transform:
   m_ObjectHideFlags: 0
@@ -2132,7 +2132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -3024,7 +3024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &908325364
 Transform:
   m_ObjectHideFlags: 0

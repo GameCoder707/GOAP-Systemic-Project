@@ -21,7 +21,7 @@ public class MediumEnemy : GeneralEnemy
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";
             }
-            if (CheckForCover())
+            else if (CheckForCover())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";

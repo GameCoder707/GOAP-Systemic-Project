@@ -33,7 +33,7 @@ public class Element : MonoBehaviour
         {
             if(transform.parent.gameObject.GetComponent<Weapon>() != null)
             {
-                if (!transform.parent.gameObject.GetComponent<Animator>().GetBool("isSwinging"))
+                if (transform.parent.gameObject.GetComponent<Animator>().GetNextAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
                     GetComponent<SphereCollider>().enabled = false;
                 else
                     GetComponent<SphereCollider>().enabled = !hit;
