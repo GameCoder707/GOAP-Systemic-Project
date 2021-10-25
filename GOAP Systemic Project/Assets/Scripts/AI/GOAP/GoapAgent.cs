@@ -201,13 +201,6 @@ public sealed class GoapAgent : MonoBehaviour
                 fsm.pushState(idleState);
             }
 
-
-            // get the agent to move itself
-            //if (dataProvider.moveAgent(action))
-            //{
-            //    fsm.popState();
-            //}
-
         };
     }
 
@@ -312,8 +305,15 @@ public sealed class GoapAgent : MonoBehaviour
     public static string prettyPrint(Queue<GoapAction> actions)
     {
         String s = "";
+        int i = 0;
+
         foreach (GoapAction a in actions)
         {
+            if(i < 1)
+            {
+                s += a.gameObject.name + ": ";
+                i++;
+            }
             s += a.GetType().Name;
             s += "-> ";
         }

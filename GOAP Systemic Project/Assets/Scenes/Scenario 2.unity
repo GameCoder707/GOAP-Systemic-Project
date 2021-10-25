@@ -2442,7 +2442,7 @@ GameObject:
   - component: {fileID: 785766296}
   - component: {fileID: 785766295}
   m_Layer: 8
-  m_Name: Light Entity
+  m_Name: Light Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3554,7 +3554,7 @@ GameObject:
   - component: {fileID: 964950362}
   - component: {fileID: 964950343}
   m_Layer: 8
-  m_Name: Med Enemy
+  m_Name: Medium Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4974,7 +4974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328788392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.44, y: -6.444948, z: 13.06}
+  m_LocalPosition: {x: -0.31, y: -6.444948, z: 10.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 233835484}
@@ -6203,7 +6203,7 @@ GameObject:
   - component: {fileID: 1840426081}
   - component: {fileID: 1840426082}
   m_Layer: 8
-  m_Name: Hvy Enemy
+  m_Name: Heavy Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

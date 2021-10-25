@@ -56,7 +56,8 @@ public class BurnBoulderAction : GoapAction
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
                     if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
-                        !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied)
+                        !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied &&
+                        agent.GetComponent<GeneralEnemy>().CheckForFireSource())
                     {
                         target = interactables[i].gameObject;
                         break;

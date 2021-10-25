@@ -27,6 +27,10 @@ public class AttackPlayerFromCoverAction : GoapAction
     {
         // Reset
         playerDead = false;
+
+        if (target != null)
+            target.GetComponentInParent<Barrier>().occupied = false;
+
     }
 
     public override void secondaryReset() { }

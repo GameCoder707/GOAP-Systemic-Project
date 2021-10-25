@@ -21,6 +21,7 @@ public class BurnWeaponAction : GoapAction
     {
         // Reset
         statusApplied = false;
+        performAction = false;
     }
 
     public override void secondaryReset() { }
@@ -126,6 +127,8 @@ public class BurnWeaponAction : GoapAction
 
             if (performAction)
             {
+                agent.transform.LookAt(new Vector3(target.transform.position.x, agent.transform.position.y, target.transform.position.z));
+
                 if (GetComponentInChildren<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.BURNING &&
                     agent.GetComponentInChildren<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
                 {

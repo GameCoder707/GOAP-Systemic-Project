@@ -32,9 +32,9 @@ public abstract class GoapAction : MonoBehaviour
 
     public void doReset()
     {
+        reset();
         inRange = false;
         target = null;
-        reset();
     }
 
     /**
