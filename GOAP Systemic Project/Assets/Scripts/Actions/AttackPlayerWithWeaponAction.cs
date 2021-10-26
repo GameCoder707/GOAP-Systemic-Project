@@ -90,8 +90,11 @@ public class AttackPlayerWithWeaponAction : GoapAction
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
-                Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+                if (faceDir != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 1800 * Time.deltaTime);
+                }
 
                 attackDelay = 0.2f;
 

@@ -86,8 +86,11 @@ public sealed class GoapAgent : MonoBehaviour
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
-                Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 900 * Time.deltaTime);
+                if(faceDir != Vector3.zero)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 900 * Time.deltaTime);
+                }
 
                 prevPosition = transform.position;
             }
@@ -288,7 +291,7 @@ public sealed class GoapAgent : MonoBehaviour
         {
             availableActions.Add(a);
         }
-        Debug.Log("Found actions: " + prettyPrint(actions));
+        //Debug.Log("Found actions: " + prettyPrint(actions));
     }
 
     public static string prettyPrint(HashSet<KeyValuePair<string, object>> state)
