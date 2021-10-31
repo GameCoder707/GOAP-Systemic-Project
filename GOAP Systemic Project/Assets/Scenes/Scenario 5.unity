@@ -2446,7 +2446,7 @@ GameObject:
   - component: {fileID: 785766296}
   - component: {fileID: 785766295}
   m_Layer: 8
-  m_Name: Light Entity
+  m_Name: Light Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6207,7 +6207,7 @@ GameObject:
   - component: {fileID: 1840426081}
   - component: {fileID: 1840426082}
   m_Layer: 8
-  m_Name: Hvy Enemy
+  m_Name: Heavy Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

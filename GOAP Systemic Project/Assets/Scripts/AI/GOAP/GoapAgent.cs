@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -29,6 +30,8 @@ public sealed class GoapAgent : MonoBehaviour
     List<GoapAction> planList = new List<GoapAction>();
 
     private NavMeshAgent agent;
+
+    public Text currentActionDisplay;
 
     void Start()
     {
@@ -190,6 +193,7 @@ public sealed class GoapAgent : MonoBehaviour
                 return;
             }
 
+            currentActionDisplay.text = action.GetMovingActionName();
             if (action.movementPass(gameObj))
             {
                 if (dataProvider.moveAgent(action))
@@ -243,6 +247,7 @@ public sealed class GoapAgent : MonoBehaviour
 
                     bool success = false;
 
+                    currentActionDisplay.text = action.GetPerformingActionName();
                     success = action.perform(gameObj);
 
                     if (!success)

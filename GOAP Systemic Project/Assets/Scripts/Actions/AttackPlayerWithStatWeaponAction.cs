@@ -21,13 +21,15 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
         addPrecondition("isStatusAppliedToWeapon", true);
 
         addEffect("attackPlayerWithStatWeapon", true);
+
+        movingActionText = "Moving towards Player";
+        performingActionText = "Attacking Player with Status Applied Weapon";
     }
 
     public override void reset()
     {
         // Reset
         playerDead = false;
-
     }
 
     public override void secondaryReset() { }
@@ -67,7 +69,6 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
     public override bool movementPass(GameObject agent)
     {
         return true;
-
     }
 
     public override bool perform(GameObject agent)

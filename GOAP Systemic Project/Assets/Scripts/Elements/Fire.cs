@@ -54,7 +54,7 @@ public class Fire : Element
                 (other.gameObject.CompareTag("Enemy") && GetComponentInParent<GeneralEnemy>() == null))
             {
                 if (!other.gameObject.GetComponent<Entity>().isBurning())
-                    other.gameObject.GetComponent<Entity>().burnPoints += 1;
+                    other.gameObject.GetComponent<Entity>().IncreaseBurnPoints();
 
                 hit = true;
             }

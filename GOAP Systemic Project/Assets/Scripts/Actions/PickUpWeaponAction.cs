@@ -12,6 +12,9 @@ public class PickUpWeaponAction : GoapAction
     public PickUpWeaponAction()
     {
         addEffect("hasWeapon", true);
+
+        movingActionText = "Moving towards Weapon";
+        performingActionText = "Picking up Weapon";
     }
 
     public override void reset()

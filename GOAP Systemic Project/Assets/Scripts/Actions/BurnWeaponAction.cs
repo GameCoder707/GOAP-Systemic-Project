@@ -15,6 +15,9 @@ public class BurnWeaponAction : GoapAction
         addPrecondition("hasWeapon", true);
 
         addEffect("isStatusAppliedToWeapon", true);
+
+        movingActionText = "Moving towards Fire Source";
+        performingActionText = "Burning weapon using Fire Source";
     }
 
     public override void reset()
@@ -115,7 +118,6 @@ public class BurnWeaponAction : GoapAction
         }
         else
             return false;
-
     }
 
     public override bool perform(GameObject agent)

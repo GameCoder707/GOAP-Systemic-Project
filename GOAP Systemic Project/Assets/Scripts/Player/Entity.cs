@@ -14,12 +14,14 @@ public class Entity : MonoBehaviour
     public float burnPoints = 0;
     protected float burnDuration = 5.0f;
     protected float burnDamage = 5.0f;
+    protected float burnPointsDrainDelay = 5.0f; // Delay to drain the meter after a few seconds
 
     [Header("Electric Info")]
     protected const float maxElectricPoints = 5;
     public float electricPoints = 0;
     protected float electricDuration = 1.5f;
     protected float electricDamage = 3.0f;
+    protected float electricPointsDrainDelay;
 
     [Header("UI")]
     public Image healthFill;
@@ -45,17 +47,25 @@ public class Entity : MonoBehaviour
         // Apply Burn Effect
         if (burnPoints >= maxBurnPoints)
         {
-            if (burnDuration <= 0)
+            if (burnDuration <= 0) // Burn completed
             {
                 burnPoints = 0;
                 burnDuration = 5.0f;
+                burnPointsDrainDelay = 6.0f;
             }
-            else
+            else // Burning
             {
                 health -= burnDamage * Time.deltaTime;
 
                 burnDuration -= Time.deltaTime;
             }
+        }
+        else // Drain after a few seconds if not filled
+        {
+            if (burnPointsDrainDelay <= 0)
+                burnPoints -=  0.5f * Time.deltaTime;
+            else
+                burnPointsDrainDelay -= Time.deltaTime;
         }
 
         // Apply Shock Effect
@@ -65,9 +75,17 @@ public class Entity : MonoBehaviour
             {
                 electricPoints = 0;
                 electricDuration = 1.5f;
+                electricPointsDrainDelay = 6.0f;
             }
             else
                 electricDuration -= Time.deltaTime;
+        }
+        else // Drain after a few seconds if not filled
+        {
+            if (electricPointsDrainDelay <= 0)
+                electricPoints -= 0.5f * Time.deltaTime;
+            else
+                electricPointsDrainDelay -= Time.deltaTime;
         }
     }
 
@@ -96,13 +114,23 @@ public class Entity : MonoBehaviour
             electricMeterObj.SetActive(false);
     }
 
+    public void IncreaseBurnPoints()
+    {
+        burnPoints += 1;
+        burnPointsDrainDelay = 6.0f;
+    }
+
     public void IncreaseElectricPoints(int power)
     {
         electricPoints += power;
 
         if (electricPoints >= maxElectricPoints)
             health -= electricDamage;
+
+        electricPointsDrainDelay = 6.0f;
     }
+
+
 
     public bool isBurning() { return burnPoints >= maxBurnPoints; }
 

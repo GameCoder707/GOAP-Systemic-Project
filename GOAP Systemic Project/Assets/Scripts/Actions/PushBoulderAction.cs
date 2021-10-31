@@ -21,6 +21,9 @@ public class PushBoulderAction : GoapAction
         addEffect("attackPlayerWithObjects", true);
 
         pushDelay = 0.3f;
+
+        movingActionText = "Moving towards Boulder";
+        performingActionText = "Aligning myself to Push boulder at Player";
     }
 
     public override void reset()
@@ -110,14 +113,14 @@ public class PushBoulderAction : GoapAction
 
                     if (!waitForStatusEffect)
                     {
-                        Debug.Log("Pushing coz no enemies can burn");
+                        //Debug.Log("Pushing coz no enemies can burn");
                         PushBoulder(player);
                     }
 
                 }
                 else // No enemies to burn boulder
                 {
-                    Debug.Log("Pushing coz no enemies");
+                    //Debug.Log("Pushing coz no enemies");
                     PushBoulder(player);
                 }
 
@@ -135,7 +138,7 @@ public class PushBoulderAction : GoapAction
 
                 if (target.GetComponent<Boulder>().isStatusApplied)
                 {
-                    Debug.Log("Pushing coz some enemy burned it");
+                    //Debug.Log("Pushing coz some enemy burned it");
                     PushBoulder(player);
                 }
             }

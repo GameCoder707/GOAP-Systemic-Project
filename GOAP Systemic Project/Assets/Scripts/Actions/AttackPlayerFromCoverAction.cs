@@ -15,6 +15,9 @@ public class AttackPlayerFromCoverAction : GoapAction
     public AttackPlayerFromCoverAction()
     {
         addEffect("attackPlayerFromCover", true);
+
+        movingActionText = "Moving towards Cover";
+        performingActionText = "Throwing Stones at Player from Cover";
     }
 
     private void Start()

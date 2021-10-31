@@ -2132,7 +2132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8759657634921839409, guid: afca31abd10448242b8f91d659083069, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afca31abd10448242b8f91d659083069, type: 3}
@@ -2442,7 +2442,7 @@ GameObject:
   - component: {fileID: 785766296}
   - component: {fileID: 785766295}
   m_Layer: 8
-  m_Name: Light Entity
+  m_Name: Light Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3554,7 +3554,7 @@ GameObject:
   - component: {fileID: 964950362}
   - component: {fileID: 964950343}
   m_Layer: 8
-  m_Name: Med Enemy
+  m_Name: Medium Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -31,7 +31,7 @@ public class PlayerBehaviour : Entity
 
         StatusEffects();
 
-        if (electricPoints < maxElectricPoints)
+        if (electricPoints < maxElectricPoints) // Stunning the enemy
         {
             Move();
             Aim();

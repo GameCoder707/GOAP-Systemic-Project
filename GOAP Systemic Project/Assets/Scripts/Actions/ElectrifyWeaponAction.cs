@@ -14,6 +14,9 @@ public class ElectrifyWeaponAction : GoapAction
         addPrecondition("hasWeapon", true);
 
         addEffect("isStatusAppliedToWeapon", true);
+
+        movingActionText = "Moving towards Conductive Weapon";
+        performingActionText = "Electrifying Weapon using Electric Source";
     }
 
     public override void reset()

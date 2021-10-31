@@ -9,6 +9,9 @@ public class FleeAction : GoapAction
     public FleeAction()
     {
         addEffect("canAttack", true);
+
+        movingActionText = "";
+        performingActionText = "Fleeing from Player";
     }
 
     public override void reset()

@@ -12,13 +12,15 @@ public class PickUpCuttingToolAction : GoapAction
     public PickUpCuttingToolAction()
     {
         addEffect("hasCuttingTool", true);
+
+        movingActionText = "Moving towards Cutting Tool";
+        performingActionText = "Picking up Cutting Tool";
     }
 
     public override void reset()
     {
         // Reset
         hasCuttingTool = false;
-
     }
 
     public override void secondaryReset() { }

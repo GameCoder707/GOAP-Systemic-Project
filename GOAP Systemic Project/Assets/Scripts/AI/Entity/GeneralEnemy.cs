@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class GeneralEnemy : MonoBehaviour, IGoap
 {
@@ -20,6 +21,8 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
     protected LayerMask enemyLayer = 1 << 8;
 
     private Vector3 prevPosition;
+
+    public Text currentGoalDisplay;
 
     // Start is called before the first frame update
     void Start()

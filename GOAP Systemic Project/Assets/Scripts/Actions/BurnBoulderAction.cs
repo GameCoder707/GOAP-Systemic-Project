@@ -18,6 +18,9 @@ public class BurnBoulderAction : GoapAction
         addEffect("attackPlayerWithStatWeapon", true);
 
         actionDelay = 0.3f;
+
+        movingActionText = "Moving towards Boulder";
+        performingActionText = "Burning Boulder";
     }
 
     public override void reset()

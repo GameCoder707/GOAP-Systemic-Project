@@ -16,6 +16,9 @@ public class AttackPlayerAction : GoapAction
     public AttackPlayerAction()
     {
         addEffect("attackPlayer", true);
+
+        movingActionText = "Moving towards Player";
+        performingActionText = "Attacking Player with Bare Hands";
     }
 
     public override void reset()

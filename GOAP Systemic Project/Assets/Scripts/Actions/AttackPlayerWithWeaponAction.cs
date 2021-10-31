@@ -18,6 +18,9 @@ public class AttackPlayerWithWeaponAction : GoapAction
         addPrecondition("hasWeapon", true);
 
         addEffect("attackPlayerWithWeapon", true);
+
+        movingActionText = "Moving towards Player";
+        performingActionText = "Attacking Player with Weapon";
     }
 
     public override void reset()

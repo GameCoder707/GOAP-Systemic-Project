@@ -16,6 +16,9 @@ public class PunchTreeBranchAction : GoapAction
     public PunchTreeBranchAction()
     {
         addEffect("hasWeapon", true);
+
+        movingActionText = "Moving towards Tree with no Cutting Tool";
+        performingActionText = "Punching Tree to obtain Flammable Weapon";
     }
 
     public override void reset()

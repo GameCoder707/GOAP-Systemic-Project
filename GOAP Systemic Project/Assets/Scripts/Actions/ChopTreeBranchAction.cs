@@ -18,6 +18,9 @@ public class ChopTreeBranchAction : GoapAction
         addPrecondition("hasCuttingTool", true);
 
         addEffect("hasWeapon", true);
+
+        movingActionText = "Moving towards Tree with Cutting Tool";
+        performingActionText = "Chopping Tree to obtain Flammable Weapon";
     }
 
     public override void reset()

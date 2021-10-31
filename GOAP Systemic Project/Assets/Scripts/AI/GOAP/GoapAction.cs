@@ -1,11 +1,8 @@
-
 using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class GoapAction : MonoBehaviour
 {
-
-
     private HashSet<KeyValuePair<string, object>> preconditions;
     private HashSet<KeyValuePair<string, object>> effects;
 
@@ -23,6 +20,9 @@ public abstract class GoapAction : MonoBehaviour
     public bool finishedAction = false;
 
     public float minimumDistance = 1.5f;
+
+    protected string movingActionText; // Text to display when the agent is moving
+    protected string performingActionText; // Text to display when the agent is performing
 
     public GoapAction()
     {
@@ -56,7 +56,7 @@ public abstract class GoapAction : MonoBehaviour
     public abstract bool checkProceduralPrecondition(GameObject agent);
 
     // To check if object is moving towards the right target
-    public abstract bool movementPass(GameObject agent); 
+    public abstract bool movementPass(GameObject agent);
 
     /**
 	 * Run the action.
@@ -76,6 +76,17 @@ public abstract class GoapAction : MonoBehaviour
 	 * Are we in range of the target?
 	 * The MoveTo state will set this and it gets reset each time this action is performed.
 	 */
+
+    public string GetMovingActionName()
+    {
+        return "Current Action: " + movingActionText;
+    }
+
+    public string GetPerformingActionName()
+    {
+        return "Current Action: " + performingActionText;
+    }
+
     public bool isInRange()
     {
         return inRange;

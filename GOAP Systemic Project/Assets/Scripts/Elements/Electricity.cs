@@ -48,26 +48,19 @@ public class Electricity : Element
     private void OnTriggerEnter(Collider other)
     {
 
-        Debug.Log("hitting");
-
         if (!hit)
         {
-
-
             if ((other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
                 ||
                 (other.gameObject.CompareTag("Enemy") && GetComponentInParent<GeneralEnemy>() == null))
             {
                 if (!other.gameObject.GetComponent<Entity>().isElectrified())
                 {
-                    Debug.Log("colliding");
-
                     if (power == 0)
                         power = 1;
 
                     other.gameObject.GetComponent<Entity>().IncreaseElectricPoints(power);
                 }
-
 
                 hit = true;
             }
@@ -78,6 +71,5 @@ public class Electricity : Element
                     other.gameObject.GetComponent<Weapon>().ElectrifyWeapon();
             }
         }
-
     }
 }

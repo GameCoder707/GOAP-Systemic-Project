@@ -20,26 +20,31 @@ public class MediumEnemy : GeneralEnemy
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";
+                currentGoalDisplay.text = "Current Goal: Burning Boulder for Heavy Enemy to Push";
             }
             else if (CheckForCover())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";
+                currentGoalDisplay.text = "Current Goal: Kill Player from behind Cover";
             }
             else if (CheckForFireSource() || CheckForElectricSource())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";
+                currentGoalDisplay.text = "Current Goal: Kill Player with Status Applied Weapon";
             }
             else if (CheckForWeaponSource())
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
                 goalName = "attackPlayerWithWeapon";
+                currentGoalDisplay.text = "Current Goal: Kill Player with Weapon";
             }
             else
             {
                 goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
                 goalName = "attackPlayer";
+                currentGoalDisplay.text = "Current Goal: Kill Player with Bare Hands";
             }
         }
 
