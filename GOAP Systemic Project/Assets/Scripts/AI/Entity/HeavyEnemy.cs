@@ -60,7 +60,8 @@ public class HeavyEnemy : GeneralEnemy
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
-                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
+                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                        interactables[i].gameObject.GetComponent<Boulder>().pusher == null)
                         return true;
                 }
             }

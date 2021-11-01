@@ -62,8 +62,11 @@ public class LightEnemy : GeneralEnemy
                 {
                     if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
                         !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied &&
+                        interactables[i].gameObject.GetComponent<Boulder>().burner == null &&
                         CheckForFireSource())
+                    {
                         return true;
+                    }
                 }
             }
         }

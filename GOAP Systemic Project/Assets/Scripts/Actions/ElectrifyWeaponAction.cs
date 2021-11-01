@@ -53,9 +53,12 @@ public class ElectrifyWeaponAction : GoapAction
                     {
                         for (int i = 0; i < interactables.Length; i++)
                         {
-                            if (interactables[i].gameObject.name.ToLower().Contains("boulder") &&
-                                agent.GetComponent<GeneralEnemy>().CheckForFireSource())
+                            if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
+                            {
+                                if (agent.GetComponent<GeneralEnemy>().CheckForFireSource() &&
+                                    interactables[i].gameObject.GetComponent<Boulder>().burner == null)
                                     return false;
+                            }
                         }
 
                         for (int i = 0; i < interactables.Length; i++)

@@ -60,9 +60,11 @@ public class BurnBoulderAction : GoapAction
                 {
                     if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
                         !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied &&
+                        interactables[i].gameObject.GetComponent<Boulder>().burner == null &&
                         agent.GetComponent<GeneralEnemy>().CheckForFireSource())
                     {
                         target = interactables[i].gameObject;
+                        target.GetComponent<Boulder>().burner = agent;
                         break;
                     }
                 }

@@ -32,8 +32,13 @@ public class AttackPlayerFromCoverAction : GoapAction
         playerDead = false;
 
         if (target != null)
-            target.GetComponentInParent<Barrier>().occupied = false;
-
+        {
+            if (target.GetComponentInParent<Barrier>().owner.GetInstanceID() == gameObject.GetInstanceID())
+            {
+                target.GetComponentInParent<Barrier>().occupied = false;
+                target.GetComponentInParent<Barrier>().owner = null;
+            }
+        }
     }
 
     public override void secondaryReset() { }
@@ -61,7 +66,9 @@ public class AttackPlayerFromCoverAction : GoapAction
                     if (!interactables[i].gameObject.GetComponent<Barrier>().occupied)
                     {
                         target = interactables[i].gameObject.GetComponent<Barrier>().GetCoverPos();
+
                         interactables[i].gameObject.GetComponent<Barrier>().occupied = true;
+                        interactables[i].gameObject.GetComponent<Barrier>().owner = agent;
                         break;
                     }
                 }
@@ -73,7 +80,10 @@ public class AttackPlayerFromCoverAction : GoapAction
 
     public override bool movementPass(GameObject agent)
     {
-        return true;
+        if (target.GetComponentInParent<Barrier>().owner.GetInstanceID() == agent.GetInstanceID())
+            return true;
+        else
+            return false;
     }
 
     public override bool perform(GameObject agent)
@@ -82,7 +92,6 @@ public class AttackPlayerFromCoverAction : GoapAction
 
         if (Vector3.Distance(player.position, transform.position) >= 6f && target.GetComponentInParent<Barrier>().GetCoverStatus())
         {
-
             Vector3 faceDir = (player.position - agent.transform.position).normalized;
 
             Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
@@ -99,8 +108,6 @@ public class AttackPlayerFromCoverAction : GoapAction
 
                 obj.GetComponent<Rigidbody>().AddForce(aimDir * 10.0f, ForceMode.Impulse);
 
-                //agent.transform.LookAt(player.gameObject.transform);
-
                 attackDelay = 1.25f;
             }
             else
@@ -113,7 +120,5 @@ public class AttackPlayerFromCoverAction : GoapAction
             target.GetComponentInParent<Barrier>().occupied = false;
             return false;
         }
-
-
     }
 }

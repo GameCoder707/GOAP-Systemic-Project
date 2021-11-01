@@ -63,16 +63,20 @@ public sealed class GoapAgent : MonoBehaviour
         {
             if (searchTimer < 0)
             {
-                agent.isStopped = false;
+                GetComponent<GeneralEnemy>().currentGoalDisplay.text = "Current Goal: N/A";
+
+                agent.speed = 0.5f * moveSpeed;
+                agent.stoppingDistance = 0f;
 
                 if (isPatrolling)
                 {
-                    //transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, 0.5f * moveSpeed * Time.deltaTime);
-                    agent.SetDestination(waypoints[currentWaypoint].position);
-                    agent.speed = 0.5f * moveSpeed;
-                    agent.stoppingDistance = 0f;
+                    agent.isStopped = false;
 
-                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 1.5f)
+                    currentActionDisplay.text = "Current Action: Patrolling";
+
+                    agent.SetDestination(waypoints[currentWaypoint].position);
+
+                    if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) <= 1.0f)
                     {
                         if (currentWaypoint + 1 >= waypoints.Count)
                             currentWaypoint = 0;
@@ -82,9 +86,17 @@ public sealed class GoapAgent : MonoBehaviour
                 }
                 else
                 {
-                    //transform.position = Vector3.MoveTowards(transform.position, waypoints[0].position, 0.5f * moveSpeed * Time.deltaTime);
-                    agent.SetDestination(waypoints[0].position);
-                    agent.speed = 0.5f * moveSpeed;
+                    if (Vector3.Distance(transform.position, waypoints[0].position) <= 0.1f)
+                    {
+                        agent.isStopped = true;
+                        currentActionDisplay.text = "Current Action: Standing By";
+                    }
+                    else
+                    {
+                        agent.isStopped = false;
+                        currentActionDisplay.text = "Current Action: Moving to Resting Spot";
+                        agent.SetDestination(waypoints[0].position);
+                    }
                 }
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;

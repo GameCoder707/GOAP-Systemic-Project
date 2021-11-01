@@ -7,6 +7,7 @@ public class Barrier : MonoBehaviour
     public GameObject posA;
     public GameObject posB;
     private GameObject occupyingPos;
+    public GameObject owner;
 
     public bool occupied;
 
@@ -38,8 +39,6 @@ public class Barrier : MonoBehaviour
             occupyingPos = posB;
             return posB;
         }
-
-
     }
 
     public bool GetCoverStatus()

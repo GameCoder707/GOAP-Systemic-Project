@@ -14,6 +14,9 @@ public class Boulder : MonoBehaviour
     public GameObject fireEffectSource; // Fire prefab
     private GameObject fireEffect;
 
+    public GameObject pusher; // Only one heavy enemy to push
+    public GameObject burner; // Only one non-heavy enemy to burn
+
     private LayerMask groundLayer;
 
     public Vector3 startPos;
@@ -54,7 +57,6 @@ public class Boulder : MonoBehaviour
                 Destroy(fireEffect);
                 Destroy(gameObject);
             }
-
         }
     }
 

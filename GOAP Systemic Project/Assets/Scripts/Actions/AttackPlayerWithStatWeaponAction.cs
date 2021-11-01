@@ -55,7 +55,23 @@ public class AttackPlayerWithStatWeaponAction : GoapAction
             if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
                     !interactables[i].gameObject.GetComponent<Boulder>().isStatusApplied)
-                    return false;
+                {
+                    switch (agent.GetComponent<GeneralEnemy>().type)
+                    {
+                        case GeneralEnemy.ENEMY_TYPE.LIGHT:
+                            if (interactables[i].gameObject.GetComponent<Boulder>().burner == null)
+                                return false;
+                            break;
+                        case GeneralEnemy.ENEMY_TYPE.MEDIUM:
+                            if (interactables[i].gameObject.GetComponent<Boulder>().burner == null)
+                                return false;
+                            break;
+                        case GeneralEnemy.ENEMY_TYPE.HEAVY:
+                            if (interactables[i].gameObject.GetComponent<Boulder>().pusher == null)
+                                return false;
+                            break;
+                    }
+                }
         }
 
         Collider[] player = Physics.OverlapSphere(transform.position, 15.0f, playerLayer);

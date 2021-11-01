@@ -55,9 +55,11 @@ public class PushBoulderAction : GoapAction
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("boulder"))
                 {
-                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed)
+                    if (!interactables[i].gameObject.GetComponent<Boulder>().isPushed &&
+                        interactables[i].gameObject.GetComponent<Boulder>().pusher == null)
                     {
                         target = interactables[i].gameObject;
+                        target.GetComponent<Boulder>().pusher = agent;
                         break;
                     }
 
@@ -112,18 +114,10 @@ public class PushBoulderAction : GoapAction
                     }
 
                     if (!waitForStatusEffect)
-                    {
-                        //Debug.Log("Pushing coz no enemies can burn");
                         PushBoulder(player);
-                    }
-
                 }
                 else // No enemies to burn boulder
-                {
-                    //Debug.Log("Pushing coz no enemies");
                     PushBoulder(player);
-                }
-
             }
             else
             {
@@ -150,36 +144,36 @@ public class PushBoulderAction : GoapAction
             GetComponent<NavMeshAgent>().stoppingDistance = 0;
         }
 
-            return true;
+        return true;
 
-        }
-
-        private void PushBoulder(Transform player)
-        {
-            if (pushDelay <= 0)
-            {
-                Vector3 pushDir = (player.position - target.transform.position).normalized;
-                pushDir = new Vector3(pushDir.x, 0.0f, pushDir.z);
-
-                target.GetComponent<Rigidbody>().AddForce(pushDir * 15.0f, ForceMode.Impulse);
-                target.GetComponent<Boulder>().isPushed = true;
-
-                pushDelay = 0.3f;
-                boulderPushed = true;
-            }
-            else
-                pushDelay -= Time.deltaTime;
-
-        }
-
-        private bool CheckActionInPlan(Queue<GoapAction> actionPlan, string actionName)
-        {
-            foreach (GoapAction a in actionPlan)
-            {
-                if (a.GetType().Name == actionName)
-                    return true;
-            }
-
-            return false;
-        }
     }
+
+    private void PushBoulder(Transform player)
+    {
+        if (pushDelay <= 0)
+        {
+            Vector3 pushDir = (player.position - target.transform.position).normalized;
+            pushDir = new Vector3(pushDir.x, 0.0f, pushDir.z);
+
+            target.GetComponent<Rigidbody>().AddForce(pushDir * 15.0f, ForceMode.Impulse);
+            target.GetComponent<Boulder>().isPushed = true;
+
+            pushDelay = 0.3f;
+            boulderPushed = true;
+        }
+        else
+            pushDelay -= Time.deltaTime;
+
+    }
+
+    private bool CheckActionInPlan(Queue<GoapAction> actionPlan, string actionName)
+    {
+        foreach (GoapAction a in actionPlan)
+        {
+            if (a.GetType().Name == actionName)
+                return true;
+        }
+
+        return false;
+    }
+}
