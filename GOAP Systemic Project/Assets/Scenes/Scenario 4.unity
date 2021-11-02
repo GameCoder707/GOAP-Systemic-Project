@@ -493,6 +493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campfire - Fire Source
       objectReference: {fileID: 0}
+    - target: {fileID: 1725317912486240, guid: e55149ba6f4d00741984987e258c3378, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -7298,6 +7302,8 @@ MonoBehaviour:
   isPushed: 0
   isStatusApplied: 0
   fireEffectSource: {fileID: 1725317912486240, guid: e55149ba6f4d00741984987e258c3378, type: 3}
+  pusher: {fileID: 0}
+  burner: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1828717905
 GameObject:

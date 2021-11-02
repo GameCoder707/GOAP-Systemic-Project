@@ -327,7 +327,7 @@ MonoBehaviour:
   conductive: 1
   weaponStatus: 0
   fireEffect: {fileID: 0}
-  electricEffect: {fileID: 5349555377433495506, guid: 15be8e0c01311a44ea3ce9933d9db6b2, type: 3}
+  electricEffect: {fileID: 106988, guid: 15dec7b07032b2f4aa6f855bfbe120f7, type: 3}
   anim: {fileID: 0}
   integrity: 7
 --- !u!136 &5187268557889323855

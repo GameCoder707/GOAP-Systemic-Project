@@ -19277,7 +19277,7 @@ GameObject:
   - component: {fileID: 199176809758892682}
   - component: {fileID: 6248377708039226257}
   - component: {fileID: 1261472118863292330}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Real Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24109,5 +24109,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0.24, z: 0}

@@ -33,12 +33,12 @@ public class Element : MonoBehaviour
         {
             if(transform.parent.gameObject.GetComponent<Weapon>() != null)
             {
-                if (transform.parent.gameObject.GetComponent<Animator>().GetNextAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
+                if (transform.parent.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("WeaponIdleAnim"))
                     GetComponent<SphereCollider>().enabled = false;
                 else
                     GetComponent<SphereCollider>().enabled = !hit;
+                
             }
-            
         }
     }
 }

@@ -62,10 +62,19 @@ public class Entity : MonoBehaviour
         }
         else // Drain after a few seconds if not filled
         {
-            if (burnPointsDrainDelay <= 0)
-                burnPoints -=  0.5f * Time.deltaTime;
+            if(burnPoints > 0)
+            {
+                if (burnPointsDrainDelay <= 0)
+                    burnPoints -= 0.5f * Time.deltaTime;
+                else
+                    burnPointsDrainDelay -= Time.deltaTime;
+            }
             else
-                burnPointsDrainDelay -= Time.deltaTime;
+            {
+                burnPointsDrainDelay = 5.0f;
+                burnPoints = 0.0f;
+            }
+
         }
 
         // Apply Shock Effect
@@ -82,10 +91,18 @@ public class Entity : MonoBehaviour
         }
         else // Drain after a few seconds if not filled
         {
-            if (electricPointsDrainDelay <= 0)
-                electricPoints -= 0.5f * Time.deltaTime;
+            if (electricPoints > 0)
+            {
+                if (electricPointsDrainDelay <= 0)
+                    electricPoints -= 0.5f * Time.deltaTime;
+                else
+                    electricPointsDrainDelay -= Time.deltaTime;
+            }
             else
-                electricPointsDrainDelay -= Time.deltaTime;
+            {
+                electricPointsDrainDelay = 5.0f;
+                electricPoints = 0.0f;
+            }
         }
     }
 

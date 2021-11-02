@@ -576,9 +576,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campfire - Fire Source
       objectReference: {fileID: 0}
+    - target: {fileID: 1725317912486240, guid: e55149ba6f4d00741984987e258c3378, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4274653050354540, guid: e55149ba6f4d00741984987e258c3378, type: 3}
       propertyPath: m_LocalScale.x
@@ -2102,7 +2106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8657933478000345421, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8657933478000345421, guid: bf7e1b8648fe8fd448358f07d64f7f50, type: 3}
       propertyPath: m_LocalPosition.x

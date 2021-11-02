@@ -47,7 +47,6 @@ public class Electricity : Element
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (!hit)
         {
             if ((other.gameObject.CompareTag("Player") && GetComponentInParent<PlayerBehaviour>() == null)
