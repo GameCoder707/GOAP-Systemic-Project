@@ -20,6 +20,8 @@ public class EnemyBehaviour : Entity
     // Update is called once per frame
     void FixedUpdate()
     {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+
         Collider[] player = Physics.OverlapSphere(transform.position, 15, playerLayer);
 
         if (player.Length > 0 && electricPoints < maxElectricPoints)

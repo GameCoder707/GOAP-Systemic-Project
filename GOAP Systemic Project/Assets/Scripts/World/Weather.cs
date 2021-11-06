@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DigitalRuby.LightningBolt;
 
 public class Weather : MonoBehaviour
 {
@@ -15,13 +16,17 @@ public class Weather : MonoBehaviour
     public List<Weapon> affectedWeapons = new List<Weapon>();
     private List<float> affectTimers = new List<float>();
 
+    public GameObject lightningVFX;
+    public GameObject heatWaveVFX;
+
     // Start is called before the first frame update
-    //void Start()
-    //{
-    //}
+    //void Start() {}
 
     void Update()
     {
+        if (weatherType == WEATHER_TYPE.HEAT_WAVE)
+            heatWaveVFX.SetActive(true);
+
         if (weatherType != WEATHER_TYPE.RAINY)
         {
             Weapon[] weaponsUnderWeather = FindObjectsOfType<Weapon>();
@@ -57,6 +62,14 @@ public class Weather : MonoBehaviour
                                 if (affectTimers[i] < 0)
                                 {
                                     affectingWeapons[i].ElectrifyWeapon();
+
+                                    GameObject obj = Instantiate(lightningVFX);
+                                    obj.GetComponent<LightningBoltScript>().StartObject.transform.position =
+                                        new Vector3(affectingWeapons[i].gameObject.transform.position.x,
+                                        transform.position.y,
+                                        affectingWeapons[i].gameObject.transform.position.z);
+                                    obj.GetComponent<LightningBoltScript>().EndObject.transform.position = affectingWeapons[i].transform.position;
+
                                     affectedWeapons.Add(affectingWeapons[i]);
 
                                     affectingWeapons.Remove(affectingWeapons[i]);
