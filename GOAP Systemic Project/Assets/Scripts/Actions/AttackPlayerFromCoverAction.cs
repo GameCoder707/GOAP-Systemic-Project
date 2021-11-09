@@ -92,6 +92,8 @@ public class AttackPlayerFromCoverAction : GoapAction
 
         if (Vector3.Distance(player.position, transform.position) >= 6f && target.GetComponentInParent<Barrier>().GetCoverStatus())
         {
+            target.GetComponentInParent<Barrier>().occupied = true;
+
             Vector3 faceDir = (player.position - agent.transform.position).normalized;
 
             Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);

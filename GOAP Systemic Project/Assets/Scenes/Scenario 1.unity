@@ -5082,6 +5082,7 @@ MonoBehaviour:
   affectedWeapons: []
   lightningVFX: {fileID: 106988, guid: b144b19058780b249aecc17f80664c12, type: 3}
   heatWaveVFX: {fileID: 931810806}
+  isDynamic: 0
 --- !u!65 &1265689189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6885,7 +6886,7 @@ GameObject:
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1902597117
 Transform:
   m_ObjectHideFlags: 0
@@ -6932,6 +6933,7 @@ MonoBehaviour:
   affectedWeapons: []
   lightningVFX: {fileID: 0}
   heatWaveVFX: {fileID: 0}
+  isDynamic: 0
 --- !u!1 &1924793598
 GameObject:
   m_ObjectHideFlags: 0

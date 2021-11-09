@@ -66,7 +66,6 @@ public class MediumEnemy : GeneralEnemy
                         interactables[i].gameObject.GetComponent<Boulder>().burner == null &&
                         CheckForFireSource())
                     {
-                        Debug.Log("Medium Burn Called");
                         return true;
                     }
 

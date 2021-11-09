@@ -5374,6 +5374,7 @@ MonoBehaviour:
   affectedWeapons: []
   lightningVFX: {fileID: 106988, guid: b144b19058780b249aecc17f80664c12, type: 3}
   heatWaveVFX: {fileID: 1217493039}
+  isDynamic: 0
 --- !u!65 &1265689189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5589,7 +5590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1328788393
 Transform:
   m_ObjectHideFlags: 0
@@ -7233,7 +7234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902597116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ba8f7e23e8602e41923dcef65139e01, type: 3}
   m_Name: 
@@ -7245,6 +7246,7 @@ MonoBehaviour:
   affectedWeapons: []
   lightningVFX: {fileID: 0}
   heatWaveVFX: {fileID: 0}
+  isDynamic: 0
 --- !u!1 &1934452360
 GameObject:
   m_ObjectHideFlags: 0
