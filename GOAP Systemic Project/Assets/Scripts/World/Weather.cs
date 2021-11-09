@@ -17,23 +17,30 @@ public class Weather : MonoBehaviour
     public List<Weapon> affectedWeapons = new List<Weapon>();
     private List<float> affectTimers = new List<float>();
 
-    public GameObject lightningVFX;
+    public GameObject sunnySunlight;
+    public GameObject stormSunlight;
     public GameObject heatWaveVFX;
+    public GameObject rainyVFX;
+
+    public GameObject lightningVFX;
+    private float lightningSpawnDelay;
 
     public bool isDynamic;
-    private float swapTimer;
+    private float weatherSwapTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        swapTimer = 3.0f;
+        weatherSwapTimer = 5.0f;
+        lightningSpawnDelay = 0.75f;
     }
 
     void Update()
     {
+        // ************************************************** //
         if (isDynamic)
         {
-            if (swapTimer <= 0)
+            if (weatherSwapTimer <= 0)
             {
                 previousWeatherType = weatherType;
                 int weatherNum = Random.Range(0, 4);
@@ -47,16 +54,20 @@ public class Weather : MonoBehaviour
                 }
 
                 weatherType = (WEATHER_TYPE)weatherNum;
-                swapTimer = 3.0f;
+                weatherSwapTimer = 5.0f;
+
+                VFXManager(weatherType);
             }
             else
-                swapTimer -= Time.deltaTime;
+                weatherSwapTimer -= Time.deltaTime;
         }
 
-        if (weatherType == WEATHER_TYPE.HEAT_WAVE)
-            heatWaveVFX.SetActive(true);
-        else
-            heatWaveVFX.SetActive(false);
+        // ************************************************** //
+
+        if (weatherType == WEATHER_TYPE.STORM)
+            StormVFXManager();
+
+        // ************************************************** //
 
         if (weatherType != WEATHER_TYPE.RAINY)
         {
@@ -156,5 +167,55 @@ public class Weather : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    private void VFXManager(WEATHER_TYPE type)
+    {
+        switch(type)
+        {
+            case WEATHER_TYPE.STORM:
+                stormSunlight.SetActive(true);
+                heatWaveVFX.SetActive(false);
+                sunnySunlight.SetActive(false);
+                rainyVFX.SetActive(false);
+                break;
+            case WEATHER_TYPE.SUNNY:
+                sunnySunlight.SetActive(true);
+                stormSunlight.SetActive(false);
+                heatWaveVFX.SetActive(false);
+                rainyVFX.SetActive(false);
+                break;
+            case WEATHER_TYPE.RAINY:
+                rainyVFX.SetActive(true);
+                sunnySunlight.SetActive(false);
+                stormSunlight.SetActive(false);
+                heatWaveVFX.SetActive(false);
+                break;
+            case WEATHER_TYPE.HEAT_WAVE:
+                heatWaveVFX.SetActive(true);
+                sunnySunlight.SetActive(false);
+                stormSunlight.SetActive(false);
+                rainyVFX.SetActive(false);
+                break;
+        }
+    }
+
+    private void StormVFXManager()
+    {
+        if (lightningSpawnDelay <= 0)
+        {
+            float startX = Random.Range(transform.position.x - 15f, transform.position.x + 15f);
+            float startZ = Random.Range(transform.position.z - 15f, transform.position.z + 15f);
+
+            GameObject obj = Instantiate(lightningVFX);
+            obj.GetComponent<LightningBoltScript>().StartObject.transform.position =
+                new Vector3(startX, transform.position.y, startZ);
+
+            obj.GetComponent<LightningBoltScript>().EndObject.transform.position = new Vector3(startX, 0f, startZ);
+
+            lightningSpawnDelay = 0.75f;
+        }
+        else
+            lightningSpawnDelay -= Time.deltaTime;
     }
 }
