@@ -52,6 +52,8 @@ public class PickUpWeaponAction : GoapAction
         if (agent.GetComponent<EnemyStats>().hasWeapon)
             return false;
 
+        target = null;
+
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
         if (interactables.Length > 0)

@@ -44,6 +44,8 @@ public class BurnBoulderAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
+        target = null;
+
         if (agent.GetComponentInChildren<Weapon>() != null)
         {
             if (agent.GetComponentInChildren<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING)

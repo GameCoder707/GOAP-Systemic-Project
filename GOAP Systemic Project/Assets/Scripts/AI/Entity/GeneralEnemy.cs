@@ -54,14 +54,14 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         return worldData;
     }
 
-    public abstract HashSet<KeyValuePair<string, object>> createGoalState();
+    public abstract List<HashSet<KeyValuePair<string, object>>> createGoalStates();
 
-    public void planFailed(HashSet<KeyValuePair<string, object>> failedGoal)
+    public void planFailed(List<HashSet<KeyValuePair<string, object>>> failedGoals)
     {
 
     }
 
-    public void planFound(HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
+    public void planFound(List<HashSet<KeyValuePair<string, object>>> goals, Queue<GoapAction> actions)
     {
         Debug.Log("<color=green>Plan found</color> " + GoapAgent.prettyPrint(actions));
     }

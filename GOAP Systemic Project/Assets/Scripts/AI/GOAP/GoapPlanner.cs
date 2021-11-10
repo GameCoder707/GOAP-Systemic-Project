@@ -16,7 +16,7 @@ public class GoapPlanner
     public Queue<GoapAction> plan(GameObject agent,
                                   HashSet<GoapAction> availableActions,
                                   HashSet<KeyValuePair<string, object>> worldState,
-                                  HashSet<KeyValuePair<string, object>> goal)
+                                  List<HashSet<KeyValuePair<string, object>>> goals)
     {
         // reset the actions so we can start fresh with them
         foreach (GoapAction a in availableActions)
@@ -38,8 +38,18 @@ public class GoapPlanner
         List<Node> leaves = new List<Node>();
 
         // build graph
-        Node start = new Node(null, 0, worldState, null);
-        bool success = buildGraph(start, leaves, usableActions, goal);
+        bool success = false;
+
+        foreach(HashSet<KeyValuePair<string, object>> g in goals)
+        {
+            Node start = new Node(null, 0, worldState, null);
+            success = buildGraph(start, leaves, usableActions, g);
+
+            if (success)
+                break;
+            else
+                leaves.Clear();
+        }
 
         if (!success)
         {

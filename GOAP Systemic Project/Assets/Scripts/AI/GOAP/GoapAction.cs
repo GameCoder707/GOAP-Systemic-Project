@@ -34,7 +34,7 @@ public abstract class GoapAction : MonoBehaviour
     {
         reset();
         inRange = false;
-        target = null;
+        //target = null;
     }
 
     /**

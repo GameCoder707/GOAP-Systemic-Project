@@ -47,6 +47,8 @@ public class PushBoulderAction : GoapAction
 
     public override bool checkProceduralPrecondition(GameObject agent)
     {
+        target = null;
+
         Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 
         if (interactables.Length > 0)

@@ -101,7 +101,7 @@ public sealed class GoapAgent : MonoBehaviour
 
                 Vector3 faceDir = (transform.position - prevPosition).normalized;
 
-                if(faceDir != Vector3.zero)
+                if (faceDir != Vector3.zero)
                 {
                     Quaternion lookRotation = Quaternion.LookRotation(faceDir, Vector3.up);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 900 * Time.deltaTime);
@@ -162,16 +162,16 @@ public sealed class GoapAgent : MonoBehaviour
 
             // get the world state and the goal we want to plan for
             HashSet<KeyValuePair<string, object>> worldState = dataProvider.getWorldState();
-            HashSet<KeyValuePair<string, object>> goal = dataProvider.createGoalState();
+            List<HashSet<KeyValuePair<string, object>>> goals = dataProvider.createGoalStates();
 
             // Plan
-            Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goal);
+            Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goals);
 
             if (plan != null)
             {
                 // we have a plan, hooray!
                 currentActions = plan;
-                dataProvider.planFound(goal, plan);
+                dataProvider.planFound(goals, plan);
 
                 fsm.popState(); // move to PerformAction state
                 fsm.pushState(performActionState);
@@ -180,8 +180,8 @@ public sealed class GoapAgent : MonoBehaviour
             else
             {
                 // ugh, we couldn't get a plan
-                Debug.Log("<color=orange>Failed Plan:</color>" + prettyPrint(goal));
-                dataProvider.planFailed(goal);
+                Debug.Log("<color=orange>Failed Plan:</color>" + prettyPrint(goals));
+                dataProvider.planFailed(goals);
                 fsm.popState(); // move back to IdleAction state
                 fsm.pushState(idleState);
             }
@@ -311,14 +311,15 @@ public sealed class GoapAgent : MonoBehaviour
         //Debug.Log("Found actions: " + prettyPrint(actions));
     }
 
-    public static string prettyPrint(HashSet<KeyValuePair<string, object>> state)
+    public static string prettyPrint(List<HashSet<KeyValuePair<string, object>>> states)
     {
         String s = "";
-        foreach (KeyValuePair<string, object> kvp in state)
-        {
-            s += kvp.Key + ":" + kvp.Value.ToString();
-            s += ", ";
-        }
+        foreach (HashSet<KeyValuePair<string, object>> hash in states)
+            foreach (KeyValuePair<string, object> kvp in hash)
+            {
+                s += kvp.Key + ":" + kvp.Value.ToString();
+                s += ", ";
+            }
         return s;
     }
 
@@ -329,7 +330,7 @@ public sealed class GoapAgent : MonoBehaviour
 
         foreach (GoapAction a in actions)
         {
-            if(i < 1)
+            if (i < 1)
             {
                 s += a.gameObject.name + ": ";
                 i++;

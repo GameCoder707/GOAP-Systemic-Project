@@ -4,50 +4,58 @@ using UnityEngine;
 
 public class LightEnemy : GeneralEnemy
 {
-    public override HashSet<KeyValuePair<string, object>> createGoalState()
+    public override List<HashSet<KeyValuePair<string, object>>> createGoalStates()
     {
-        HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>>();
+        List<HashSet<KeyValuePair<string, object>>> goals = new List<HashSet<KeyValuePair<string, object>>>();
 
         if (!GetComponent<EnemyBehaviour>().isHealthy())
         {
-            goal.Add(new KeyValuePair<string, object>("canAttack", true));
+            goals.Add(new HashSet<KeyValuePair<string, object>>());
+            goals[goals.Count - 1].Add(new KeyValuePair<string, object>("canAttack", true));
             goalName = "canAttack";
+            currentGoalDisplay.text = "Current Goal: Flee from Player";
         }
         else // Combat Goals
         {
             if (CheckForObjects())
             {
-                goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goals.Add(new HashSet<KeyValuePair<string, object>>());
+                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";
                 currentGoalDisplay.text = "Current Goal: Burn Boulder for Heavy Enemy to Push";
             }
-            else if (CheckForCover())
+
+            if (CheckForCover())
             {
-                goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
+                goals.Add(new HashSet<KeyValuePair<string, object>>());
+                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
                 goalName = "attackPlayerFromCover";
                 currentGoalDisplay.text = "Current Goal: Kill Player from behind Cover";
             }
-            else if (CheckForFireSource() || CheckForElectricSource())
+
+            if (CheckForFireSource() || CheckForElectricSource())
             {
-                goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goals.Add(new HashSet<KeyValuePair<string, object>>());
+                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
                 goalName = "attackPlayerWithStatWeapon";
                 currentGoalDisplay.text = "Current Goal: Kill Player with Status Applied Weapon";
             }
-            else if (CheckForWeaponSource())
+
+            if (CheckForWeaponSource())
             {
-                goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
+                goals.Add(new HashSet<KeyValuePair<string, object>>());
+                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
                 goalName = "attackPlayerWithWeapon";
                 currentGoalDisplay.text = "Current Goal: Kill Player with Weapon";
             }
-            else
-            {
-                goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
-                goalName = "attackPlayer";
-                currentGoalDisplay.text = "Current Goal: Kill Player with Bare Hands";
-            }
+
+            goals.Add(new HashSet<KeyValuePair<string, object>>());
+            goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayer", true));
+            goalName = "attackPlayer";
+            currentGoalDisplay.text = "Current Goal: Kill Player with Bare Hands";
         }
 
-        return goal;
+        return goals;
     }
 
     protected override bool CheckForObjects()

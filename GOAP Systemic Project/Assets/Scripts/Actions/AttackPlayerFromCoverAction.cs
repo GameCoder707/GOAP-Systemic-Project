@@ -30,18 +30,20 @@ public class AttackPlayerFromCoverAction : GoapAction
     {
         // Reset
         playerDead = false;
+    }
 
+    public override void secondaryReset()
+    {
         if (target != null)
         {
             if (target.GetComponentInParent<Barrier>().owner.GetInstanceID() == gameObject.GetInstanceID())
             {
                 target.GetComponentInParent<Barrier>().occupied = false;
                 target.GetComponentInParent<Barrier>().owner = null;
+                target = null;
             }
         }
     }
-
-    public override void secondaryReset() { }
 
     public override bool isDone()
     {
@@ -63,7 +65,15 @@ public class AttackPlayerFromCoverAction : GoapAction
             {
                 if (interactables[i].gameObject.name.ToLower().Contains("cover"))
                 {
-                    if (!interactables[i].gameObject.GetComponent<Barrier>().occupied)
+                    if(target != null)
+                    {
+                        if(target.transform.parent.gameObject == interactables[i].gameObject)
+                        {
+                            target = interactables[i].gameObject.GetComponent<Barrier>().GetCoverPos();
+                            break;
+                        }
+                    }
+                    else if (!interactables[i].gameObject.GetComponent<Barrier>().occupied)
                     {
                         target = interactables[i].gameObject.GetComponent<Barrier>().GetCoverPos();
 
