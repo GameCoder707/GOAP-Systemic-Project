@@ -28,19 +28,19 @@ public interface IGoap
 	 * Give the planner new goals so it can figure out 
 	 * the actions needed to fulfill it.
 	 */
-    List<HashSet<KeyValuePair<string, object>>> createGoalStates();
+    List<GoalInfo> createGoalStates();
 
     /**
 	 * No sequence of actions could be found for the supplied goal.
 	 * You will need to try another goal
 	 */
-    void planFailed(List<HashSet<KeyValuePair<string, object>>> failedGoals);
+    void planFailed(List<GoalInfo> failedGoals);
 
     /**
 	 * A plan was found for the supplied goal.
 	 * These are the actions the Agent will perform, in order.
 	 */
-    void planFound(List<HashSet<KeyValuePair<string, object>>> goals, Queue<GoapAction> actions);
+    void planFound(List<GoalInfo> goals, Queue<GoapAction> actions);
 
     /**
 	 * All actions are complete and the goal was reached. Hooray!

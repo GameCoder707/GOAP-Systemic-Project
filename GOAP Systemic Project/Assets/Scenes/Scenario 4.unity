@@ -2709,7 +2709,6 @@ MonoBehaviour:
   moveSpeed: 5
   type: 0
   goalName: 
-  currentGoalDisplay: {fileID: 1958504973}
 --- !u!114 &785766294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2861,6 +2860,7 @@ MonoBehaviour:
   - {fileID: 715774984}
   - {fileID: 1733570651}
   currentActionDisplay: {fileID: 1101118012}
+  currentGoalDisplay: {fileID: 1958504973}
 --- !u!136 &785766303
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3917,7 +3917,6 @@ MonoBehaviour:
   moveSpeed: 4
   type: 1
   goalName: 
-  currentGoalDisplay: {fileID: 151390782}
 --- !u!114 &964950352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3937,6 +3936,7 @@ MonoBehaviour:
   - {fileID: 169217677}
   - {fileID: 173077468}
   currentActionDisplay: {fileID: 907985134}
+  currentGoalDisplay: {fileID: 151390782}
 --- !u!136 &964950353
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6450,7 +6450,6 @@ MonoBehaviour:
   moveSpeed: 3
   type: 2
   goalName: 
-  currentGoalDisplay: {fileID: 1934452362}
 --- !u!114 &1840426065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6601,6 +6600,7 @@ MonoBehaviour:
   waypoints:
   - {fileID: 842720039}
   currentActionDisplay: {fileID: 1166323266}
+  currentGoalDisplay: {fileID: 1934452362}
 --- !u!136 &1840426074
 CapsuleCollider:
   m_ObjectHideFlags: 0

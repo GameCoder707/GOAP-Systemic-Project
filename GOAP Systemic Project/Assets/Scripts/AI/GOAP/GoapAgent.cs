@@ -32,6 +32,8 @@ public sealed class GoapAgent : MonoBehaviour
     private NavMeshAgent agent;
 
     public Text currentActionDisplay;
+    public Text currentGoalDisplay;
+    public GoalInfo currentGoal;
 
     void Start()
     {
@@ -63,7 +65,7 @@ public sealed class GoapAgent : MonoBehaviour
         {
             if (searchTimer < 0)
             {
-                GetComponent<GeneralEnemy>().currentGoalDisplay.text = "Current Goal: N/A";
+                currentGoalDisplay.text = "Current Goal: N/A";
 
                 agent.speed = 0.5f * moveSpeed;
                 agent.stoppingDistance = 0f;
@@ -162,10 +164,13 @@ public sealed class GoapAgent : MonoBehaviour
 
             // get the world state and the goal we want to plan for
             HashSet<KeyValuePair<string, object>> worldState = dataProvider.getWorldState();
-            List<HashSet<KeyValuePair<string, object>>> goals = dataProvider.createGoalStates();
+            List<GoalInfo> goals = dataProvider.createGoalStates();
+            currentGoal = new GoalInfo();
 
             // Plan
-            Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goals);
+            Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goals, ref currentGoal);
+
+            currentGoalDisplay.text = currentGoal.goalDesc;
 
             if (plan != null)
             {
@@ -187,6 +192,17 @@ public sealed class GoapAgent : MonoBehaviour
             }
 
         };
+    }
+
+    private bool CheckActionInPlan(Queue<GoapAction> actionPlan, string actionName)
+    {
+        foreach (GoapAction a in actionPlan)
+        {
+            if (a.GetType().Name == actionName)
+                return true;
+        }
+
+        return false;
     }
 
     private void createMoveToState()
@@ -311,11 +327,11 @@ public sealed class GoapAgent : MonoBehaviour
         //Debug.Log("Found actions: " + prettyPrint(actions));
     }
 
-    public static string prettyPrint(List<HashSet<KeyValuePair<string, object>>> states)
+    public static string prettyPrint(List<GoalInfo> states)
     {
         String s = "";
-        foreach (HashSet<KeyValuePair<string, object>> hash in states)
-            foreach (KeyValuePair<string, object> kvp in hash)
+        foreach (GoalInfo gi in states)
+            foreach (KeyValuePair<string, object> kvp in gi.goal)
             {
                 s += kvp.Key + ":" + kvp.Value.ToString();
                 s += ", ";

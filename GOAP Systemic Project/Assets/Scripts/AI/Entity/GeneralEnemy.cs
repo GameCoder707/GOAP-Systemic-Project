@@ -22,7 +22,7 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
 
     private Vector3 prevPosition;
 
-    public Text currentGoalDisplay;
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,14 +54,14 @@ public abstract class GeneralEnemy : MonoBehaviour, IGoap
         return worldData;
     }
 
-    public abstract List<HashSet<KeyValuePair<string, object>>> createGoalStates();
+    public abstract List<GoalInfo> createGoalStates();
 
-    public void planFailed(List<HashSet<KeyValuePair<string, object>>> failedGoals)
+    public void planFailed(List<GoalInfo> failedGoals)
     {
 
     }
 
-    public void planFound(List<HashSet<KeyValuePair<string, object>>> goals, Queue<GoapAction> actions)
+    public void planFound(List<GoalInfo> goals, Queue<GoapAction> actions)
     {
         Debug.Log("<color=green>Plan found</color> " + GoapAgent.prettyPrint(actions));
     }

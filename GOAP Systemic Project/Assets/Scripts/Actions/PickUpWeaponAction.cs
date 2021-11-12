@@ -29,7 +29,7 @@ public class PickUpWeaponAction : GoapAction
 
     public override void secondaryReset()
     {
-        if(target != null)
+        if (target != null)
         {
             target.GetComponent<Weapon>().isOwned = false;
             target.GetComponent<Weapon>().owner = null;
@@ -173,8 +173,7 @@ public class PickUpWeaponAction : GoapAction
 
     public override bool movementPass(GameObject agent)
     {
-
-        if (agent.GetComponent<GeneralEnemy>().goalName == "attackPlayerWithStatWeapon")
+        if (agent.GetComponent<GoapAgent>().currentGoal.goalName == "attackPlayerWithStatWeapon")
         {
             Collider[] interactables = Physics.OverlapSphere(transform.position, 15.0f, interactableLayer);
 

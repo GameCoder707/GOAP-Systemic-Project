@@ -4,56 +4,56 @@ using UnityEngine;
 
 public class MediumEnemy : GeneralEnemy
 {
-    public override List<HashSet<KeyValuePair<string, object>>> createGoalStates()
+    public override List<GoalInfo> createGoalStates()
     {
-        List<HashSet<KeyValuePair<string, object>>> goals = new List<HashSet<KeyValuePair<string, object>>>();
+        List<GoalInfo> goals = new List<GoalInfo>();
 
         if (!GetComponent<EnemyBehaviour>().isHealthy())
         {
-            goals.Add(new HashSet<KeyValuePair<string, object>>());
-            goals[goals.Count - 1].Add(new KeyValuePair<string, object>("canAttack", true));
-            goalName = "canAttack";
-            currentGoalDisplay.text = "Current Goal: Flee from Player";
+            goals.Add(new GoalInfo());
+            goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("canAttack", true));
+            goals[goals.Count - 1].goalName = "canAttack";
+            goals[goals.Count - 1].goalDesc = "Current Goal: Flee from Player";
         }
         else // Combat Goals
         {
             if (CheckForObjects())
             {
-                goals.Add(new HashSet<KeyValuePair<string, object>>());
-                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
-                goalName = "attackPlayerWithStatWeapon";
-                currentGoalDisplay.text = "Current Goal: Burning Boulder for Heavy Enemy to Push";
+                goals.Add(new GoalInfo());
+                goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goals[goals.Count - 1].goalName = "attackPlayerWithStatWeapon";
+                goals[goals.Count - 1].goalDesc = "Current Goal: Burning Boulder for Heavy Enemy to Push";
             }
 
             if (CheckForCover())
             {
-                goals.Add(new HashSet<KeyValuePair<string, object>>());
-                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
-                goalName = "attackPlayerFromCover";
-                currentGoalDisplay.text = "Current Goal: Kill Player from behind Cover";
+                goals.Add(new GoalInfo());
+                goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("attackPlayerFromCover", true));
+                goals[goals.Count - 1].goalName = "attackPlayerFromCover";
+                goals[goals.Count - 1].goalDesc = "Current Goal: Kill Player from behind Cover";
             }
 
             if (CheckForFireSource() || CheckForElectricSource())
             {
-                goals.Add(new HashSet<KeyValuePair<string, object>>());
-                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
-                goalName = "attackPlayerWithStatWeapon";
-                currentGoalDisplay.text = "Current Goal: Kill Player with Status Applied Weapon";
+                goals.Add(new GoalInfo());
+                goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("attackPlayerWithStatWeapon", true));
+                goals[goals.Count - 1].goalName = "attackPlayerWithStatWeapon";
+                goals[goals.Count - 1].goalDesc = "Current Goal: Kill Player with Status Applied Weapon";
             }
 
             if (CheckForWeaponSource())
             {
-                goals.Add(new HashSet<KeyValuePair<string, object>>());
-                goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
-                goalName = "attackPlayerWithWeapon";
-                currentGoalDisplay.text = "Current Goal: Kill Player with Weapon";
+                goals.Add(new GoalInfo());
+                goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("attackPlayerWithWeapon", true));
+                goals[goals.Count - 1].goalName = "attackPlayerWithWeapon";
+                goals[goals.Count - 1].goalDesc = "Current Goal: Kill Player with Weapon";
             }
 
 
-            goals.Add(new HashSet<KeyValuePair<string, object>>());
-            goals[goals.Count - 1].Add(new KeyValuePair<string, object>("attackPlayer", true));
-            goalName = "attackPlayer";
-            currentGoalDisplay.text = "Current Goal: Kill Player with Bare Hands";
+            goals.Add(new GoalInfo());
+            goals[goals.Count - 1].goal.Add(new KeyValuePair<string, object>("attackPlayer", true));
+            goals[goals.Count - 1].goalName = "attackPlayer";
+            goals[goals.Count - 1].goalDesc = "Current Goal: Kill Player with Bare Hands";
 
         }
 
