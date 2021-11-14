@@ -52,7 +52,18 @@ public class PlayerBehaviour : Entity
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.up, out hit, Mathf.Infinity))
         {
             if (hit.collider.gameObject.name.ToLower().Contains("weather"))
-                weatherInfo.text = "Weather: " + hit.collider.gameObject.GetComponent<Weather>().weatherType.ToString();
+            {
+                string dynamicStatus = "";
+
+                if (hit.collider.gameObject.GetComponent<Weather>().isDynamic)
+                    dynamicStatus = "ON";
+                else
+                    dynamicStatus = "OFF";
+
+                weatherInfo.text = "Weather: " + hit.collider.gameObject.GetComponent<Weather>().weatherType.ToString() +
+                    "\n Dynamic: " + dynamicStatus;
+            }
+
         }
     }
 

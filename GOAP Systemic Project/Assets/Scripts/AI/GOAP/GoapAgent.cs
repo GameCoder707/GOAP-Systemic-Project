@@ -118,6 +118,9 @@ public sealed class GoapAgent : MonoBehaviour
 
                 if (searchTimer <= 0)
                 {
+                    foreach (GoapAction a in availableActions)
+                        a.doReset();
+
                     stateMachine.popState();
                     stateMachine.pushState(idleState);
                 }

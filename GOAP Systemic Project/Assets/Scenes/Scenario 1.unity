@@ -2861,7 +2861,6 @@ MonoBehaviour:
   - {fileID: 1733570651}
   currentActionDisplay: {fileID: 1798269930}
   currentGoalDisplay: {fileID: 1816975784}
-  currentGoal: {fileID: 0}
 --- !u!136 &785766303
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3059,8 +3058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40.80005}
-  m_SizeDelta: {x: 491.01, y: 52.4}
+  m_AnchoredPosition: {x: 0, y: -61}
+  m_SizeDelta: {x: 491.01, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846861640
 MonoBehaviour:
@@ -3905,7 +3904,6 @@ MonoBehaviour:
   - {fileID: 173077468}
   currentActionDisplay: {fileID: 130148222}
   currentGoalDisplay: {fileID: 604847401}
-  currentGoal: {fileID: 0}
 --- !u!136 &964950353
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6321,7 +6319,6 @@ MonoBehaviour:
   - {fileID: 842720039}
   currentActionDisplay: {fileID: 629338677}
   currentGoalDisplay: {fileID: 12346693}
-  currentGoal: {fileID: 0}
 --- !u!136 &1840426074
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class PickUpWeaponAction : GoapAction
     public override bool checkProceduralPrecondition(GameObject agent)
     {
         if (agent.GetComponent<EnemyStats>().hasWeapon)
-            return false;
+            return false; // No need to pick up another weapon if already carrying one
 
         target = null;
 

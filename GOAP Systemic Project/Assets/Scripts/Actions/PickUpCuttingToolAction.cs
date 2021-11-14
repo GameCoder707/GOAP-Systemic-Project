@@ -21,6 +21,9 @@ public class PickUpCuttingToolAction : GoapAction
     {
         // Reset
         hasCuttingTool = false;
+
+        if (target != null)
+            target.GetComponent<CuttingTool>().isOwned = false;
     }
 
     public override void secondaryReset() { }

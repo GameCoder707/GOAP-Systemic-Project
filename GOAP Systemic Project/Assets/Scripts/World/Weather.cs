@@ -38,6 +38,14 @@ public class Weather : MonoBehaviour
     void Update()
     {
         // ************************************************** //
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            isDynamic = !isDynamic;
+
+            if (!isDynamic)
+                weatherSwapTimer = 5.0f;
+        }
+
         if (isDynamic)
         {
             if (weatherSwapTimer <= 0)
@@ -55,12 +63,28 @@ public class Weather : MonoBehaviour
 
                 weatherType = (WEATHER_TYPE)weatherNum;
                 weatherSwapTimer = 5.0f;
-
-                VFXManager(weatherType);
             }
             else
                 weatherSwapTimer -= Time.deltaTime;
         }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                weatherType = WEATHER_TYPE.SUNNY;
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                weatherType = WEATHER_TYPE.RAINY;
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                weatherType = WEATHER_TYPE.STORM;
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+                weatherType = WEATHER_TYPE.HEAT_WAVE;
+        }
+
+        // ************************************************** //
+
+        stormSunlight.SetActive(weatherType == WEATHER_TYPE.STORM);
+        heatWaveVFX.SetActive(weatherType == WEATHER_TYPE.HEAT_WAVE);
+        sunnySunlight.SetActive(weatherType == WEATHER_TYPE.SUNNY);
+        rainyVFX.SetActive(weatherType == WEATHER_TYPE.RAINY);
 
         // ************************************************** //
 
@@ -167,37 +191,6 @@ public class Weather : MonoBehaviour
             return true;
         else
             return false;
-    }
-
-    private void VFXManager(WEATHER_TYPE type)
-    {
-        switch(type)
-        {
-            case WEATHER_TYPE.STORM:
-                stormSunlight.SetActive(true);
-                heatWaveVFX.SetActive(false);
-                sunnySunlight.SetActive(false);
-                rainyVFX.SetActive(false);
-                break;
-            case WEATHER_TYPE.SUNNY:
-                sunnySunlight.SetActive(true);
-                stormSunlight.SetActive(false);
-                heatWaveVFX.SetActive(false);
-                rainyVFX.SetActive(false);
-                break;
-            case WEATHER_TYPE.RAINY:
-                rainyVFX.SetActive(true);
-                sunnySunlight.SetActive(false);
-                stormSunlight.SetActive(false);
-                heatWaveVFX.SetActive(false);
-                break;
-            case WEATHER_TYPE.HEAT_WAVE:
-                heatWaveVFX.SetActive(true);
-                sunnySunlight.SetActive(false);
-                stormSunlight.SetActive(false);
-                rainyVFX.SetActive(false);
-                break;
-        }
     }
 
     private void StormVFXManager()
