@@ -60,7 +60,7 @@ public class Fire : Element
             }
             else if (other.gameObject.GetComponent<Weapon>() != null)
             {
-                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.BURNING &&
+                if (other.gameObject.GetComponent<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE &&
                     other.gameObject.GetComponent<Weapon>().flammable)
                     other.gameObject.GetComponent<Weapon>().BurnWeapon();
             }

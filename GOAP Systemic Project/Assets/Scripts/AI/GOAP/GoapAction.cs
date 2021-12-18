@@ -9,16 +9,16 @@ public abstract class GoapAction : MonoBehaviour
     private bool inRange = false;
 
     /* The cost of performing the action. 
-	 * Figure out a weight that suits the action. 
-	 * Changing it will affect what actions are chosen during planning.*/
+	 Cheaper the action, the more likely it gets chosen by the planner. */
     public float cost = 1f;
 
-    /**
-	 * An action often has to perform on an object. This is that object. Can be null. */
+    /* An object that an entity can execute an action upon. Not always mandatory. */
     public GameObject target;
 
     public bool finishedAction = false;
 
+    /* The minimum distance the entity will have to be
+       within the GameObject target to execute the action */
     public float minimumDistance = 1.5f;
 
     protected string movingActionText; // Text to display when the agent is moving
@@ -37,25 +37,20 @@ public abstract class GoapAction : MonoBehaviour
         //target = null;
     }
 
-    /**
-	 * Reset any variables that need to be reset before planning happens again.
-	 */
+    /* Reset any variables that need to be reset before planning happens again. */
     public abstract void reset();
 
+    /* A secondary reset function for actions that are no longer in the final plan of actions */
     public abstract void secondaryReset();
 
-    /**
-	 * Is the action done?
-	 */
+    /* Is the action done? */
     public abstract bool isDone();
 
-    /**
-	 * Procedurally check if this action can run. Not all actions
-	 * will need this, but some might.
-	 */
+    /*Procedurally check if this action can run. Not all actions
+	  will need this, but some might. */
     public abstract bool checkProceduralPrecondition(GameObject agent);
 
-    // To check if object is moving towards the right target
+    /* To check if object is moving towards the right target */
     public abstract bool movementPass(GameObject agent);
 
     /**
@@ -72,11 +67,6 @@ public abstract class GoapAction : MonoBehaviour
 	 */
     public abstract bool requiresInRange();
 
-    /**
-	 * Are we in range of the target?
-	 * The MoveTo state will set this and it gets reset each time this action is performed.
-	 */
-
     public string GetMovingActionName()
     {
         return "Current Action: " + movingActionText;
@@ -87,6 +77,10 @@ public abstract class GoapAction : MonoBehaviour
         return "Current Action: " + performingActionText;
     }
 
+    /**
+     * Are we in range of the target?
+     * The MoveTo state will set this and it gets reset each time this action is performed.
+     */
     public bool isInRange()
     {
         return inRange;
@@ -101,7 +95,6 @@ public abstract class GoapAction : MonoBehaviour
     {
         preconditions.Add(new KeyValuePair<string, object>(key, value));
     }
-
 
     public void removePrecondition(string key)
     {
@@ -133,7 +126,6 @@ public abstract class GoapAction : MonoBehaviour
         if (!default(KeyValuePair<string, object>).Equals(remove))
             effects.Remove(remove);
     }
-
 
     public HashSet<KeyValuePair<string, object>> Preconditions
     {

@@ -65,7 +65,7 @@ public class Electricity : Element
             }
             else if (other.gameObject.GetComponent<Weapon>() != null)
             {
-                if (other.gameObject.GetComponent<Weapon>().weaponStatus != Weapon.WEAPON_STATUS.ELECTRIFIED &&
+                if (other.gameObject.GetComponent<Weapon>().weaponStatus == Weapon.WEAPON_STATUS.NONE &&
                     other.gameObject.GetComponent<Weapon>().conductive)
                     other.gameObject.GetComponent<Weapon>().ElectrifyWeapon();
             }
