@@ -22,27 +22,19 @@ public class PlayerBehaviour : Entity
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene("Main Menu");
-
-        if (health <= 0)
+        if (health > 0)
         {
-            // Reset player
-            health = 100;
-            burnPoints = 0;
-            burnDuration = 5.0f;
+            if (electricPoints < maxElectricPoints) // Stunning the enemy
+            {
+                Move();
+                Aim();
+                Attack();
+            }
         }
 
         StatusEffects();
-
-        if (electricPoints < maxElectricPoints) // Stunning the enemy
-        {
-            Move();
-            Aim();
-            Attack();
-        }
-
         DisplayUIElements();
+
     }
 
     private void FixedUpdate()

@@ -25,9 +25,18 @@ public class EnemyBehaviour : Entity
         Collider[] player = Physics.OverlapSphere(transform.position, 15, playerLayer);
 
         if (player.Length > 0 && electricPoints < maxElectricPoints)
-            playerInRange = true;
-        else
-            playerInRange = false;
+        {
+            for(int i = 0; i < player.Length; i++)
+            {
+                if(player[i].gameObject.GetComponent<PlayerBehaviour>() != null)
+                {
+                    if(player[i].gameObject.GetComponent<PlayerBehaviour>().health > 0)
+                        playerInRange = true;
+                    else
+                        playerInRange = false;
+                }
+            }
+        }
 
         if(!isHealthy())
         {
